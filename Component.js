@@ -1,28 +1,39 @@
 export default class Component extends HTMLElement {
-	static _dom;
 	evt = {};
+	styleUrl = "style.css";
+	static observedAttributes = [];
 	constructor() {
 		super();
-
-		// Create a shadow root
+	}
+	connectedCallback() {
+		console.log("Custom element added to page.");
 		this.shadow = this.attachShadow({ mode: 'open' });
-		this.addStyle('style.css');
-
-		// Attach the created elements to the shadow dom
-		this.dom = this.constructor.dom.cloneNode(true);
-		if (this.dom.tagName === 'TEMPLATE') {
-			[...this.constructor.dom.children].forEach(child => {
-				this.shadow.appendChild(child);
-			});
-		} else {
-			this.shadow.appendChild(this.dom);
+		if (this.styleUrl) {
+			this.addStyle(this.styleUrl);
 		}
+		// Attach the created elements to the shadow dom
+		// this.dom = this.constructor.dom.cloneNode(true);
+		// if (this.dom.tagName === 'TEMPLATE') {
+		// 	[...this.constructor.dom.children].forEach(child => {
+		// 		this.shadow.appendChild(child);
+		// 	});
+		// } else {
+		// 	this.shadow.appendChild(this.dom);
+		// }
 	}
-	static init() {
-		// Create a button element
-		customElements.define(this.tagName, this);
+
+	disconnectedCallback() {
+		console.log("Custom element removed from page.");
 	}
-	static get dom() {
+
+	adoptedCallback() {
+		console.log("Custom element moved to new page.");
+	}
+
+	attributeChangedCallback(name, oldValue, newValue) {
+		console.log(`Attribute ${name} has changed.`);
+	}
+	get dom() {
 		if (!this._dom) {
 			this._dom = this.domCreate();
 			this._dom.obj = this;
@@ -32,12 +43,16 @@ export default class Component extends HTMLElement {
 	get baseUrl() {
 		return new URL(this.constructor.url).href.split("/").slice(0, -1).join("/");
 	}
-	static domCreate() {
+	domCreate() {
 		// Create a div element
 		const div = document.createElement('div');
 		const slot = div.appendChild(document.createElement('slot'));
 		slot.textContent = 'Component';
 		return div;
+	}
+	static register() {
+		customElements.define(this.tagName, this);
+		return this;
 	}
 	setStyle(style, obj = this) {
 		for (let propertyName in style) {
@@ -112,7 +127,7 @@ export default class Component extends HTMLElement {
 		}
 		if (allUnits.percentage.includes(unit)) {
 			number /= 100;
-			if (property === 'font-size'|| property === 'line-height') {
+			if (property === 'font-size' || property === 'line-height') {
 				return this.parseValue(`${number}em`);
 			}
 			let box = this.offsetParent.getBoundingClientRect();

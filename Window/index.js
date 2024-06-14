@@ -3,7 +3,7 @@ import Component from "../Component.js";
 export default class Window extends Component {
     static url = import.meta.url;
     static tagName = 'wp-window';
-    static icons = {
+    icons = {
         close: `m64 64v64l128 128-128 128v64h64l128-128 128 128h64v-64l-128-128 128-128v-64h-64l-128 128-128-128h-64z`,
         maximize: `m64 64v384h384v-384zm64 64h256v256h-256z`,
         restore: `m128 64v64h256v256h64v-320zm-64 128v256h256v-256zm64 64h128v128h-128z`,
@@ -22,7 +22,12 @@ export default class Window extends Component {
     };
     constructor() {
         super();
-        this.shadow.appendChild(this.constructor.dom_controls());
+    }
+	connectedCallback() {
+		console.log("Custom element added to page W.");
+        super.connectedCallback();
+        console.log('Window constructor mid');
+        this.shadow.appendChild(this.dom_controls());
         this.transferStyles(this, this.dom);
         this.setStyle({
             'position': 'fixed',
@@ -41,11 +46,16 @@ export default class Window extends Component {
                 }
             }
         });
-        observer.observe(this, { childList: true, attributes: true, attributeFilter: ['width', 'height', 'x', 'y'] });
-        this.addEventListener('click', (e) => {
-            this.querySelector('slot').textContent = 'Héros';
-        });
+    observer.observe(this, { childList: true, attributes: true, attributeFilter: ['width', 'height', 'x', 'y'] });
+    this.addEventListener('click', (e) => {
+        this.querySelector('slot').textContent = 'Héros';
+    });
+    console.log('Window constructor end');
+        return;
 
+    }
+    test() {
+        console.log('test');
     }
     get x() {
         return this.properties.x;
@@ -53,6 +63,7 @@ export default class Window extends Component {
     set x(value) {
         value = this.parseValue(value, "left");
         this.properties.x = parseFloat(value);
+        // debugger;
         this.setStyle({
             'left': this.x + 'px',
         });
@@ -146,13 +157,14 @@ export default class Window extends Component {
         return this;
     }
 
-    static domCreate() {
+    domCreate() {
         const result = document.createElement('div');
         result.classList.add('window');
         const header = result.appendChild(document.createElement('header'));
         const slot = header.appendChild(document.createElement('slot'));
         slot.name = 'title';
-        slot.textContent = 'Héros';
+        console.log(this.title);
+        slot.textContent = this.title || 'Untitled';
         header.appendChild(this.dom_icons());
         const main = result.appendChild(document.createElement('div'));
         main.classList.add('main');
@@ -163,7 +175,7 @@ export default class Window extends Component {
         const resize = result.appendChild(this.dom_icon('resize'));
         return result;
     }
-    static dom_icons() {
+    dom_icons() {
         const result = document.createElement('div');
         result.classList.add('icons');
         result.appendChild(this.dom_icon('minimize'));
@@ -172,7 +184,7 @@ export default class Window extends Component {
         result.appendChild(this.dom_icon('close'));
         return result;
     }
-    static dom_controls() {
+    dom_controls() {
         const result = document.createElement('div');
         result.classList.add('controls');
         const controls = ['nw-resize', 'n-resize', 'ne-resize', 'w-resize', 'e-resize', 'sw-resize', 's-resize', 'se-resize'];
@@ -182,7 +194,7 @@ export default class Window extends Component {
         });
         return result;
     }
-    static dom_icon(icon, callback) {
+    dom_icon(icon, callback) {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('viewBox', '0 0 512 512');
         const path = svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
@@ -194,7 +206,7 @@ export default class Window extends Component {
         return svg;
     }
 
-    static dom_button(className, href) {
+    dom_button(className, href) {
         const button = document.createElement('button');
         button.classList.add(className);
         const svg = button.appendChild(this.dom_svg());
@@ -348,4 +360,4 @@ export default class Window extends Component {
     };
 }
 
-Window.init();
+Window.register();

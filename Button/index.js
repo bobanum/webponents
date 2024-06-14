@@ -11,7 +11,7 @@ export default class Button extends Component {
             alert('Button clicked!');
         });
     }
-	static domCreate() {
+	domCreate() {
         // Create a button element
         const button = document.createElement('button');
         const slot = button.appendChild(document.createElement('slot'));
@@ -21,4 +21,4 @@ export default class Button extends Component {
 		return button;
 	}
 }
-Button.init();
+Button.register();
