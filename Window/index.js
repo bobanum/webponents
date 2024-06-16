@@ -3,13 +3,7 @@ import Component from "../Component.js";
 export default class Window extends Component {
     static url = import.meta.url;
     static tagName = 'wp-window';
-    icons = {
-        close: `m64 64v64l128 128-128 128v64h64l128-128 128 128h64v-64l-128-128 128-128v-64h-64l-128 128-128-128h-64z`,
-        maximize: `m64 64v384h384v-384zm64 64h256v256h-256z`,
-        restore: `m128 64v64h256v256h64v-320zm-64 128v256h256v-256zm64 64h128v128h-128z`,
-        minimize: `m64 384h384v64h-384z`,
-        resize: `m512 0-512 512h128l384-384zm0 192-320 320h128l192-192zm0 192-128 128h128z`,
-    };
+    static _template_ = 'index.tpl';
     properties = {
         'minWidth': 240,
         'minHeight': 180,
@@ -23,12 +17,12 @@ export default class Window extends Component {
     constructor() {
         super();
     }
-	connectedCallback() {
-		console.log("Custom element added to page W.");
+    connectedCallback() {
         super.connectedCallback();
-        console.log('Window constructor mid');
-        this.shadow.appendChild(this.dom_controls());
-        this.transferStyles(this, this.dom);
+        this.getTemplate().then(template => {
+            this.dom = template.querySelector('div');
+        });
+        // this.transferStyles(this, this.dom);
         this.setStyle({
             'position': 'fixed',
             'z-index': '2000',
@@ -37,25 +31,16 @@ export default class Window extends Component {
         ['x', 'y', 'width', 'height'].forEach(property => {
             this[property] = this.getAttribute(property) || this.properties[property];
         });
-        this.addEvents();
-        const observer = new MutationObserver((mutationsList) => {
-            console.log('Content changed:', mutationsList);
-            for (let mutation of mutationsList) {
-                console.log('Content changed:', mutation);
-                if (mutation.type === 'childList') {
-                }
-            }
-        });
-    observer.observe(this, { childList: true, attributes: true, attributeFilter: ['width', 'height', 'x', 'y'] });
-    this.addEventListener('click', (e) => {
-        this.querySelector('slot').textContent = 'Héros';
-    });
-    console.log('Window constructor end');
+        // const observer = new MutationObserver((mutationsList) => {
+        //     console.log('Content changed:', mutationsList);
+        //     for (let mutation of mutationsList) {
+        //         console.log('Content changed:', mutation);
+        //         if (mutation.type === 'childList') {
+        //         }
+        //     }
+        // });
+        // observer.observe(this, { childList: true, attributes: true, attributeFilter: ['width', 'height', 'x', 'y'] });
         return;
-
-    }
-    test() {
-        console.log('test');
     }
     get x() {
         return this.properties.x;
@@ -145,74 +130,6 @@ export default class Window extends Component {
             'left': this.x + 'px',
             'width': this.width + 'px',
         });
-    }
-    transferStyles(from, to) {
-        for (let key of from.style) {
-            to.style.setProperty(key, from.style.getPropertyValue(key));
-        }
-        from.removeAttribute('style');
-        for (let c of from.classList) {
-            to.classList.add(c);
-        }
-        return this;
-    }
-
-    domCreate() {
-        const result = document.createElement('div');
-        result.classList.add('window');
-        const header = result.appendChild(document.createElement('header'));
-        const slot = header.appendChild(document.createElement('slot'));
-        slot.name = 'title';
-        console.log(this.title);
-        slot.textContent = this.title || 'Untitled';
-        header.appendChild(this.dom_icons());
-        const main = result.appendChild(document.createElement('div'));
-        main.classList.add('main');
-        main.appendChild(document.createElement('slot'));
-        const footer = result.appendChild(document.createElement('footer'));
-        footer.appendChild(document.createElement('button')).textContent = 'OK';
-        footer.appendChild(document.createElement('button')).textContent = 'Cancel';
-        const resize = result.appendChild(this.dom_icon('resize'));
-        return result;
-    }
-    dom_icons() {
-        const result = document.createElement('div');
-        result.classList.add('icons');
-        result.appendChild(this.dom_icon('minimize'));
-        result.appendChild(this.dom_icon('restore'));
-        result.appendChild(this.dom_icon('maximize'));
-        result.appendChild(this.dom_icon('close'));
-        return result;
-    }
-    dom_controls() {
-        const result = document.createElement('div');
-        result.classList.add('controls');
-        const controls = ['nw-resize', 'n-resize', 'ne-resize', 'w-resize', 'e-resize', 'sw-resize', 's-resize', 'se-resize'];
-        controls.forEach(control => {
-            let div = result.appendChild(document.createElement('div'));
-            div.classList.add('control', control);
-        });
-        return result;
-    }
-    dom_icon(icon, callback) {
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('viewBox', '0 0 512 512');
-        const path = svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
-        path.setAttribute('d', this.icons[icon]);
-        svg.classList.add('icon', icon);
-        if (callback) {
-            svg.addEventListener('click', callback);
-        }
-        return svg;
-    }
-
-    dom_button(className, href) {
-        const button = document.createElement('button');
-        button.classList.add(className);
-        const svg = button.appendChild(this.dom_svg());
-        const use = svg.appendChild(document.createElement('use'));
-        use.setAttribute('href', href);
-        return button;
     }
     restore() {
         this.setStyle({
@@ -323,6 +240,20 @@ export default class Window extends Component {
         },
         ".close": {
             click: () => {
+                const event = new CustomEvent("close");
+                this.dispatchEvent(event);
+                this.remove();
+            }
+        },
+        "#btn_ok": {
+            click: () => {
+                this.dispatchEvent(new CustomEvent('ok'));
+                this.remove();
+            }
+        },
+        "#btn_cancel": {
+            click: () => {
+                this.dispatchEvent(new CustomEvent('cancel'));
                 this.remove();
             }
         },
@@ -358,6 +289,33 @@ export default class Window extends Component {
             }
         },
     };
+    static _observedAttributes = {
+        'title': {
+            set: function (value) {
+                this.shadowRoot.querySelector('#title').textContent = value;
+            },
+        },
+        'x': {
+            set: function (value) {
+                this.properties.x = value;
+            },
+        },
+        'y': {
+            set: function (value) {
+                this.properties.y = value;
+            },
+        },
+        'width': {
+            set: function (value) {
+                this.properties.width = value;
+            },
+        },
+        'height': {
+            set: function (value) {
+                this.properties.height = value;
+            },
+        },
+    };
 }
 
-Window.register();
+Window.init();

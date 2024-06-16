@@ -1,44 +1,61 @@
+/**
+ * Represents a custom component that extends the HTMLElement class.
+ * @class Component
+ * @extends HTMLElement
+ */
 export default class Component extends HTMLElement {
 	evt = {};
 	styleUrl = "style.css";
-	static observedAttributes = [];
+	static observedAttributes;
 	constructor() {
 		super();
 	}
+
+	/**
+	 * Callback method called when the custom element is connected to the document's DOM.
+	 * Attaches a shadow root and adds styles if specified. Retrieves and appends the template to the shadow root.
+	 */
 	connectedCallback() {
-		console.log("Custom element added to page.");
 		this.shadow = this.attachShadow({ mode: 'open' });
 		if (this.styleUrl) {
 			this.addStyle(this.styleUrl);
 		}
-		// Attach the created elements to the shadow dom
-		// this.dom = this.constructor.dom.cloneNode(true);
-		// if (this.dom.tagName === 'TEMPLATE') {
-		// 	[...this.constructor.dom.children].forEach(child => {
-		// 		this.shadow.appendChild(child);
-		// 	});
-		// } else {
-		// 	this.shadow.appendChild(this.dom);
-		// }
+
+		this.constructor._getTemplate_().then(template => {
+			if (template) {
+				this.template = template.cloneNode(true);
+				this.shadowRoot.appendChild(this.template);
+			}
+			this.addEvents();
+		});
 	}
 
+	/**
+	 * Called when the custom element is removed from the DOM.
+	 */
 	disconnectedCallback() {
 		console.log("Custom element removed from page.");
 	}
 
+	/**
+	 * Called when the custom element is moved to a new document.
+	 */
 	adoptedCallback() {
 		console.log("Custom element moved to new page.");
 	}
 
 	attributeChangedCallback(name, oldValue, newValue) {
-		console.log(`Attribute ${name} has changed.`);
-	}
-	get dom() {
-		if (!this._dom) {
-			this._dom = this.domCreate();
-			this._dom.obj = this;
+		const fn = this.constructor._observedAttributes[name];
+		if (typeof fn === 'function') {
+			return fn.call(this, newValue);
 		}
-		return this._dom;
+		if (oldValue === null && fn.add) {
+			return fn.add.call(this, newValue);
+		}
+		if (newValue === null && fn.remove) {
+			return fn.remove.call(this, oldValue);
+		}
+		return fn.set.call(this, newValue);
 	}
 	get baseUrl() {
 		return new URL(this.constructor.url).href.split("/").slice(0, -1).join("/");
@@ -66,14 +83,24 @@ export default class Component extends HTMLElement {
 			const linkElem = document.createElement('link');
 			linkElem.setAttribute('rel', 'stylesheet');
 			linkElem.setAttribute('href', `${this.baseUrl}/${url}`);
-			this.shadow.appendChild(linkElem);
+			this.shadowRoot.appendChild(linkElem);
 		});
+		return this;
+	}
+	transferStyles(from, to) {
+		for (let key of from.style) {
+			to.style.setProperty(key, from.style.getPropertyValue(key));
+		}
+		from.removeAttribute('style');
+		for (let c of from.classList) {
+			to.classList.add(c);
+		}
 		return this;
 	}
 	addEvents(evt = this.evt) {
 		for (let key in evt) {
 			for (let event in evt[key]) {
-				this.shadow.querySelectorAll(key).forEach(elem => {
+				this.shadowRoot.querySelectorAll(key).forEach(elem => {
 					elem.addEventListener(event, evt[key][event].bind(this));
 				});
 			}
@@ -156,4 +183,33 @@ export default class Component extends HTMLElement {
 			return number;
 		}
 	}
+	static observe() {
+		this.observedAttributes = Object.keys(this._observedAttributes);
+	}
+	async getTemplate() {
+		if (this.template) return this.template;
+		return await this.constructor._getTemplate_().then(template => {
+			if (!template) return;
+			this.template = this.cloneNode(true);
+			return this.template;
+		});
+	}
+	static async _getTemplate_() {
+		if (!this._template_) return;
+		if (typeof this._template_ === 'string') {
+			this._template_ = await fetch(this._template_).then(response => response.text()).then(htmlString => {
+				const parser = new DOMParser();
+				const doc = parser.parseFromString(htmlString, 'text/html');
+				const fragment = doc.querySelector('template').content;
+				return fragment;
+			});
+		}
+		return this._template_;
+	}
+	static init() {
+		this._template_ = this._getTemplate_();
+		this.observe();
+		this.register();
+	}
+	static _observedAttributes = {};
 }

@@ -6,6 +6,9 @@
 	<title>Window</title>
 	<script type="module">
 		import Window from './index.js';
+		document.querySelector('wp-window').addEventListener('close', e => {
+			console.log('Window closed');
+		});
 	</script>
 	<style>body{min-height: 100vh;}</style>
 </head>

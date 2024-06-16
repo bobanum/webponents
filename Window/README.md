@@ -20,16 +20,17 @@ The Window component is a container that can be used to display content in a win
 ```
 
 ## Attributes
-| Attribute   | Default  | Description                            |
-| ----------- | -------- | -------------------------------------- |
-| x           | 0        | The horizontal position of the window. |
-| y           | 0        | The vertical position of the window.   |
-| width       | auto     | The width of the window.               |
-| height      | auto     | The height of the window.              |
-| min-width⧖  | 0        | The minimum width of the window.       |
-| min-height⧖ | 0        | The minimum height of the window.      |
-| max-width⧖  | infinite | The maximum width of the window.       |
-| max-height⧖ | infinite | The maximum height of the window.      |
+| Attribute   | Default    | Description                            |
+| ----------- | ---------- | -------------------------------------- |
+| title       | 'untitled' | The title of the window.               |
+| x           | 0          | The horizontal position of the window. |
+| y           | 0          | The vertical position of the window.   |
+| width       | auto       | The width of the window.               |
+| height      | auto       | The height of the window.              |
+| min-width⧖  | 0          | The minimum width of the window.       |
+| min-height⧖ | 0          | The minimum height of the window.      |
+| max-width⧖  | infinite   | The maximum width of the window.       |
+| max-height⧖ | infinite   | The maximum height of the window.      |
 ⧖: Not implemented yet.
 ⧗: Partially implemented.
 
@@ -43,21 +44,28 @@ The Window component is a container that can be used to display content in a win
 | footerless⧖ | Removes the window footer.   |
 
 ## Slots
-| Slot  | Description       |
-| ----- | ----------------- |
-| title | The window title. |
+| Slot | Description |
+| ---- | ----------- |
+| xxx  | xxx         |
 
 ## CSS Custom Properties⧖
-| Property               | Default                                                | Description                          |
-| ---------------------- | ------------------------------------------------------ | ------------------------------------ |
-| --h                    | 0%                                                     | The window hue.                      |
-| --s                    | 0%                                                     | The window saturation.               |
-| --l                    | 80%                                                    | The window lightness.                |
-| --d                    | 15%                                                    | The window darkness (for dark mode). |
-| --window-background    | hsl(var(--h), var(--s), var(--l))                      | The window background color.         |
-| --window-color         | hsl(var(--h), var(--s), var(--d))                      | The window text color.               |
-| --window-border        | 0px solid hsv(var(--h), var(--s), var(--window-color)) | The window border width.             |
-| --window-radius        | .25rem                                                 | The window border radius.            |
-| --window-shadow        | .1em .1em .3em #0006;                                  | The window shadow.                   |
-| --window-title-bg      | hsl(var(--h), var(--s), var(--d))                      | The window title background color.   |
-| --window-title-color   | hsl(var(--h), var(--s), var(--l))                      | The window title text color.         |
+| Property             | Default                                                | Description                          |
+| -------------------- | ------------------------------------------------------ | ------------------------------------ |
+| --h                  | 0%                                                     | The window hue.                      |
+| --s                  | 0%                                                     | The window saturation.               |
+| --l                  | 80%                                                    | The window lightness.                |
+| --d                  | 15%                                                    | The window darkness (for dark mode). |
+| --window-background  | hsl(var(--h), var(--s), var(--l))                      | The window background color.         |
+| --window-color       | hsl(var(--h), var(--s), var(--d))                      | The window text color.               |
+| --window-border      | 0px solid hsv(var(--h), var(--s), var(--window-color)) | The window border width.             |
+| --window-radius      | .25rem                                                 | The window border radius.            |
+| --window-shadow      | .1em .1em .3em #0006;                                  | The window shadow.                   |
+| --window-title-bg    | hsl(var(--h), var(--s), var(--d))                      | The window title background color.   |
+| --window-title-color | hsl(var(--h), var(--s), var(--l))                      | The window title text color.         |
+
+## Events⧗
+| Event  | Description               |
+| ------ | ------------------------- |
+| close  | The window is closed.     |
+| ok     | Button ok is clicked.     |
+| cancel | Button cancel is clicked. |

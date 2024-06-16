@@ -56,10 +56,12 @@
 			padding: 0 4px;
 
 		}
-
+		#title {
+			margin-right: auto;
+		}
 		.icons {
-			margin: -4px;
-			margin-left: auto;
+			margin: -4px 0;
+			margin-left: 1ch;
 			display: flex;
 		}
 	}
@@ -106,6 +108,7 @@
 .controls {
 	display: contents;
 	font-size: 8px;
+	
 
 	.maximized + &,
 	.minimized + & {
@@ -117,15 +120,15 @@
 		z-index: 3000;
 
 		// &:hover {
-		// 	background-color: #0003;
+			// background-color: #0003;
 		// }
 
 		&.nw-resize,
 		&.ne-resize,
 		&.sw-resize,
 		&.se-resize {
-			width: 2em;
-			height: 2em;
+			width: 1.5em;
+			height: 1.5em;
 			margin: -.5em;
 			z-index: 3001;
 		}

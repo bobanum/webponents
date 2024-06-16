@@ -45,9 +45,12 @@
   height: 100%;
   padding: 0 4px;
 }
+.window header #title {
+  margin-right: auto;
+}
 .window header .icons {
-  margin: -4px;
-  margin-left: auto;
+  margin: -4px 0;
+  margin-left: 1ch;
   display: flex;
 }
 .window > .main {
@@ -96,8 +99,8 @@
   z-index: 3000;
 }
 .controls > *.nw-resize, .controls > *.ne-resize, .controls > *.sw-resize, .controls > *.se-resize {
-  width: 2em;
-  height: 2em;
+  width: 1.5em;
+  height: 1.5em;
   margin: -0.5em;
   z-index: 3001;
 }
