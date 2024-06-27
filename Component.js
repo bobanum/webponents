@@ -9,13 +9,13 @@ export default class Component extends HTMLElement {
 	 * @type {Object}
 	 */
 	evt = {};
-	
+
 	/**
 	 * Represents the slot event object.
 	 * @type {Object}
 	 */
 	slotEvt = {};
-	
+
 	/**
 	 * The list of attributes to observe for changes.
 	 * @type {Array<string>}
@@ -227,33 +227,26 @@ export default class Component extends HTMLElement {
 		this.observedAttributes = Object.keys(this.observableAttributes);
 	}
 	async getTemplate() {
-		// debugger;
-		// console.log(this.template, this.constructor._template_);
+		// Template is already loaded, return it
 		if (this.template) return this.template;
-		return await this.constructor.loadTemplate().then(template => {
-			console.log('template1');
-			if (!template) return;
-			console.log('template2');
-			this.template = template.cloneNode(true);
-			console.log('template3');
-			return template;
-		});
+		// Load the template and return it
+		const template = await this.constructor.loadTemplate();
+		// There is no template to load
+		if (!template) return;
+		// Clone the template and return it
+		return this.template = template.cloneNode(true);
 	}
 	static async loadTemplate() {
-		// console.log(this.baseUrl(this.templateUrl), this.templateUrl, this._template_);
-		// There is no template URL specified
-		if (!this.templateUrl) return;
 		// Template is already loaded, return it
-		if (!this._template_) {
-			// console.log(this.baseUrl(this.templateUrl));
-			this._template_ = await fetch(this.baseUrl(this.templateUrl)).then(response => response.text()).then(htmlString => {
-				console.log("htmlString");
-				const doc = new DOMParser().parseFromString(htmlString, 'text/html');
-				return doc.querySelector('template').content;
-			});
-		}
-		return this._template_;
+		if (this._template_) return this._template_;
+		// There is no template URL specified
+		if (!this.templateUrl) return false;
+		const response = await fetch(this.baseUrl(this.templateUrl));
+		const htmlString = await response.text();
+		const doc = new DOMParser().parseFromString(htmlString, 'text/html');
+		return this._template_ = doc.querySelector('template').content;
 	}
+
 	static init() {
 		this._template_ = this.loadTemplate();
 		this.observe();
