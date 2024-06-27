@@ -3,7 +3,8 @@ import Component from "../Component.js";
 export default class Window extends Component {
     static url = import.meta.url;
     static tagName = 'wp-window';
-    static _template_ = 'index.tpl';
+    static templateUrl = 'index.tpl';
+    static styleUrl = 'style.css';
     properties = {
         'minWidth': 240,
         'minHeight': 180,
@@ -19,15 +20,11 @@ export default class Window extends Component {
     }
     connectedCallback() {
         super.connectedCallback();
-        this.getTemplate().then(template => {
-            this.dom = template.querySelector('div');
+        this.getTemplate().then(() => {
+            this.dom = this.shadowRoot.querySelector('.window');
+            this.transferStyles(this, this.dom);
         });
-        // this.transferStyles(this, this.dom);
-        this.setStyle({
-            'position': 'fixed',
-            'z-index': '2000',
-            'display': 'grid',
-        });
+        this.setStyle({});
         ['x', 'y', 'width', 'height'].forEach(property => {
             this[property] = this.getAttribute(property) || this.properties[property];
         });
@@ -289,10 +286,15 @@ export default class Window extends Component {
             }
         },
     };
-    static _observedAttributes = {
+    static observableAttributes = {
         'title': {
             set: function (value) {
+                console.log(this.shadowRoot.querySelectorAll('*'));
                 this.shadowRoot.querySelector('#title').textContent = value;
+                this.removeAttribute('title');
+            },
+            remove: function () {
+                // Title removed: do nothing
             },
         },
         'x': {

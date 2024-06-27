@@ -55,7 +55,6 @@ The Window component is a container that can be used to display content in a win
 | --s                  | 0%                                                     | The window saturation.               |
 | --l                  | 80%                                                    | The window lightness.                |
 | --d                  | 15%                                                    | The window darkness (for dark mode). |
-| --a                  | 1                                                      | The window alpha.                    |
 | --window-background  | hsl(var(--h), var(--s), var(--l))                      | The window background color.         |
 | --window-color       | hsl(var(--h), var(--s), var(--d))                      | The window text color.               |
 | --window-border      | 0px solid hsv(var(--h), var(--s), var(--window-color)) | The window border width.             |

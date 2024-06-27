@@ -1,27 +1,8 @@
-:host {
-	position: fixed;
-	z-index: 2000;
-	display: grid;
-	min-width: 20ch;
-	min-height: 10em;
-}
 .window {
 	--h: 0;
 	--s: 0%;
 	--l: 80%;
-	--d: 15%;
-	--a: .5;
-	display: grid;
-	grid-template-rows: auto 1fr auto;
-	border-radius: .25rem;
-	box-shadow: .1em .1em .3em #0006;
-	overflow: hidden;
-	position: relative;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-	color: hsl(var(--h), var(--s), calc(var(--l) + 20%));
-	background-color: hsl(var(--h), var(--s), var(--d), var(--a));
+	--d: 10%;
 	&.maximized {
 		.maximize {
 			display: none;
@@ -44,9 +25,19 @@
 		}
 	}
 
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+	border-radius: .25rem;
+	box-shadow: .1em .1em .3em #0006;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	color: hsl(var(--h), var(--s), calc(var(--l) + 20%));
+	background-color: hsl(var(--h), var(--s), calc(var(--d)));
 
 	header {
-		--pd: 1.25;
 		line-height: 1;
 		display: flex;
 		padding: .2em .5em;
@@ -54,6 +45,7 @@
 		font-weight: bold;
 		background-color: hsl(var(--h), var(--s), calc(var(--l)));
 		color: hsl(var(--h), var(--s), calc(var(--d) - 10%));
+
 		svg {
 			display: block;
 			padding: 0 .25em;

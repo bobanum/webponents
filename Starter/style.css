@@ -1,17 +1,8 @@
-:host {
-  position: fixed;
-  z-index: 2000;
-  display: grid;
-  min-width: 20ch;
-  min-height: 10em;
-}
-
 .window {
   --h: 0;
   --s: 0%;
   --l: 80%;
-  --d: 15%;
-  --a: .5;
+  --d: 10%;
   display: grid;
   grid-template-rows: auto 1fr auto;
   border-radius: 0.25rem;
@@ -22,7 +13,7 @@
   height: 100%;
   overflow: hidden;
   color: hsl(var(--h), var(--s), calc(var(--l) + 20%));
-  background-color: hsl(var(--h), var(--s), var(--d), var(--a));
+  background-color: hsl(var(--h), var(--s), calc(var(--d)));
 }
 .window.maximized .maximize {
   display: none;
@@ -37,7 +28,6 @@
   display: none;
 }
 .window header {
-  --pd: 1.25;
   line-height: 1;
   display: flex;
   padding: 0.2em 0.5em;

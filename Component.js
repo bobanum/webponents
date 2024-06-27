@@ -4,9 +4,27 @@
  * @extends HTMLElement
  */
 export default class Component extends HTMLElement {
+	/**
+	 * Event object.
+	 * @type {Object}
+	 */
 	evt = {};
-	styleUrl = "style.css";
-	static observedAttributes;
+	
+	/**
+	 * Represents the slot event object.
+	 * @type {Object}
+	 */
+	slotEvt = {};
+	
+	/**
+	 * The list of attributes to observe for changes.
+	 * @type {Array<string>}
+	 */
+	static observedAttributes = [];
+	/**
+	 * Represents a component.
+	 * @constructor
+	 */
 	constructor() {
 		super();
 	}
@@ -16,17 +34,18 @@ export default class Component extends HTMLElement {
 	 * Attaches a shadow root and adds styles if specified. Retrieves and appends the template to the shadow root.
 	 */
 	connectedCallback() {
-		this.shadow = this.attachShadow({ mode: 'open' });
-		if (this.styleUrl) {
-			this.addStyle(this.styleUrl);
-		}
+		// console.log("Custom element added to page.");
+		this.attachShadow({ mode: 'open' });
+		this.addStyle();
 
-		this.constructor._getTemplate_().then(template => {
+		this.getTemplate().then(template => {
 			if (template) {
-				this.template = template.cloneNode(true);
-				this.shadowRoot.appendChild(this.template);
+				this.shadowRoot.appendChild(template);
 			}
 			this.addEvents();
+			this.addSlotEvents();
+			// debugger;
+			this.applyAttributes();
 		});
 	}
 
@@ -45,7 +64,8 @@ export default class Component extends HTMLElement {
 	}
 
 	attributeChangedCallback(name, oldValue, newValue) {
-		const fn = this.constructor._observedAttributes[name];
+		if (!this.shadowRoot) return;
+		const fn = this.constructor.observableAttributes[name];
 		if (typeof fn === 'function') {
 			return fn.call(this, newValue);
 		}
@@ -57,15 +77,19 @@ export default class Component extends HTMLElement {
 		}
 		return fn.set.call(this, newValue);
 	}
-	get baseUrl() {
-		return new URL(this.constructor.url).href.split("/").slice(0, -1).join("/");
+	applyAttributes() {
+		for (let attr of this.constructor.observedAttributes) {
+			if (this.hasAttribute(attr)) {
+				this.attributeChangedCallback(attr, null, this.getAttribute(attr));
+			}
+		}
 	}
-	domCreate() {
-		// Create a div element
-		const div = document.createElement('div');
-		const slot = div.appendChild(document.createElement('slot'));
-		slot.textContent = 'Component';
-		return div;
+	static baseUrl(url) {
+		const base = new URL(this.url).href.split("/").slice(0, -1).join("/");
+		return url ? base + '/' + url : base;
+	}
+	baseUrl(url) {
+		return this.constructor.baseUrl(url);
 	}
 	static register() {
 		customElements.define(this.tagName, this);
@@ -78,22 +102,31 @@ export default class Component extends HTMLElement {
 		return this;
 	}
 	addStyle(...urls) {
-		// Apply external styles to the shadow DOM
-		urls.forEach(url => {
-			const linkElem = document.createElement('link');
-			linkElem.setAttribute('rel', 'stylesheet');
-			linkElem.setAttribute('href', `${this.baseUrl}/${url}`);
-			this.shadowRoot.appendChild(linkElem);
-		});
+		this.constructor.addStyle(this.shadowRoot, ...urls);
+		return this;
+	}
+	static addStyle(to, ...urls) {
+		if (urls.length > 0) {
+			// Apply external styles to the shadow DOM
+			urls.forEach(url => {
+				const linkElem = document.createElement('link');
+				linkElem.setAttribute('rel', 'stylesheet');
+				linkElem.setAttribute('href', this.baseUrl(url));
+				to.appendChild(linkElem);
+			});
+			return this;
+		}
+		if (this.styleUrl) {
+			this.addStyle(to, this.styleUrl);
+			return this;
+		}
 		return this;
 	}
 	transferStyles(from, to) {
 		for (let key of from.style) {
+			if (!key.startsWith('-')) continue;
 			to.style.setProperty(key, from.style.getPropertyValue(key));
-		}
-		from.removeAttribute('style');
-		for (let c of from.classList) {
-			to.classList.add(c);
+			from.style.removeProperty(key);
 		}
 		return this;
 	}
@@ -105,6 +138,13 @@ export default class Component extends HTMLElement {
 				});
 			}
 		}
+	}
+	addSlotEvents(evt = this.slotEvt) {
+		for (let key in evt) {
+			const selector = key ? 'slot[name="' + key + '"]' : 'slot:not([name])';
+			this.shadowRoot.querySelector(selector)?.addEventListener('slotchange', evt[key].bind(this));
+		}
+		return this;
 	}
 	parseValue(value, property = 'width') {
 		const allUnits = {
@@ -184,32 +224,40 @@ export default class Component extends HTMLElement {
 		}
 	}
 	static observe() {
-		this.observedAttributes = Object.keys(this._observedAttributes);
+		this.observedAttributes = Object.keys(this.observableAttributes);
 	}
 	async getTemplate() {
+		// debugger;
+		// console.log(this.template, this.constructor._template_);
 		if (this.template) return this.template;
-		return await this.constructor._getTemplate_().then(template => {
+		return await this.constructor.loadTemplate().then(template => {
+			console.log('template1');
 			if (!template) return;
-			this.template = this.cloneNode(true);
-			return this.template;
+			console.log('template2');
+			this.template = template.cloneNode(true);
+			console.log('template3');
+			return template;
 		});
 	}
-	static async _getTemplate_() {
-		if (!this._template_) return;
-		if (typeof this._template_ === 'string') {
-			this._template_ = await fetch(this._template_).then(response => response.text()).then(htmlString => {
-				const parser = new DOMParser();
-				const doc = parser.parseFromString(htmlString, 'text/html');
-				const fragment = doc.querySelector('template').content;
-				return fragment;
+	static async loadTemplate() {
+		// console.log(this.baseUrl(this.templateUrl), this.templateUrl, this._template_);
+		// There is no template URL specified
+		if (!this.templateUrl) return;
+		// Template is already loaded, return it
+		if (!this._template_) {
+			// console.log(this.baseUrl(this.templateUrl));
+			this._template_ = await fetch(this.baseUrl(this.templateUrl)).then(response => response.text()).then(htmlString => {
+				console.log("htmlString");
+				const doc = new DOMParser().parseFromString(htmlString, 'text/html');
+				return doc.querySelector('template').content;
 			});
 		}
 		return this._template_;
 	}
 	static init() {
-		this._template_ = this._getTemplate_();
+		this._template_ = this.loadTemplate();
 		this.observe();
 		this.register();
 	}
-	static _observedAttributes = {};
+	static observableAttributes = {};
 }
