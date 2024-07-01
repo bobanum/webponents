@@ -5,6 +5,7 @@ export default class Window extends Component {
     static tagName = 'wp-window';
     static templateUrl = 'index.tpl';
     static styleUrl = 'style.css';
+    _dom = undefined;
     properties = {
         'minWidth': 240,
         'minHeight': 180,
@@ -21,7 +22,6 @@ export default class Window extends Component {
     connectedCallback() {
         super.connectedCallback();
         this.getTemplate().then(() => {
-            this.dom = this.shadowRoot.querySelector('.window');
             this.transferStyles(this, this.dom);
         });
         this.setStyle({});
@@ -38,6 +38,12 @@ export default class Window extends Component {
         // });
         // observer.observe(this, { childList: true, attributes: true, attributeFilter: ['width', 'height', 'x', 'y'] });
         return;
+    }
+    get dom() {
+        if (this._dom === undefined) {
+            this._dom = this.shadowRoot.querySelector('.window');
+        }
+        return this._dom;
     }
     get x() {
         return this.properties.x;
@@ -158,6 +164,29 @@ export default class Window extends Component {
             document.body.style.setProperty('user-select', 'none');
         };
     }
+    draggingStart = (e) => {
+        const rect = this.getBoundingClientRect();
+        const offset = {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        };
+        const mousemove = (e) => {
+            if (this.dom.classList.contains('maximized')) {
+                this.restore();
+                offset.x = this.width / 2;
+            } else {
+                this.x = e.clientX - offset.x;
+                this.y = e.clientY - offset.y;
+            }
+        };
+        document.body.addEventListener('mousemove', mousemove);
+        document.body.addEventListener('mouseup', (e) => {
+            document.body.style.removeProperty('user-select');
+            document.body.removeEventListener('mousemove', mousemove);
+        }, { once: true });
+        document.body.style.setProperty('user-select', 'none');
+    };
+
     evt = {
         ".n-resize": {
             mousedown: this.getMoveListener((e) => {
@@ -211,13 +240,14 @@ export default class Window extends Component {
                     this.maximize();
                 }
             },
-            mousedown: (e) => {
+            mousedown: this.draggingStart,
+            mousedownzzz: (e) => {
                 const rect = this.getBoundingClientRect();
                 const offset = {
                     x: e.clientX - rect.left,
                     y: e.clientY - rect.top
                 };
-                this.dom.classList.add('dragging');
+                // this.dom.classList.add('dragging');
                 const mousemove = (e) => {
                     if (this.dom.classList.contains('maximized')) {
                         this.restore();
@@ -287,9 +317,24 @@ export default class Window extends Component {
         },
     };
     static observableAttributes = {
+        'headerless': {
+            set: function (value) {
+                if (value === 'false' || value === null) {
+                    this.dom.classList.remove('headerless');
+                    this.dom.removeEventListener('mousedown', this.draggingStart);
+                } else {
+                    this.dom.classList.add('headerless');
+                    this.dom.addEventListener('mousedown', this.draggingStart);
+                }
+            },
+        },
+        'footerless': {
+            set: function (value) {
+                this.dom.classList.toggle('footerless', value !== 'false');
+            },
+        },
         'title': {
             set: function (value) {
-                console.log(this.shadowRoot.querySelectorAll('*'));
                 this.shadowRoot.querySelector('#title').textContent = value;
                 this.removeAttribute('title');
             },

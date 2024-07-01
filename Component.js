@@ -44,7 +44,6 @@ export default class Component extends HTMLElement {
 			}
 			this.addEvents();
 			this.addSlotEvents();
-			// debugger;
 			this.applyAttributes();
 		});
 	}
@@ -241,8 +240,8 @@ export default class Component extends HTMLElement {
 		if (this._template_) return this._template_;
 		// There is no template URL specified
 		if (!this.templateUrl) return false;
-		const response = await fetch(this.baseUrl(this.templateUrl));
-		const htmlString = await response.text();
+		// Load the template and return it
+		const htmlString = await fetch(this.baseUrl(this.templateUrl)).then(response => response.text());
 		const doc = new DOMParser().parseFromString(htmlString, 'text/html');
 		return this._template_ = doc.querySelector('template').content;
 	}

@@ -23,6 +23,23 @@
   overflow: hidden;
   color: hsl(var(--h), var(--s), calc(var(--l) + 20%));
   background-color: hsl(var(--h), var(--s), var(--d), var(--a));
+  -webkit-backdrop-filter: blur(0.1em) saturate(50%);
+          backdrop-filter: blur(0.1em) saturate(50%);
+}
+.window.headerless {
+  grid-template-rows: 1fr auto;
+}
+.window.headerless > header {
+  display: none;
+}
+.window.footerless {
+  grid-template-rows: auto 1fr;
+}
+.window.footerless > footer {
+  display: none;
+}
+.window.headerless.footerless {
+  grid-template-rows: 1fr;
 }
 .window.maximized .maximize {
   display: none;

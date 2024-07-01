@@ -31,6 +31,8 @@ The Window component is a container that can be used to display content in a win
 | min-height⧖ | 0          | The minimum height of the window.      |
 | max-width⧖  | infinite   | The maximum width of the window.       |
 | max-height⧖ | infinite   | The maximum height of the window.      |
+| headerless⧖ |            | Removes the window header.             |
+| footerless⧖ |            | Removes the window footer.             |
 ⧖: Not implemented yet.
 ⧗: Partially implemented.
 
@@ -40,8 +42,6 @@ The Window component is a container that can be used to display content in a win
 | modal⧖      | Makes the window a modal.    |
 | fixed⧖      | Makes the window fixed.      |
 | fixed-size⧖ | Makes the window fixed size. |
-| headerless⧖ | Removes the window header.   |
-| footerless⧖ | Removes the window footer.   |
 
 ## Slots
 | Slot | Description |
