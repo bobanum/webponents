@@ -1,43 +1,98 @@
+/**
+ * Represents a custom component that extends the HTMLElement class.
+ * @class Component
+ * @extends HTMLElement
+ */
 export default class Component extends HTMLElement {
-	static _dom;
+	/**
+	 * Event object.
+	 * @type {Object}
+	 */
 	evt = {};
+
+	/**
+	 * Represents the slot event object.
+	 * @type {Object}
+	 */
+	slotEvt = {};
+
+	/**
+	 * The list of attributes to observe for changes.
+	 * @type {Array<string>}
+	 */
+	static observedAttributes = [];
+	/**
+	 * Represents a component.
+	 * @constructor
+	 */
 	constructor() {
 		super();
+	}
 
-		// Create a shadow root
-		this.shadow = this.attachShadow({ mode: 'open' });
-		this.addStyle('style.css');
+	/**
+	 * Callback method called when the custom element is connected to the document's DOM.
+	 * Attaches a shadow root and adds styles if specified. Retrieves and appends the template to the shadow root.
+	 */
+	connectedCallback() {
+		// console.log("Custom element added to page.");
+		this.attachShadow({ mode: 'open' });
+		this.addStyle();
 
-		// Attach the created elements to the shadow dom
-		this.dom = this.constructor.dom.cloneNode(true);
-		if (this.dom.tagName === 'TEMPLATE') {
-			[...this.constructor.dom.children].forEach(child => {
-				this.shadow.appendChild(child);
-			});
-		} else {
-			this.shadow.appendChild(this.dom);
+		this.getTemplate().then(template => {
+			if (template) {
+				this.shadowRoot.appendChild(template);
+			}
+			this.addEvents();
+			this.addSlotEvents();
+			this.applyAttributes();
+		});
+	}
+
+	/**
+	 * Called when the custom element is removed from the DOM.
+	 */
+	disconnectedCallback() {
+		console.log("Custom element removed from page.");
+	}
+
+	/**
+	 * Called when the custom element is moved to a new document.
+	 */
+	adoptedCallback() {
+		console.log("Custom element moved to new page.");
+	}
+
+	attributeChangedCallback(name, oldValue, newValue) {
+		if (!this.shadowRoot) return;
+		const fn = this.constructor.observableAttributes[name];
+		if (typeof fn === 'function') {
+			return fn.call(this, newValue);
+		}
+		if (oldValue === null && fn.add) {
+			return fn.add.call(this, newValue);
+		}
+		if (newValue === null && fn.remove) {
+			return fn.remove.call(this, oldValue);
+		}
+		return fn.set.call(this, newValue);
+	}
+	applyAttributes() {
+		for (let attr of this.constructor.observedAttributes) {
+			if (this.hasAttribute(attr)) {
+				this.attributeChangedCallback(attr, null, this.getAttribute(attr));
+			}
 		}
 	}
-	static init() {
-		// Create a button element
+	static baseUrl(url) {
+		const base = new URL(this.url).href.split("/").slice(0, -1).join("/");
+		return url ? base + '/' + url : base;
+	}
+	baseUrl(url) {
+		return this.constructor.baseUrl(url);
+	}
+	static register() {
 		customElements.define(this.tagName, this);
-	}
-	static get dom() {
-		if (!this._dom) {
-			this._dom = this.domCreate();
-			this._dom.obj = this;
-		}
-		return this._dom;
-	}
-	get baseUrl() {
-		return new URL(this.constructor.url).href.split("/").slice(0, -1).join("/");
-	}
-	static domCreate() {
-		// Create a div element
-		const div = document.createElement('div');
-		const slot = div.appendChild(document.createElement('slot'));
-		slot.textContent = 'Component';
-		return div;
+		return this;
 	}
 	setStyle(style, obj = this) {
 		for (let propertyName in style) {
@@ -46,23 +101,49 @@ export default class Component extends HTMLElement {
 		return this;
 	}
 	addStyle(...urls) {
-		// Apply external styles to the shadow DOM
-		urls.forEach(url => {
-			const linkElem = document.createElement('link');
-			linkElem.setAttribute('rel', 'stylesheet');
-			linkElem.setAttribute('href', `${this.baseUrl}/${url}`);
-			this.shadow.appendChild(linkElem);
-		});
+		this.constructor.addStyle(this.shadowRoot, ...urls);
+		return this;
+	}
+	static addStyle(to, ...urls) {
+		if (urls.length > 0) {
+			// Apply external styles to the shadow DOM
+			urls.forEach(url => {
+				const linkElem = document.createElement('link');
+				linkElem.setAttribute('rel', 'stylesheet');
+				linkElem.setAttribute('href', this.baseUrl(url));
+				to.appendChild(linkElem);
+			});
+			return this;
+		}
+		if (this.styleUrl) {
+			this.addStyle(to, this.styleUrl);
+			return this;
+		}
+		return this;
+	}
+	transferStyles(from, to) {
+		for (let key of from.style) {
+			if (!key.startsWith('-')) continue;
+			to.style.setProperty(key, from.style.getPropertyValue(key));
+			from.style.removeProperty(key);
+		}
 		return this;
 	}
 	addEvents(evt = this.evt) {
 		for (let key in evt) {
 			for (let event in evt[key]) {
-				this.shadow.querySelectorAll(key).forEach(elem => {
+				this.shadowRoot.querySelectorAll(key).forEach(elem => {
 					elem.addEventListener(event, evt[key][event].bind(this));
 				});
 			}
 		}
+	}
+	addSlotEvents(evt = this.slotEvt) {
+		for (let key in evt) {
+			const selector = key ? 'slot[name="' + key + '"]' : 'slot:not([name])';
+			this.shadowRoot.querySelector(selector)?.addEventListener('slotchange', evt[key].bind(this));
+		}
+		return this;
 	}
 	parseValue(value, property = 'width') {
 		const allUnits = {
@@ -112,7 +193,7 @@ export default class Component extends HTMLElement {
 		}
 		if (allUnits.percentage.includes(unit)) {
 			number /= 100;
-			if (property === 'font-size'|| property === 'line-height') {
+			if (property === 'font-size' || property === 'line-height') {
 				return this.parseValue(`${number}em`);
 			}
 			let box = this.offsetParent.getBoundingClientRect();
@@ -141,4 +222,34 @@ export default class Component extends HTMLElement {
 			return number;
 		}
 	}
+	static observe() {
+		this.observedAttributes = Object.keys(this.observableAttributes);
+	}
+	async getTemplate() {
+		// Template is already loaded, return it
+		if (this.template) return this.template;
+		// Load the template and return it
+		const template = await this.constructor.loadTemplate();
+		// There is no template to load
+		if (!template) return;
+		// Clone the template and return it
+		return this.template = template.cloneNode(true);
+	}
+	static async loadTemplate() {
+		// Template is already loaded, return it
+		if (this._template_) return this._template_;
+		// There is no template URL specified
+		if (!this.templateUrl) return false;
+		// Load the template and return it
+		const htmlString = await fetch(this.baseUrl(this.templateUrl)).then(response => response.text());
+		const doc = new DOMParser().parseFromString(htmlString, 'text/html');
+		return this._template_ = doc.querySelector('template').content;
+	}
+
+	static init() {
+		this._template_ = this.loadTemplate();
+		this.observe();
+		this.register();
+	}
+	static observableAttributes = {};
 }

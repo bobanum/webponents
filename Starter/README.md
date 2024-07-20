@@ -31,8 +31,6 @@ The Window component is a container that can be used to display content in a win
 | min-height⧖ | 0          | The minimum height of the window.      |
 | max-width⧖  | infinite   | The maximum width of the window.       |
 | max-height⧖ | infinite   | The maximum height of the window.      |
-| headerless⧖ |            | Removes the window header.             |
-| footerless⧖ |            | Removes the window footer.             |
 ⧖: Not implemented yet.
 ⧗: Partially implemented.
 
@@ -42,6 +40,8 @@ The Window component is a container that can be used to display content in a win
 | modal⧖      | Makes the window a modal.    |
 | fixed⧖      | Makes the window fixed.      |
 | fixed-size⧖ | Makes the window fixed size. |
+| headerless⧖ | Removes the window header.   |
+| footerless⧖ | Removes the window footer.   |
 
 ## Slots
 | Slot | Description |
@@ -55,7 +55,6 @@ The Window component is a container that can be used to display content in a win
 | --s                  | 0%                                                     | The window saturation.               |
 | --l                  | 80%                                                    | The window lightness.                |
 | --d                  | 15%                                                    | The window darkness (for dark mode). |
-| --a                  | 1                                                      | The window alpha.                    |
 | --window-background  | hsl(var(--h), var(--s), var(--l))                      | The window background color.         |
 | --window-color       | hsl(var(--h), var(--s), var(--d))                      | The window text color.               |
 | --window-border      | 0px solid hsv(var(--h), var(--s), var(--window-color)) | The window border width.             |

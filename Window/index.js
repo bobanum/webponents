@@ -3,13 +3,9 @@ import Component from "../Component.js";
 export default class Window extends Component {
     static url = import.meta.url;
     static tagName = 'wp-window';
-    static icons = {
-        close: `m64 64v64l128 128-128 128v64h64l128-128 128 128h64v-64l-128-128 128-128v-64h-64l-128 128-128-128h-64z`,
-        maximize: `m64 64v384h384v-384zm64 64h256v256h-256z`,
-        restore: `m128 64v64h256v256h64v-320zm-64 128v256h256v-256zm64 64h128v128h-128z`,
-        minimize: `m64 384h384v64h-384z`,
-        resize: `m512 0-512 512h128l384-384zm0 192-320 320h128l192-192zm0 192-128 128h128z`,
-    };
+    static templateUrl = 'index.tpl';
+    static styleUrl = 'style.css';
+    _dom = undefined;
     properties = {
         'minWidth': 240,
         'minHeight': 180,
@@ -22,30 +18,32 @@ export default class Window extends Component {
     };
     constructor() {
         super();
-        this.shadow.appendChild(this.constructor.dom_controls());
-        this.transferStyles(this, this.dom);
-        this.setStyle({
-            'position': 'fixed',
-            'z-index': '2000',
-            'display': 'grid',
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        this.getTemplate().then(() => {
+            this.transferStyles(this, this.dom);
         });
+        this.setStyle({});
         ['x', 'y', 'width', 'height'].forEach(property => {
             this[property] = this.getAttribute(property) || this.properties[property];
         });
-        this.addEvents();
-        const observer = new MutationObserver((mutationsList) => {
-            console.log('Content changed:', mutationsList);
-            for (let mutation of mutationsList) {
-                console.log('Content changed:', mutation);
-                if (mutation.type === 'childList') {
-                }
-            }
-        });
-        observer.observe(this, { childList: true, attributes: true, attributeFilter: ['width', 'height', 'x', 'y'] });
-        this.addEventListener('click', (e) => {
-            this.querySelector('slot').textContent = 'Héros';
-        });
-
+        // const observer = new MutationObserver((mutationsList) => {
+        //     console.log('Content changed:', mutationsList);
+        //     for (let mutation of mutationsList) {
+        //         console.log('Content changed:', mutation);
+        //         if (mutation.type === 'childList') {
+        //         }
+        //     }
+        // });
+        // observer.observe(this, { childList: true, attributes: true, attributeFilter: ['width', 'height', 'x', 'y'] });
+        return;
+    }
+    get dom() {
+        if (this._dom === undefined) {
+            this._dom = this.shadowRoot.querySelector('.window');
+        }
+        return this._dom;
     }
     get x() {
         return this.properties.x;
@@ -53,6 +51,7 @@ export default class Window extends Component {
     set x(value) {
         value = this.parseValue(value, "left");
         this.properties.x = parseFloat(value);
+        // debugger;
         this.setStyle({
             'left': this.x + 'px',
         });
@@ -135,73 +134,6 @@ export default class Window extends Component {
             'width': this.width + 'px',
         });
     }
-    transferStyles(from, to) {
-        for (let key of from.style) {
-            to.style.setProperty(key, from.style.getPropertyValue(key));
-        }
-        from.removeAttribute('style');
-        for (let c of from.classList) {
-            to.classList.add(c);
-        }
-        return this;
-    }
-
-    static domCreate() {
-        const result = document.createElement('div');
-        result.classList.add('window');
-        const header = result.appendChild(document.createElement('header'));
-        const slot = header.appendChild(document.createElement('slot'));
-        slot.name = 'title';
-        slot.textContent = 'Héros';
-        header.appendChild(this.dom_icons());
-        const main = result.appendChild(document.createElement('div'));
-        main.classList.add('main');
-        main.appendChild(document.createElement('slot'));
-        const footer = result.appendChild(document.createElement('footer'));
-        footer.appendChild(document.createElement('button')).textContent = 'OK';
-        footer.appendChild(document.createElement('button')).textContent = 'Cancel';
-        const resize = result.appendChild(this.dom_icon('resize'));
-        return result;
-    }
-    static dom_icons() {
-        const result = document.createElement('div');
-        result.classList.add('icons');
-        result.appendChild(this.dom_icon('minimize'));
-        result.appendChild(this.dom_icon('restore'));
-        result.appendChild(this.dom_icon('maximize'));
-        result.appendChild(this.dom_icon('close'));
-        return result;
-    }
-    static dom_controls() {
-        const result = document.createElement('div');
-        result.classList.add('controls');
-        const controls = ['nw-resize', 'n-resize', 'ne-resize', 'w-resize', 'e-resize', 'sw-resize', 's-resize', 'se-resize'];
-        controls.forEach(control => {
-            let div = result.appendChild(document.createElement('div'));
-            div.classList.add('control', control);
-        });
-        return result;
-    }
-    static dom_icon(icon, callback) {
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('viewBox', '0 0 512 512');
-        const path = svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
-        path.setAttribute('d', this.icons[icon]);
-        svg.classList.add('icon', icon);
-        if (callback) {
-            svg.addEventListener('click', callback);
-        }
-        return svg;
-    }
-
-    static dom_button(className, href) {
-        const button = document.createElement('button');
-        button.classList.add(className);
-        const svg = button.appendChild(this.dom_svg());
-        const use = svg.appendChild(document.createElement('use'));
-        use.setAttribute('href', href);
-        return button;
-    }
     restore() {
         this.setStyle({
             'top': this.y + 'px',
@@ -232,6 +164,29 @@ export default class Window extends Component {
             document.body.style.setProperty('user-select', 'none');
         };
     }
+    draggingStart = (e) => {
+        const rect = this.getBoundingClientRect();
+        const offset = {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        };
+        const mousemove = (e) => {
+            if (this.dom.classList.contains('maximized')) {
+                this.restore();
+                offset.x = this.width / 2;
+            } else {
+                this.x = e.clientX - offset.x;
+                this.y = e.clientY - offset.y;
+            }
+        };
+        document.body.addEventListener('mousemove', mousemove);
+        document.body.addEventListener('mouseup', (e) => {
+            document.body.style.removeProperty('user-select');
+            document.body.removeEventListener('mousemove', mousemove);
+        }, { once: true });
+        document.body.style.setProperty('user-select', 'none');
+    };
+
     evt = {
         ".n-resize": {
             mousedown: this.getMoveListener((e) => {
@@ -285,13 +240,14 @@ export default class Window extends Component {
                     this.maximize();
                 }
             },
-            mousedown: (e) => {
+            mousedown: this.draggingStart,
+            mousedownzzz: (e) => {
                 const rect = this.getBoundingClientRect();
                 const offset = {
                     x: e.clientX - rect.left,
                     y: e.clientY - rect.top
                 };
-                this.dom.classList.add('dragging');
+                // this.dom.classList.add('dragging');
                 const mousemove = (e) => {
                     if (this.dom.classList.contains('maximized')) {
                         this.restore();
@@ -311,6 +267,20 @@ export default class Window extends Component {
         },
         ".close": {
             click: () => {
+                const event = new CustomEvent("close");
+                this.dispatchEvent(event);
+                this.remove();
+            }
+        },
+        "#btn_ok": {
+            click: () => {
+                this.dispatchEvent(new CustomEvent('ok'));
+                this.remove();
+            }
+        },
+        "#btn_cancel": {
+            click: () => {
+                this.dispatchEvent(new CustomEvent('cancel'));
                 this.remove();
             }
         },
@@ -344,6 +314,53 @@ export default class Window extends Component {
                 this.dom.classList.remove('maximized');
                 this.dom.classList.add('minimized');
             }
+        },
+    };
+    static observableAttributes = {
+        'headerless': {
+            set: function (value) {
+                if (value === 'false' || value === null) {
+                    this.dom.classList.remove('headerless');
+                    this.dom.removeEventListener('mousedown', this.draggingStart);
+                } else {
+                    this.dom.classList.add('headerless');
+                    this.dom.addEventListener('mousedown', this.draggingStart);
+                }
+            },
+        },
+        'footerless': {
+            set: function (value) {
+                this.dom.classList.toggle('footerless', value !== 'false');
+            },
+        },
+        'title': {
+            set: function (value) {
+                this.shadowRoot.querySelector('#title').textContent = value;
+                this.removeAttribute('title');
+            },
+            remove: function () {
+                // Title removed: do nothing
+            },
+        },
+        'x': {
+            set: function (value) {
+                this.properties.x = value;
+            },
+        },
+        'y': {
+            set: function (value) {
+                this.properties.y = value;
+            },
+        },
+        'width': {
+            set: function (value) {
+                this.properties.width = value;
+            },
+        },
+        'height': {
+            set: function (value) {
+                this.properties.height = value;
+            },
         },
     };
 }
