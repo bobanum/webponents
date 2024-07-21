@@ -1,3 +1,18 @@
+:root, .window {
+  --h: 0;
+  --s: 0%;
+  --l: 80%;
+  --d: 15%;
+  --a: .5;
+  --bg: hsl(var(--h), var(--s), var(--l));
+  --color: hsl(var(--h), var(--s), var(--d));
+  --border: 0px solid hsv(var(--h), var(--s), var(--color));
+  --radius: .25rem;
+  --shadow: .1em .1em .3em #0006;
+  --title-bg: hsl(var(--h), var(--s), var(--d));
+  --title-color: hsl(var(--h), var(--s), var(--l));
+}
+
 :host {
   position: fixed;
   z-index: 2000;
@@ -7,11 +22,6 @@
 }
 
 .window {
-  --h: 0;
-  --s: 0%;
-  --l: 80%;
-  --d: 15%;
-  --a: .5;
   display: grid;
   grid-template-rows: auto 1fr auto;
   border-radius: 0.25rem;
@@ -60,8 +70,8 @@
   padding: 0.2em 0.5em;
   cursor: move;
   font-weight: bold;
-  background-color: hsl(var(--h), var(--s), calc(var(--l)));
-  color: hsl(var(--h), var(--s), calc(var(--d) - 10%));
+  background-color: var(--title-bg);
+  color: var(--title-color);
 }
 .window header svg {
   display: block;
@@ -84,14 +94,6 @@
   overflow-y: auto;
   padding: 0.5em;
 }
-.window footer {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(5ch, auto);
-  justify-content: center;
-  gap: 1ch;
-  padding: 0.5em;
-}
 .window button {
   cursor: pointer;
   background-color: hsl(var(--h), var(--s), calc(var(--l) - 10%));
@@ -112,6 +114,15 @@
   bottom: 0;
   right: 0;
   color: hsl(var(--h), var(--s), calc(var(--l) - 0%));
+}
+
+::slotted(footer) {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(5ch, auto);
+  justify-content: center;
+  gap: 1ch;
+  padding: 0.5em;
 }
 
 .controls {

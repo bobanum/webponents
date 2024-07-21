@@ -1,0 +1,31 @@
+header {
+		--pd: 1.25;
+		line-height: 1;
+		display: flex;
+		padding: .2em .5em;
+		cursor: move;
+		font-weight: bold;
+		background-color: var(--title-bg);
+		color: var(--title-color);
+
+		svg {
+			display: block;
+			padding: 0 .25em;
+			fill: currentColor;
+			cursor: pointer;
+			width: 12px;
+			height: 100%;
+			padding: 0 4px;
+
+		}
+
+		#title {
+			margin-right: auto;
+		}
+
+		.icons {
+			margin: -4px 0;
+			margin-left: 1ch;
+			display: flex;
+		}
+	}

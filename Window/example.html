@@ -10,12 +10,19 @@
 			console.log('Window closed');
 		});
 	</script>
+	<link rel="shortcut icon" href="../logo_webponents.svg" type="image/x-icon">
 	<style>body{min-height: 100vh;}</style>
 </head>
 <body style="background-color: #667;">
-	<wp-window>
+	<wp-window style="--title-color:red;">
 		<div slot="title">My First Window</div>
 		<p>Hello World</p>
+		
+	</wp-window>
+	<wp-window x="200" y="200" buttons="ok;cancel;maybe|Peut-être">
+		<div slot="title">My 2nd Window</div>
+		<p>Bye World</p>
+		<footer slot="footer"></footer>
 	</wp-window>
 </body>
 </html>

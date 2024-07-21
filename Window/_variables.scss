@@ -1,0 +1,14 @@
+:root, .window {
+	--h: 0;
+	--s: 0%;
+	--l: 80%;
+	--d: 15%;
+	--a: .5;
+	--bg: hsl(var(--h), var(--s), var(--l));
+	--color: hsl(var(--h), var(--s), var(--d));
+	--border: 0px solid hsv(var(--h), var(--s), var(--color));
+	--radius: .25rem;
+	--shadow: .1em .1em .3em #0006;
+	--title-bg: hsl(var(--h), var(--s), var(--d));
+	--title-color: hsl(var(--h), var(--s), var(--l));
+}

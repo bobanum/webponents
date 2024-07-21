@@ -5,6 +5,13 @@ export default class Window extends Component {
     static tagName = 'wp-window';
     static templateUrl = 'index.tpl';
     static styleUrl = 'style.css';
+    labels = {
+        'ok': 'OK',
+        'cancel': 'Cancel',
+        'close': 'Close',
+        'submit': 'Submit',
+        'reset': 'Reset',
+    };
     _dom = undefined;
     properties = {
         'minWidth': 240,
@@ -23,6 +30,27 @@ export default class Window extends Component {
         super.connectedCallback();
         this.getTemplate().then(() => {
             this.transferStyles(this, this.dom);
+            if (this.hasAttribute('buttons')) {
+                const buttons = this.getAttribute('buttons').split(';');
+                const domButtons = this.appendChild(document.createElement('footer'));
+                domButtons.classList.add('buttons');
+                domButtons.slot = 'footer';
+                buttons.forEach(button => {
+                    const [id, label] = button.split('|');
+                    const domButton = domButtons.appendChild(document.createElement('button'));
+                    domButton.classList.add(button);
+                    domButton.textContent = label || this.labels[id] || id;
+                    domButton.id = id;
+                    if (id === 'submit') {
+                        domButton.type = 'submit';
+                    } else if (id === 'reset') {
+                        domButton.type = 'reset';
+                    }
+                    domButton.addEventListener('click', (e) => {
+                        this.dispatchEvent(new CustomEvent(e.currentTarget.id));
+                    });
+                });
+            }
         });
         this.setStyle({});
         ['x', 'y', 'width', 'height'].forEach(property => {
@@ -272,18 +300,18 @@ export default class Window extends Component {
                 this.remove();
             }
         },
-        "#btn_ok": {
-            click: () => {
-                this.dispatchEvent(new CustomEvent('ok'));
-                this.remove();
-            }
-        },
-        "#btn_cancel": {
-            click: () => {
-                this.dispatchEvent(new CustomEvent('cancel'));
-                this.remove();
-            }
-        },
+        // "#btn_ok": {
+        //     click: () => {
+        //         this.dispatchEvent(new CustomEvent('ok'));
+        //         this.remove();
+        //     }
+        // },
+        // "#btn_cancel": {
+        //     click: () => {
+        //         this.dispatchEvent(new CustomEvent('cancel'));
+        //         this.remove();
+        //     }
+        // },
         ".maximize": {
             mousedown: (e) => {
                 e.stopPropagation();

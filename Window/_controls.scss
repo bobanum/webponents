@@ -1,0 +1,80 @@
+.controls {
+	display: contents;
+	font-size: 8px;
+	
+	
+	.maximized + &,
+	.minimized + & {
+		display: none;
+	}
+	
+	> * {
+		position: absolute;
+		z-index: 3000;
+		
+		// &:hover {
+			// background-color: #0003;
+			// }
+			
+			&.nw-resize,
+			&.ne-resize,
+			&.sw-resize,
+			&.se-resize {
+				width: 1.5em;
+				height: 1.5em;
+				margin: -.5em;
+				z-index: 3001;
+			}
+			
+			&.n-resize,
+			&.s-resize {
+				width: 100%;
+				height: 1em;
+				margin: -.5em 0;
+				cursor: ns-resize;
+			}
+			
+			&.w-resize,
+			&.e-resize {
+				width: 1em;
+				height: 100%;
+				margin: 0 -.5em;
+				cursor: ew-resize;
+			}
+			
+			&.nw-resize,
+			&.n-resize,
+			&.ne-resize {
+				top: 0;
+		}
+
+		&.sw-resize,
+		&.s-resize,
+		&.se-resize {
+			bottom: 0;
+		}
+
+		&.nw-resize,
+		&.w-resize,
+		&.sw-resize {
+			left: 0;
+		}
+
+		&.ne-resize,
+		&.e-resize,
+		&.se-resize {
+			right: 0;
+		}
+
+		&.nw-resize,
+		&.se-resize {
+			cursor: nwse-resize;
+		}
+
+		&.ne-resize,
+		&.sw-resize {
+			cursor: nesw-resize
+		}
+
+	}
+}

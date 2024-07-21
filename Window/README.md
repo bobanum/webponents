@@ -18,6 +18,8 @@ The Window component is a container that can be used to display content in a win
 		<h1>Hello World</h1>
 	</my-window>
 ```
+> ⧖: Not implemented yet.
+> ⧗: Partially implemented.
 
 ## Attributes
 | Attribute   | Default    | Description                            |
@@ -33,8 +35,6 @@ The Window component is a container that can be used to display content in a win
 | max-height⧖ | infinite   | The maximum height of the window.      |
 | headerless⧖ |            | Removes the window header.             |
 | footerless⧖ |            | Removes the window footer.             |
-⧖: Not implemented yet.
-⧗: Partially implemented.
 
 ## Classes
 | Class       | Description                  |
@@ -44,25 +44,25 @@ The Window component is a container that can be used to display content in a win
 | fixed-size⧖ | Makes the window fixed size. |
 
 ## Slots
-| Slot | Description |
-| ---- | ----------- |
-| xxx  | xxx         |
+| Slot   | Description        |
+| ------ | ------------------ |
+| footer | The window footer. |
 
 ## CSS Custom Properties⧖
-| Property             | Default                                                | Description                          |
-| -------------------- | ------------------------------------------------------ | ------------------------------------ |
-| --h                  | 0%                                                     | The window hue.                      |
-| --s                  | 0%                                                     | The window saturation.               |
-| --l                  | 80%                                                    | The window lightness.                |
-| --d                  | 15%                                                    | The window darkness (for dark mode). |
-| --a                  | 1                                                      | The window alpha.                    |
-| --window-background  | hsl(var(--h), var(--s), var(--l))                      | The window background color.         |
-| --window-color       | hsl(var(--h), var(--s), var(--d))                      | The window text color.               |
-| --window-border      | 0px solid hsv(var(--h), var(--s), var(--window-color)) | The window border width.             |
-| --window-radius      | .25rem                                                 | The window border radius.            |
-| --window-shadow      | .1em .1em .3em #0006;                                  | The window shadow.                   |
-| --window-title-bg    | hsl(var(--h), var(--s), var(--d))                      | The window title background color.   |
-| --window-title-color | hsl(var(--h), var(--s), var(--l))                      | The window title text color.         |
+| Property      | Default                                         | Description                          |
+| ------------- | ----------------------------------------------- | ------------------------------------ |
+| --h           | 0%                                              | The window hue.                      |
+| --s           | 0%                                              | The window saturation.               |
+| --l           | 80%                                             | The window lightness.                |
+| --d           | 15%                                             | The window darkness (for dark mode). |
+| --a           | 1                                               | The window alpha.                    |
+| --bg          | hsl(var(--h), var(--s), var(--l))               | The window background color.         |
+| --color       | hsl(var(--h), var(--s), var(--d))               | The window text color.               |
+| --border      | 0px solid hsv(var(--h), var(--s), var(--color)) | The window border width.             |
+| --radius      | .25rem                                          | The window border radius.            |
+| --shadow      | .1em .1em .3em #0006;                           | The window shadow.                   |
+| --title-bg    | hsl(var(--h), var(--s), var(--d))               | The window title background color.   |
+| --title-color | hsl(var(--h), var(--s), var(--l))               | The window title text color.         |
 
 ## Events⧗
 | Event  | Description               |
