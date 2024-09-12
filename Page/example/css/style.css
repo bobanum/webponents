@@ -1,0 +1,46 @@
+@import url("../../css/font-themes/artistic-handcrafted.css");
+:root {
+  font-family: var(--font-body);
+}
+
+* {
+  margin: 0;
+}
+
+h1,
+h3 {
+  font-family: var(--font-heading);
+}
+
+h2,
+h4 {
+  font-family: var(--font-subheading);
+}
+
+h1 {
+  font-size: 28pt;
+}
+
+h1 + div {
+  display: grid;
+  gap: 1em;
+}
+h1 + div > div:last-child div {
+  margin-top: 0.2em;
+}
+
+h2 {
+  margin-top: 0.5em;
+}
+
+.flap {
+  font-size: 10pt;
+  line-height: 1.2;
+}
+
+ol {
+  padding-left: 2ch;
+}
+ol li {
+  margin-top: 0.5em;
+}

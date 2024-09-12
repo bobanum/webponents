@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Modal</title>
+	<script type="module">
+		import Modal from './index.js';
+		document.querySelector('web-modal').addEventListener('close', e => {
+			console.log('Modal closed');
+		});
+	</script>
+	<link rel="shortcut icon" href="../favicon.svg" type="image/x-icon">
+	<style>body{min-height: 100vh;}</style>
+</head>
+<body style="background-color: #667;">
+	<web-modal style="--title-color:red;">
+		<div slot="title">My First Modal</div>
+		<p>Hello World</p>
+		
+	</web-modal>
+	<web-modal buttons="ok;cancel;maybe|Peut-être">
+		<div slot="title">My 2nd Modal</div>
+		<p>Bye World</p>
+		<footer slot="footer"></footer>
+	</web-modal>
+</body>
+</html>
+
+

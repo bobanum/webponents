@@ -1,14 +1,30 @@
 /**
- * Represents a custom component that extends the HTMLElement class.
- * @class Component
+ * Webponent is a custom HTML element that extends HTMLElement.
+ * It provides a base structure for creating web components with various utility methods
+ * for handling styles, events, attributes, and templates.
+ *
+ * @class Webponent
  * @extends HTMLElement
  */
-export default class Component extends HTMLElement {
+export default class Webponent extends HTMLElement {
+	/**
+	 * The base URL for the web component.
+	 * This static property is used to store the base URL that can be used
+	 * throughout the web component for making network requests or referencing
+	 * resources.
+	 * 
+	 * @type {string}
+	 * @private
+	 */
+	static _baseUrl = '';
+
+	static _meta;
+	static styleUrl;
 	/**
 	 * Event object.
 	 * @type {Object}
 	 */
-	evt = {};
+	EVT = {};
 
 	/**
 	 * Represents the slot event object.
@@ -17,35 +33,40 @@ export default class Component extends HTMLElement {
 	slotEvt = {};
 
 	/**
+	 * @static
+	 * @type {Object}
+	 * @description An object that holds the observable attributes for the Webponent class.
+	 */
+	static observedProps;
+
+	/**
+	 * (Standard Custom Element property)
 	 * The list of attributes to observe for changes.
 	 * @type {Array<string>}
 	 */
-	static observedAttributes = [];
+	static get observedAttributes() {
+		return [...Object.keys(this.observedProps)];
+	};
 	/**
 	 * Represents a component.
 	 * @constructor
 	 */
-	constructor() {
-		super();
-	}
+	// constructor() {
+	// 	super();
+	// }
 
 	/**
 	 * Callback method called when the custom element is connected to the document's DOM.
 	 * Attaches a shadow root and adds styles if specified. Retrieves and appends the template to the shadow root.
 	 */
-	connectedCallback() {
-		// console.log("Custom element added to page.");
+	async connectedCallback() {
 		this.attachShadow({ mode: 'open' });
-		this.addStyle();
+		if (this.styleUrl?.length) {
+			this.addStyle();
+		}
 
-		this.getTemplate().then(template => {
-			if (template) {
-				this.shadowRoot.appendChild(template);
-			}
-			this.addEvents();
-			this.addSlotEvents();
-			this.applyAttributes();
-		});
+		const template = await this.getTemplate();
+		return { template };
 	}
 
 	/**
@@ -62,20 +83,55 @@ export default class Component extends HTMLElement {
 		console.log("Custom element moved to new page.");
 	}
 
+	/**
+	 * Callback function that is called when an observed attribute of the custom element changes.
+	 * 
+	 * @param {string} name - The name of the attribute that changed.
+	 * @param {string|null} oldValue - The old value of the attribute before the change.
+	 * @param {string|null} newValue - The new value of the attribute after the change.
+	 * 
+	 * @returns {void}
+	 * @example
+	 * static observedProps = {
+	 *     age: {
+	 * 	   type: Number,
+	 * 	   value: 18,
+	 * 	   reflect: true,
+	 * 	   required: true,
+	 * 	   coerce: (value) => parseInt(value),
+	 * 	   validate: (value) => value > 0 ? null : value,
+	 * };
+	 */
 	attributeChangedCallback(name, oldValue, newValue) {
+		console.log(arguments);
+
 		if (!this.shadowRoot) return;
-		const fn = this.constructor.observableAttributes[name];
-		if (typeof fn === 'function') {
-			return fn.call(this, newValue);
+		const definition = this.constructor.observedProps[name];
+
+		if (typeof definition === 'function') {
+			return definition.call(this, newValue);
 		}
-		if (oldValue === null && fn.add) {
-			return fn.add.call(this, newValue);
+		if (typeof definition === 'object') {
+			return definition.call(this, newValue);
 		}
-		if (newValue === null && fn.remove) {
-			return fn.remove.call(this, oldValue);
+		if (oldValue === null && definition.add) {
+			return definition.add.call(this, newValue);
 		}
-		return fn.set.call(this, newValue);
+		if (newValue === null && definition.remove) {
+			return definition.remove.call(this, oldValue);
+		}
+		return definition.set.call(this, newValue);
 	}
+	// attributeChangedCallback(name, oldValue, newValue) {
+	//     console.log("onAttributeChanged", name, oldValue, newValue);
+	//     if (oldValue === newValue) {
+	//         return;
+	//     }
+	//     if (name === "marks") {
+	//         this.page.removeChild(this.page.querySelector(".marks"));
+	//         this.page.appendChild(this.dom.marks());
+	//     }
+	// }
 	applyAttributes() {
 		for (let attr of this.constructor.observedAttributes) {
 			if (this.hasAttribute(attr)) {
@@ -84,15 +140,16 @@ export default class Component extends HTMLElement {
 		}
 	}
 	static baseUrl(url) {
-		const base = new URL(this.url).href.split("/").slice(0, -1).join("/");
-		return url ? base + '/' + url : base;
+		if (!this._baseUrl) {
+			this._baseUrl = new URL(this._meta.url).href.split("/").slice(0, -1).join("/");
+		}
+		if (url) {
+			return this._baseUrl + '/' + url;
+		}
+		return this._baseUrl;
 	}
 	baseUrl(url) {
 		return this.constructor.baseUrl(url);
-	}
-	static register() {
-		customElements.define(this.tagName, this);
-		return this;
 	}
 	setStyle(style, obj = this) {
 		for (let propertyName in style) {
@@ -116,7 +173,11 @@ export default class Component extends HTMLElement {
 			return this;
 		}
 		if (this.styleUrl) {
-			this.addStyle(to, this.styleUrl);
+			if (this.styleUrl instanceof Array) {
+				this.addStyle(to, ...this.styleUrl);
+			} else {
+				this.addStyle(to, this.styleUrl);
+			}
 			return this;
 		}
 		return this;
@@ -129,7 +190,7 @@ export default class Component extends HTMLElement {
 		}
 		return this;
 	}
-	addEvents(evt = this.evt) {
+	addEvents(evt = this.EVT) {
 		for (let key in evt) {
 			for (let event in evt[key]) {
 				this.shadowRoot.querySelectorAll(key).forEach(elem => {
@@ -222,34 +283,84 @@ export default class Component extends HTMLElement {
 			return number;
 		}
 	}
-	static observe() {
-		this.observedAttributes = Object.keys(this.observableAttributes);
-	}
 	async getTemplate() {
 		// Template is already loaded, return it
 		if (this.template) return this.template;
 		// Load the template and return it
 		const template = await this.constructor.loadTemplate();
 		// There is no template to load
-		if (!template) return;
+		if (!template) return false;
 		// Clone the template and return it
 		return this.template = template.cloneNode(true);
 	}
-	static async loadTemplate() {
+	/**
+	 * Asynchronously loads an HTML template.
+	 *
+	 * @returns {Promise<DocumentFragment|boolean>} A promise that resolves to the loaded template content as a DocumentFragment,
+	 * or false if no template URL is specified.
+	 *
+	 * @example
+	 * const templateContent = await MyComponent.loadTemplate();
+	 * if (templateContent) {
+	 *   // Do something with the template content
+	 * }
+	 */
+	static async loadTemplate(templateUrl = this.templateUrl) {
 		// Template is already loaded, return it
 		if (this._template_) return this._template_;
 		// There is no template URL specified
-		if (!this.templateUrl) return false;
+		if (!templateUrl) return false;
 		// Load the template and return it
-		const htmlString = await fetch(this.baseUrl(this.templateUrl)).then(response => response.text());
+		const htmlString = await fetch(this.baseUrl(templateUrl)).then(response => response.text());
 		const doc = new DOMParser().parseFromString(htmlString, 'text/html');
 		return this._template_ = doc.querySelector('template').content;
 	}
-
-	static init() {
-		this._template_ = this.loadTemplate();
-		this.observe();
-		this.register();
+	static defineProps(props) {
+		for (let prop in props) {
+			const definition = props[prop];
+			if (typeof definition === 'function' || typeof definition === 'string') {
+				continue;
+			}
+			if (definition.reflect) {
+				const descriptor = {};
+				if (definition.value) {
+					if (this.hasAttribute(prop)) {
+						definition.value = this.getAttribute(prop);
+					}
+					descriptor.get = () => {
+						return this.getAttribute(prop) || definition.value;
+					};
+					descriptor.set = (value) => {
+						this.setAttribute(prop, value);
+						definition.value = value;
+					};
+				} else {
+					descriptor.get = definition.get || (() => {
+						return this.getAttribute(prop);
+					});
+					definition.set = descriptor.set || ((value) => {
+						if (value == this.getAttribute(prop)) return;
+						this.setAttribute(prop, value);
+					});
+				}
+				Object.defineProperty(this.prototype, prop, descriptor);
+			}
+		}
+		return this;
 	}
-	static observableAttributes = {};
+
+	/**
+	 * Initializes the component with the provided metadata.
+	 * Loads the template and defines the custom element.
+	 *
+	 * @param {Object} meta - The metadata for the component.
+	 * @returns {Promise<this>} A promise that resolves to the initialized component.
+	 */
+	static async init(meta) {
+		this._meta = meta;
+
+		this._template_ = await this.loadTemplate();
+		customElements.define(this.tagName, this);
+		return this;
+	}
 }

@@ -1,0 +1,75 @@
+.marks {
+    --marks-length: 18;
+    --marks-width: 0.5;
+    --marks-color: hsl(0, 0%, 0%, .1);
+    --marks-style: solid;
+    --marks-stroke: calc(1pt * var(--marks-width)) var(--marks-style) var(--marks-color);
+    display: grid;
+    grid-area: 1 / 1;
+    pointer-events: none;
+
+    > * {
+        grid-row: 1;
+        grid-column: 1;
+        display: grid;
+
+        > * > *,
+        > ::before,
+        > ::after {
+            content: "";
+            // border: var(--marks-stroke);
+        }
+
+        &:last-child {
+            align-content: space-evenly;
+
+            > * {
+                display: flex;
+                justify-content: space-between;
+
+                > *,
+                &::before,
+                &::after {
+                    border-top: var(--marks-stroke);
+                }
+
+                > * {
+                    width: calc(1pt * var(--marks-length) / 2);
+                    margin: 0 calc(1pt * var(--marks-length) * 3 / 4);
+                }
+
+                &::before,
+                &::after {
+                    width: calc(1pt * var(--marks-length));
+                }
+            }
+        }
+
+        &:first-child {
+            grid-auto-flow: column;
+            justify-content: space-evenly;
+
+            > * {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                *,
+                &::before,
+                &::after {
+                    border-left: var(--marks-stroke);
+                }
+
+                &::before,
+                &::after {
+                    height: calc(1pt * var(--marks-length));
+                }
+
+                > * {
+                    height: calc(1pt * var(--marks-length) / 2);
+                    margin: calc(1pt * var(--marks-length) * 3 / 4) 0;
+                }
+            }
+        }
+    }
+}

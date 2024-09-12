@@ -1,5 +1,5 @@
 <template>
-	<div class="window">
+	<div class="modal">
 		<header id="test">
 			<span id="title">Untitled</span>
 			<div class="icons"><svg viewBox="0 0 512 512" class="icon minimize">

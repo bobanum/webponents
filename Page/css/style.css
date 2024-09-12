@@ -1,0 +1,152 @@
+:root {
+  --width: 8.5in;
+  --height: 11in;
+  --margin: .5in;
+  --rows: 1;
+  --columns: 1;
+}
+
+html {
+  height: 100%;
+  font-family: var(--font-body, sans-serif);
+}
+@media screen {
+  html {
+    background-color: #333;
+  }
+}
+
+body {
+  height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+th,
+label,
+legend,
+caption,
+figcaption {
+  font-family: var(--font-heading);
+  line-height: 1;
+}
+
+@page {
+  size: var(--width) var(--height);
+  margin: 0;
+  @top-left {
+    content: "Page " counter(pageNumber);
+  }
+}
+@page landscape {
+  size: var(--height) var(--width);
+}
+@page portrait {
+  size: var(--width) var(--height);
+}
+:host {
+  --width: 8.5in;
+  --height: 11in;
+  --margin: .25in;
+  --rows: 1;
+  --cols: 1;
+  display: grid;
+  position: relative;
+}
+@media screen {
+  :host {
+    margin: 1em auto;
+  }
+}
+
+.page--page {
+  width: var(--width);
+  height: var(--height);
+  grid-area: 1/1;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  grid-template-rows: repeat(var(--rows), 1fr);
+}
+@media screen {
+  .page--page {
+    background-color: #fff;
+    box-shadow: 0.15em 0.15em 0.4em rgba(0, 0, 0, 0.2);
+  }
+}
+
+slot, .slot {
+  padding: calc(1pt * var(--margin));
+  display: block;
+  overflow: hidden;
+}
+
+.marks {
+  --marks-length: 18;
+  --marks-width: 0.5;
+  --marks-color: hsl(0, 0%, 0%, .1);
+  --marks-style: solid;
+  --marks-stroke: calc(1pt * var(--marks-width)) var(--marks-style) var(--marks-color);
+  display: grid;
+  grid-area: 1/1;
+  pointer-events: none;
+}
+.marks > * {
+  grid-row: 1;
+  grid-column: 1;
+  display: grid;
+}
+.marks > * > * > *,
+.marks > * > ::before,
+.marks > * > ::after {
+  content: "";
+}
+.marks > *:last-child {
+  align-content: space-evenly;
+}
+.marks > *:last-child > * {
+  display: flex;
+  justify-content: space-between;
+}
+.marks > *:last-child > * > *, .marks > *:last-child > *::before, .marks > *:last-child > *::after {
+  border-top: var(--marks-stroke);
+}
+.marks > *:last-child > * > * {
+  width: calc(1pt * var(--marks-length) / 2);
+  margin: 0 calc(1pt * var(--marks-length) * 3 / 4);
+}
+.marks > *:last-child > *::before, .marks > *:last-child > *::after {
+  width: calc(1pt * var(--marks-length));
+}
+.marks > *:first-child {
+  grid-auto-flow: column;
+  justify-content: space-evenly;
+}
+.marks > *:first-child > * {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.marks > *:first-child > * *, .marks > *:first-child > *::before, .marks > *:first-child > *::after {
+  border-left: var(--marks-stroke);
+}
+.marks > *:first-child > *::before, .marks > *:first-child > *::after {
+  height: calc(1pt * var(--marks-length));
+}
+.marks > *:first-child > * > * {
+  height: calc(1pt * var(--marks-length) / 2);
+  margin: calc(1pt * var(--marks-length) * 3 / 4) 0;
+}

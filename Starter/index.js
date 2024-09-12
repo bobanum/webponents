@@ -1,10 +1,10 @@
-import Component from "../Component.js";
+import Webponent from "../Webponent.js";
 
 /**
  * Represents the Starter component.
- * @extends Component
+ * @extends Webponent
  */
-export default class Starter extends Component {
+export default class Starter extends Webponent {
     /**
      * The URL of the Starter component.
      * @type {string}
@@ -15,7 +15,7 @@ export default class Starter extends Component {
      * The tag name of the Starter component.
      * @type {string}
      */
-    static tagName = 'wp-starter';
+    static tagName = 'web-starter';
 
     /**
      * The template file for the Starter component. (optional)
@@ -65,7 +65,7 @@ export default class Starter extends Component {
      * The observed attributes for the Starter component.
      * @type {Object}
      */
-    static observableAttributes = {
+    static observedProps = {
         'attribute': {
             /**
              * Setter function for the 'attribute' attribute.

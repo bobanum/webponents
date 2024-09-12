@@ -1,4 +1,4 @@
-:root, .window {
+:root, .modal {
   --h: 0;
   --s: 0%;
   --l: 80%;
@@ -21,7 +21,7 @@
   min-height: 10em;
 }
 
-.window {
+.modal {
   display: grid;
   grid-template-rows: auto 1fr auto;
   border-radius: 0.25rem;
@@ -36,34 +36,34 @@
   -webkit-backdrop-filter: blur(0.1em) saturate(50%);
           backdrop-filter: blur(0.1em) saturate(50%);
 }
-.window.headerless {
+.modal.headerless {
   grid-template-rows: 1fr auto;
 }
-.window.headerless > header {
+.modal.headerless > header {
   display: none;
 }
-.window.footerless {
+.modal.footerless {
   grid-template-rows: auto 1fr;
 }
-.window.footerless > footer {
+.modal.footerless > footer {
   display: none;
 }
-.window.headerless.footerless {
+.modal.headerless.footerless {
   grid-template-rows: 1fr;
 }
-.window.maximized .maximize {
+.modal.maximized .maximize {
   display: none;
 }
-.window.minimized .minimize {
+.modal.minimized .minimize {
   display: none;
 }
-.window.minimized > :not(header) {
+.modal.minimized > :not(header) {
   display: none;
 }
-.window:not(.maximized):not(.minimized) .restore {
+.modal:not(.maximized):not(.minimized) .restore {
   display: none;
 }
-.window header {
+.modal header {
   --pd: 1.25;
   line-height: 1;
   display: flex;
@@ -73,7 +73,7 @@
   background-color: var(--title-bg);
   color: var(--title-color);
 }
-.window header svg {
+.modal header svg {
   display: block;
   padding: 0 0.25em;
   fill: currentColor;
@@ -82,33 +82,33 @@
   height: 100%;
   padding: 0 4px;
 }
-.window header #title {
+.modal header #title {
   margin-right: auto;
 }
-.window header .icons {
+.modal header .icons {
   margin: -4px 0;
   margin-left: 1ch;
   display: flex;
 }
-.window > .main {
+.modal > .main {
   overflow-y: auto;
   padding: 0.5em;
 }
-.window button {
+.modal button {
   cursor: pointer;
   background-color: hsl(var(--h), var(--s), calc(var(--l) - 10%));
   color: hsl(var(--h), var(--s), 0%);
   border: none;
   border-radius: 0.25em;
 }
-.window button:hover {
+.modal button:hover {
   background-color: hsl(var(--h), var(--s), calc(var(--l) + 30%));
   color: hsl(var(--h), var(--s), calc(var(--l) - 30%));
 }
-.window .close {
+.modal .close {
   cursor: pointer;
 }
-.window .resize {
+.modal .resize {
   display: none;
   position: absolute;
   bottom: 0;

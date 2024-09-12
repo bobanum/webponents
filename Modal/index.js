@@ -1,8 +1,8 @@
-import Component from "../Component.js";
+import Webponent from "../Webponent.js";
 
-export default class Window extends Component {
+export default class Modal extends Webponent {
     static url = import.meta.url;
-    static tagName = 'wp-window';
+    static tagName = 'web-modal';
     static templateUrl = 'index.tpl';
     static styleUrl = 'style.css';
     labels = {
@@ -12,7 +12,6 @@ export default class Window extends Component {
         'submit': 'Submit',
         'reset': 'Reset',
     };
-    _dom = undefined;
     properties = {
         'minWidth': 240,
         'minHeight': 180,
@@ -23,35 +22,123 @@ export default class Window extends Component {
         'width': undefined,
         'height': undefined,
     };
-    constructor() {
-        super();
-    }
-    connectedCallback() {
-        super.connectedCallback();
-        this.getTemplate().then(() => {
-            this.transferStyles(this, this.dom);
-            if (this.hasAttribute('buttons')) {
-                const buttons = this.getAttribute('buttons').split(';');
-                const domButtons = this.appendChild(document.createElement('footer'));
-                domButtons.classList.add('buttons');
-                domButtons.slot = 'footer';
-                buttons.forEach(button => {
-                    const [id, label] = button.split('|');
-                    const domButton = domButtons.appendChild(document.createElement('button'));
-                    domButton.classList.add(button);
-                    domButton.textContent = label || this.labels[id] || id;
-                    domButton.id = id;
-                    if (id === 'submit') {
-                        domButton.type = 'submit';
-                    } else if (id === 'reset') {
-                        domButton.type = 'reset';
-                    }
-                    domButton.addEventListener('click', (e) => {
-                        this.dispatchEvent(new CustomEvent(e.currentTarget.id));
-                    });
+    DOM = {
+        'main': () => {
+            const result = document.createDocumentFragment();
+
+            result.appendChild(this.DOM.modal());
+            result.appendChild(this.DOM.controls());
+            return result;
+        },
+        'modal': () => {
+            const result = document.createElement("template");
+            result.classList.add("modal");
+            result.appendChild(this.DOM.header());
+            result.appendChild(this.DOM.slot_main());
+            result.appendChild(this.DOM.slot_footer());
+            return result;
+        },
+        'header': (id) => {
+            const result = document.createElement("header");
+            result.id = id;
+            const title = result.appendChild(document.createElement("span"));
+            title.id = "title";
+            title.textContent = "Untitled";
+            result.appendChild(this.DOM.icons());
+            return result;
+        },
+        'icons': () => {
+            const icons = document.createElement("div");
+            icons.classList.add("icons");
+            icons.appendChild(this.DOM.svg_icon("minimize", "m64 384h384v64h-384z"));
+            icons.appendChild(this.DOM.svg_icon("restore", "m128 64v64h256v256h64v-320zm-64 128v256h256v-256zm64 64h128v128h-128z"));
+            icons.appendChild(this.DOM.svg_icon("maximize", "m64 64v384h384v-384zm64 64h256v256h-256z"));
+            icons.appendChild(this.DOM.svg_icon("close", "m64 64v64l128 128-128 128v64h64l128-128 128 128h64v-64l-128-128 128-128v-64h-64l-128 128-128-128h-64z"));
+            const slot = icons.appendChild(document.createElement("slot"));
+            slot.name = "icons";
+            return icons;
+        },
+        'svg_icon': (name, d) => {
+            const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            icon.setAttribute("width", "24");
+            icon.setAttribute("height", "24");
+            icon.setAttribute("viewBox", "0 0 512 512");
+            icon.classList.add("icon");
+            icon.classList.add(name);
+            const path = icon.appendChild(document.createElement("path"));
+            path.d = d;
+            return icon;
+        },
+        'slot_main': () => {
+            const main = document.createElement("div");
+            main.classList.add("main");
+            main.appendChild(document.createElement("slot"));
+            return main;
+        },
+        'slot_footer': () => {
+            const footer = document.createElement("slot");
+            footer.name = "footer";
+            return footer;
+        },
+        'controls': () => {
+            const controls = document.createElement("div");
+            controls.classList.add("controls");
+            controls.appendChild(this.DOM.control("nw-resize"));
+            controls.appendChild(this.DOM.control("n-resize"));
+            controls.appendChild(this.DOM.control("ne-resize"));
+            controls.appendChild(this.DOM.control("w-resize"));
+            controls.appendChild(this.DOM.control("e-resize"));
+            controls.appendChild(this.DOM.control("sw-resize"));
+            controls.appendChild(this.DOM.control("s-resize"));
+            controls.appendChild(this.DOM.control("se-resize"));
+            return controls;
+        },
+        'control': (name) => {
+            const control = document.createElement("div");
+            control.classList.add("control");
+            control.classList.add(name);
+            return control;
+        },
+        'buttons': (buttons) => {
+            const result = document.createElement('footer');
+            result.classList.add('buttons');
+            result.slot = 'footer';
+            buttons.forEach(button => {
+                const [id, label] = button.split('|');
+                const domButton = result.appendChild(document.createElement('button'));
+                domButton.classList.add(button);
+                domButton.textContent = label || this.labels[id] || id;
+                domButton.id = id;
+                if (id === 'submit') {
+                    domButton.type = 'submit';
+                } else if (id === 'reset') {
+                    domButton.type = 'reset';
+                }
+                domButton.addEventListener('click', (e) => {
+                    this.dispatchEvent(new CustomEvent(e.currentTarget.id));
                 });
-            }
-        });
+            });
+            return result;
+        },
+    };
+    // async getTemplate() {
+    //     return this.DOM.main();
+    // }
+    async connectedCallback() {
+        let { template } = await super.connectedCallback();
+        if (!template && this.DOM?.main) {
+            template = this.DOM.main();
+        }
+        this.shadowRoot.appendChild(template);
+        this.transferStyles(this, this.dom);
+        if (this.hasAttribute('buttons')) {
+            const buttons = this.getAttribute('buttons').split(';');
+            this.appendChild(this.DOM.buttons(buttons));
+        }
+        this.addEvents();
+        this.addSlotEvents();
+        this.applyAttributes();
+
         this.setStyle({});
         ['x', 'y', 'width', 'height'].forEach(property => {
             this[property] = this.getAttribute(property) || this.properties[property];
@@ -69,7 +156,7 @@ export default class Window extends Component {
     }
     get dom() {
         if (this._dom === undefined) {
-            this._dom = this.shadowRoot.querySelector('.window');
+            this._dom = this.shadowRoot.querySelector('.modal');
         }
         return this._dom;
     }
@@ -215,7 +302,7 @@ export default class Window extends Component {
         document.body.style.setProperty('user-select', 'none');
     };
 
-    evt = {
+    EVT = {
         ".n-resize": {
             mousedown: this.getMoveListener((e) => {
                 this.top = e.clientY;
@@ -275,7 +362,7 @@ export default class Window extends Component {
                     x: e.clientX - rect.left,
                     y: e.clientY - rect.top
                 };
-                // this.dom.classList.add('dragging');
+                // this.__dom__.classList.add('dragging');
                 const mousemove = (e) => {
                     if (this.dom.classList.contains('maximized')) {
                         this.restore();
@@ -344,21 +431,21 @@ export default class Window extends Component {
             }
         },
     };
-    static observableAttributes = {
+    static observedProps = {
         'headerless': {
             set: function (value) {
                 if (value === 'false' || value === null) {
-                    this.dom.classList.remove('headerless');
-                    this.dom.removeEventListener('mousedown', this.draggingStart);
+                    this.__dom__.classList.remove('headerless');
+                    this.__dom__.removeEventListener('mousedown', this.draggingStart);
                 } else {
-                    this.dom.classList.add('headerless');
-                    this.dom.addEventListener('mousedown', this.draggingStart);
+                    this.__dom__.classList.add('headerless');
+                    this.__dom__.addEventListener('mousedown', this.draggingStart);
                 }
             },
         },
         'footerless': {
             set: function (value) {
-                this.dom.classList.toggle('footerless', value !== 'false');
+                this.__dom__.classList.toggle('footerless', value !== 'false');
             },
         },
         'title': {
@@ -391,6 +478,6 @@ export default class Window extends Component {
             },
         },
     };
-}
 
-Window.init();
+}
+Modal.init();

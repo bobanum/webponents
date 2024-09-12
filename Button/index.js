@@ -1,8 +1,8 @@
-import Component from "../Component.js";
+import Webponent from "../Webponent.js";
 
-export default class Button extends Component {
+export default class Button extends Webponent {
     static url = import.meta.url;
-    static tagName = 'wp-button';
+    static tagName = 'web-button';
     constructor() {
         super();
 
