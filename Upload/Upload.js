@@ -9,7 +9,7 @@ class Upload extends Webponent {
 	 * The tag name of the custom element.
 	 * @type {string}
 	 */
-	static tagName = 'web-upload';
+	static tagName = 'upload-ponent';
 	/**
 	 * Indicates whether the class is associated with a form element.
 	 * @type {boolean}

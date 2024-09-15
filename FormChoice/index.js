@@ -6,6 +6,12 @@ import Webponent from "../Webponent.js";
  */
 export default class Starter extends Webponent {
     /**
+     * The URL of the Starter component.
+     * @type {string}
+     */
+    static url = import.meta.url;
+
+    /**
      * The tag name of the Starter component.
      * @type {string}
      */
@@ -15,8 +21,8 @@ export default class Starter extends Webponent {
      * The template file for the Starter component. (optional)
      * @type {string}
      */
-    // static templateUrl = 'index.tpl';
-	// static styleUrl = "style.css";
+    static templateUrl = 'index.tpl';
+	static styleUrl = "style.css";
 
     constructor() {
         super();
@@ -75,4 +81,4 @@ export default class Starter extends Webponent {
 /**
  * Initializes the Starter component.
  */
-Starter.init(import.meta);
+Starter.init();

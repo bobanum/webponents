@@ -1,0 +1,314 @@
+<svg version="1.1" width="240" height="240" viewBox="0 0 248 248" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- <svg version="1.1" viewBox="0 0 1376 440" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> -->
+    <rect fill="#f00" x="0" y="0" height="440" width="876"/>
+    <defs>
+        <g id="dot0" opacity=".8">
+            <path d="m0 0h16l-16 16z" fill="#ffff"/>
+            <path d="m16 0v16h-16z" fill="#000F"/>
+        </g>
+        <g id="dot1" opacity=".8">
+            <path d="m0 0v24l8-8v-8h8l8-8z" fill="#fff"/>
+            <path d="m24 24v-24l-8 8v8h-8l-8 8z" fill="#0008"/>
+        </g>
+        <g id="bar0">
+            <path d="m0 0v64l8-8v-48l8-8z" fill="#ff0"/>
+            <path d="m16 0-8 8v48l-8 8h16z"/>
+        </g>
+        <!-- <g id="bar1" transform="translate(800,-64)">
+            <path d="m120 64v88l8-8v-72h8l8-8z" fill="#fff"/>
+            <path d="m144 152v-88l-8 8v72h-8l-8 8z"/>
+        </g> -->
+    </defs>
+    <use transform="translate(0)" xlink:href="#bar0"/>
+
+    <g id="views">
+        <view id="dot00" viewBox="0 0 152 48"></view>
+        <view id="dot00r" viewBox="0 0 48 48"></view>
+        <view id="dot00g" viewBox="104 0 48 48"></view>
+        <view id="dot01r" viewBox="0 72 64 64"></view>
+        <view id="dot01g" viewBox="104 72 64 64"></view>
+        <view id="dot02r" viewBox="0 160 80 80"></view>
+        <view id="dot02g" viewBox="104 160 80 80"></view>
+        <view id="dot10r" viewBox="208 0 72 72"></view>
+        <view id="dot10g" viewBox="352 0 72 72"></view>
+        <view id="dot11r" viewBox="208 96 88 88"></view>
+        <view id="dot11g" viewBox="352 96 88 88"></view>
+        <view id="dot12r" viewBox="208 208 104 104"></view>
+        <view id="dot12g" viewBox="352 208 104 104"></view>
+    </g>
+    <g id="group-dot0">
+        <g id="group-dot00">
+            <g id="group-dot00r" transform="translate(0,0)">
+                <g transform="translate(0,0)">
+                    <use transform="translate(0)" xlink:href="#dot0"/>
+                    <use transform="translate(16)" xlink:href="#dot0"/>
+                    <use transform="translate(32)" xlink:href="#dot0"/>
+                </g>
+                <g transform="translate(0,16)">
+                    <use transform="translate(0)" xlink:href="#dot0"/>
+                    <use transform="translate(16)" xlink:href="#dot0"/>
+                    <use transform="translate(32)" xlink:href="#dot0"/>
+                </g>
+                <g transform="translate(0,32)">
+                    <use transform="translate(0)" xlink:href="#dot0"/>
+                    <use transform="translate(16)" xlink:href="#dot0"/>
+                    <use transform="translate(32)" xlink:href="#dot0"/>
+                </g>
+            </g>
+            <use transform="translate(104) rotate(180, 24, 24)" xlink:href="#group-dot00r"/>
+        </g>
+        <g id="group-dot01" transform="translate(0,72)">
+            <g id="group-dot01r" transform="translate(0,0)">
+                <g transform="translate(0,0)">
+                    <use transform="translate(0)" xlink:href="#dot0"/>
+                    <use transform="translate(24)" xlink:href="#dot0"/>
+                    <use transform="translate(48)" xlink:href="#dot0"/>
+                </g>
+                <g transform="translate(0,24)">
+                    <use transform="translate(0)" xlink:href="#dot0"/>
+                    <use transform="translate(24)" xlink:href="#dot0"/>
+                    <use transform="translate(48)" xlink:href="#dot0"/>
+                </g>
+                <g transform="translate(0,48)">
+                    <use transform="translate(0)" xlink:href="#dot0"/>
+                    <use transform="translate(24)" xlink:href="#dot0"/>
+                    <use transform="translate(48)" xlink:href="#dot0"/>
+                </g>
+            </g>
+            <use transform="translate(104) rotate(180,32,32)" xlink:href="#group-dot01r"/>
+        </g>
+        <g id="group-dot02" transform="translate(0,160)">
+            <g id="group-dot02r" transform="translate(0)">
+                <g transform="translate(0,0)">
+                    <use transform="translate(0)" xlink:href="#dot0"/>
+                    <use transform="translate(32)" xlink:href="#dot0"/>
+                    <use transform="translate(64)" xlink:href="#dot0"/>
+                </g>
+                <g transform="translate(0,32)">
+                    <use transform="translate(0)" xlink:href="#dot0"/>
+                    <use transform="translate(32)" xlink:href="#dot0"/>
+                    <use transform="translate(64)" xlink:href="#dot0"/>
+                </g>
+                <g transform="translate(0,64)">
+                    <use transform="translate(0)" xlink:href="#dot0"/>
+                    <use transform="translate(32)" xlink:href="#dot0"/>
+                    <use transform="translate(64)" xlink:href="#dot0"/>
+                </g>
+            </g>
+            <use id="group-dot02g" transform="translate(104) rotate(180, 40,40)" xlink:href="#group-dot02r"/>
+        </g>
+    </g>
+    <g id="group-dot1" transform="translate(208,0)">
+        <g id="group-dot10" transform="translate(0,0)">
+            <g id="group-dot10r" transform="translate(0)">
+                <g transform="translate(0,0)">
+                    <use transform="translate(0)" xlink:href="#dot1"/>
+                    <use transform="translate(24)" xlink:href="#dot1"/>
+                    <use transform="translate(48)" xlink:href="#dot1"/>
+                </g>
+                <g transform="translate(0,24)">
+                    <use transform="translate(0)" xlink:href="#dot1"/>
+                    <use transform="translate(24)" xlink:href="#dot1"/>
+                    <use transform="translate(48)" xlink:href="#dot1"/>
+                </g>
+                <g transform="translate(0,48)">
+                    <use transform="translate(0)" xlink:href="#dot1"/>
+                    <use transform="translate(24)" xlink:href="#dot1"/>
+                    <use transform="translate(48)" xlink:href="#dot1"/>
+                </g>
+            </g>
+            <use id="group-dot10g" transform="translate(144) rotate(180,36,36)" xlink:href="#group-dot10r"/>
+        </g>
+        <g id="group-dot11" transform="translate(0,96)">
+            <g id="group-dot11r" transform="translate(0)">
+                <g transform="translate(0,0)">
+                    <use transform="translate(0)" xlink:href="#dot1"/>
+                    <use transform="translate(32)" xlink:href="#dot1"/>
+                    <use transform="translate(64)" xlink:href="#dot1"/>
+                </g>
+                <g transform="translate(0,32)">
+                    <use transform="translate(0)" xlink:href="#dot1"/>
+                    <use transform="translate(32)" xlink:href="#dot1"/>
+                    <use transform="translate(64)" xlink:href="#dot1"/>
+                </g>
+                <g transform="translate(0,64)">
+                    <use transform="translate(0)" xlink:href="#dot1"/>
+                    <use transform="translate(32)" xlink:href="#dot1"/>
+                    <use transform="translate(64)" xlink:href="#dot1"/>
+                </g>
+            </g>
+            <use id="group-dot11g" transform="translate(144) rotate(180,44,44)" xlink:href="#group-dot11r"/>
+        </g>
+        <g id="group-dot12" transform="translate(0,208)">
+            <g id="group-dot12r" transform="translate(0)">
+                <g transform="translate(0,0)">
+                    <use transform="translate(0)" xlink:href="#dot1"/>
+                    <use transform="translate(40)" xlink:href="#dot1"/>
+                    <use transform="translate(80)" xlink:href="#dot1"/>
+                </g>
+                <g transform="translate(0,40)">
+                    <use transform="translate(0)" xlink:href="#dot1"/>
+                    <use transform="translate(40)" xlink:href="#dot1"/>
+                    <use transform="translate(80)" xlink:href="#dot1"/>
+                </g>
+                <g transform="translate(0,80)">
+                    <use transform="translate(0)" xlink:href="#dot1"/>
+                    <use transform="translate(40)" xlink:href="#dot1"/>
+                    <use transform="translate(80)" xlink:href="#dot1"/>
+                </g>
+            </g>
+            <use id="group-dot12g" transform="translate(144) rotate(180,52,52)" xlink:href="#group-dot12r"/>
+        </g>
+        <!-- <g transform="translate(0,0)">
+            <g id="group-dot11r" transform="translate(96,88)">
+                <use transform="translate(-64,56)" xlink:href="#dot1"/>
+                <use transform="translate(-32,56)" xlink:href="#dot1"/>
+                <use transform="translate(-64,88)" xlink:href="#dot1"/>
+                <use transform="translate(-32,88)" xlink:href="#dot1"/>
+                <use transform="translate(-96,88)" xlink:href="#dot1"/>
+                <use transform="translate(-96,120)" xlink:href="#dot1"/>
+                <use transform="translate(-64,120)" xlink:href="#dot1"/>
+                <use transform="translate(-32,120)" xlink:href="#dot1"/>
+                <use transform="translate(-96,56)" xlink:href="#dot1"/>
+            </g>
+            <g id="group-dot12r" transform="translate(-16,200)">
+                <use transform="translate(56,56)" xlink:href="#dot1"/>
+                <use transform="translate(96,56)" xlink:href="#dot1"/>
+                <use transform="translate(56,96)" xlink:href="#dot1"/>
+                <use transform="translate(96,96)" xlink:href="#dot1"/>
+                <use transform="translate(16,96)" xlink:href="#dot1"/>
+                <use transform="translate(16,136)" xlink:href="#dot1"/>
+                <use transform="translate(56,136)" xlink:href="#dot1"/>
+                <use transform="translate(96,136)" xlink:href="#dot1"/>
+                <use transform="translate(16,56)" xlink:href="#dot1"/>
+            </g>
+            <use id="group-dot11g" transform="rotate(180,332,140)" xlink:href="#group-dot11r"/>
+            <use transform="rotate(180,340,260)" xlink:href="#group-dot12r"/>
+        </g> -->
+    </g>
+    <g id="group-bar0" transform="translate(500,0)">
+        <g id="group-bar00">
+            <g id="group-bar00v">
+                <g id="group-bar00vr">
+                    <use transform="translate(0)" xlink:href="#bar0"/>
+                    <use transform="translate(16)" xlink:href="#bar0"/>
+                    <use transform="translate(32)" xlink:href="#bar0"/>
+                </g>
+                <use id="group-bar00vg" transform="translate(56) rotate(180,24,32)" xlink:href="#group-bar00vr"/>
+            </g>
+            <g id="group-bar00h">
+                <use id="group-bar00hr" transform="translate(112, 0) rotate(-90) scale(-1,1)" xlink:href="#group-bar00vr"/>
+                <use id="group-bar00hg" transform="translate(248, 48) rotate(-90) scale(1,-1)" xlink:href="#group-bar00vr"/>
+            </g>
+        </g>
+        <g id="group-bar01" transform="translate(0,72)">
+            <g id="group-bar01v">
+                <g id="group-bar01vr">
+                    <use transform="translate(0)" xlink:href="#bar0"/>
+                    <use transform="translate(24)" xlink:href="#bar0"/>
+                    <use transform="translate(48)" xlink:href="#bar0"/>
+                </g>
+                <use id="group-bar01vg" transform="translate(88) rotate(180,24,32)" xlink:href="#group-bar01vr"/>
+            </g>
+            <g id="group-bar01h">
+                <use id="group-bar01hr" transform="translate(144, 0) rotate(-90) scale(-1,1)" xlink:href="#group-bar01vr"/>
+                <use id="group-bar01hg" transform="translate(280, 64) rotate(-90) scale(1,-1)" xlink:href="#group-bar01vr"/>
+            </g>
+        </g>
+        <g id="group-bar02" transform="translate(0,144)">
+            <g id="group-bar02v">
+                <g id="group-bar02vr">
+                    <use transform="translate(0)" xlink:href="#bar0"/>
+                    <use transform="translate(32)" xlink:href="#bar0"/>
+                    <use transform="translate(64)" xlink:href="#bar0"/>
+                </g>
+                <use id="group-bar02vg" transform="translate(120) rotate(180,24,32)" xlink:href="#group-bar02vr"/>
+            </g>
+            <g id="group-bar02h" transform="translate(176)">
+                <use id="group-bar02hr" transform="translate(0, 0) rotate(-90) scale(-1,1)" xlink:href="#group-bar02vr"/>
+                <use id="group-bar02hg" transform="translate(136, 80) rotate(-90) scale(1,-1)" xlink:href="#group-bar02vr"/>
+            </g>
+        </g>
+    </g>
+    
+    <!-- </g>
+        <g id="g1411" transform="translate(792,104)">
+            <use transform="translate(-768,8)" xlink:href="#bar1"/>
+            <use transform="translate(-744,8)" xlink:href="#bar1"/>
+            <use transform="translate(-792,8)" xlink:href="#bar1"/>
+        </g>
+    </g> -->
+    <!-- <g id="group-bar0" display="none" transform="translate(0,0)">
+        <g transform="translate(-56,112)">
+            <g id="g1544" transform="translate(440,-8)">
+                <use transform="translate(-424,88)" xlink:href="#bar0"/>
+                <use transform="translate(-408,88)" xlink:href="#bar0"/>
+                <use transform="translate(-440,88)" xlink:href="#bar0"/>
+            </g>
+            <use transform="rotate(180,644,32)" xlink:href="#g1544"/>
+            <use transform="matrix(0,-1,-1,0,928,616)" xlink:href="#g1544"/>
+            <use transform="matrix(0,1,1,0,776,-568)" xlink:href="#g1544"/>
+            <g transform="translate(440,80)">
+                <use transform="translate(-416,88)" xlink:href="#bar0"/>
+                <use transform="translate(-392,88)" xlink:href="#bar0"/>
+                <use transform="translate(-440,88)" xlink:href="#bar0"/>
+            </g>
+            <g transform="rotate(180,432,80)">
+                <use transform="translate(-416,88)" xlink:href="#bar0"/>
+                <use transform="translate(-392,88)" xlink:href="#bar0"/>
+                <use transform="translate(-440,88)" xlink:href="#bar0"/>
+            </g>
+            <g transform="matrix(0,1,1,0,768,-40)">
+                <use transform="translate(-416,88)" xlink:href="#bar0"/>
+                <use transform="translate(-392,88)" xlink:href="#bar0"/>
+                <use transform="translate(-440,88)" xlink:href="#bar0"/>
+            </g>
+            <g transform="matrix(0,-1,-1,0,936,280)">
+                <use transform="translate(-416,88)" xlink:href="#bar0"/>
+                <use transform="translate(-392,88)" xlink:href="#bar0"/>
+                <use transform="translate(-440,88)" xlink:href="#bar0"/>
+            </g>
+            <g id="g1910" transform="translate(440,168)">
+                <use transform="translate(-408,88)" xlink:href="#bar0"/>
+                <use transform="translate(-376,88)" xlink:href="#bar0"/>
+                <use transform="translate(-440,88)" xlink:href="#bar0"/>
+            </g>
+            <use transform="rotate(180,660,208)" xlink:href="#g1910"/>
+            <use transform="matrix(0,-1,-1,0,1016,824)" xlink:href="#g1910"/>
+            <use transform="matrix(0,1,1,0,688,-392)" xlink:href="#g1910"/>
+        </g>
+    </g>
+    <g id="group-bar1" display="none" transform="translate(0,0)">
+        <g id="g1959" transform="translate(792,216)">
+            <use transform="translate(-760,8)" xlink:href="#bar1"/>
+            <use transform="translate(-728,8)" xlink:href="#bar1"/>
+            <use transform="translate(-792,8)" xlink:href="#bar1"/>
+        </g>
+        <g transform="translate(792,328)">
+            <use transform="translate(-752,8)" xlink:href="#bar1"/>
+            <use transform="translate(-712,8)" xlink:href="#bar1"/>
+            <use transform="translate(-792,8)" xlink:href="#bar1"/>
+        </g>
+        <use transform="rotate(180,1020,156)" xlink:href="#g1411"/>
+        <use transform="rotate(180,1028,268)" xlink:href="#g1959"/>
+        <use transform="matrix(0,-1,-1,0,1376,1104)" xlink:href="#g1411"/>
+        <use transform="matrix(0,-1,-1,0,1488,1104)" xlink:href="#g1411"/>
+        <use transform="matrix(0,1,1,0,1064,-696)" xlink:href="#g1959"/>
+        <use transform="matrix(0,-1,-1,0,1488,1232)" xlink:href="#g1959"/>
+        <g transform="rotate(180,640,216)">
+            <use transform="translate(-752,8)" xlink:href="#bar1"/>
+            <use transform="translate(-712,8)" xlink:href="#bar1"/>
+            <use transform="translate(-792,8)" xlink:href="#bar1"/>
+        </g>
+        <g transform="matrix(0,-1,-1,0,1272,568)">
+            <use transform="translate(-752,8)" xlink:href="#bar1"/>
+            <use transform="translate(-712,8)" xlink:href="#bar1"/>
+            <use transform="translate(-792,8)" xlink:href="#bar1"/>
+        </g>
+        <g transform="matrix(0,1,1,0,1280,208)">
+            <use transform="translate(-752,8)" xlink:href="#bar1"/>
+            <use transform="translate(-712,8)" xlink:href="#bar1"/>
+            <use transform="translate(-792,8)" xlink:href="#bar1"/>
+        </g>
+    </g> -->
+</svg>

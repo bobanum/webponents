@@ -15,14 +15,14 @@ import Upload from './path/to/Upload/index.js';
 Here's an example of how to use the Upload component in your HTML:
 
 ```html
-<web-upload accept=".jpg,.png" multiple></web-upload>
+<upload-ponent accept=".jpg,.png" multiple></upload-ponent>
 ```
 
 ## API
 
 ### Properties
 
-- **tagName**: The tag name of the custom element. Default is `'web-upload'`.
+- **tagName**: The tag name of the custom element. Default is `'upload-ponent'`.
 - **formAssociated**: Indicates whether the class is associated with a form element. Default is `true`
 - **observedAttributes**: An array of attribute names to be observed for changes. Default is `['accept', 'multiple']`.
 

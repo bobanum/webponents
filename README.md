@@ -20,7 +20,7 @@ npm install @bobanum/webponents
   <script type="module" src="path/to/webponents/Window/index.js"></script>
 </head>
 <body>
-  <web-window>Hello World</web-window>
+  <window-ponent>Hello World</window-ponent>
 </body>
 </html>
 ```

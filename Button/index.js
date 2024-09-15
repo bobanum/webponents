@@ -2,7 +2,7 @@ import Webponent from "../Webponent.js";
 
 export default class Button extends Webponent {
     static url = import.meta.url;
-    static tagName = 'web-button';
+    static tagName = 'button-ponent';
     constructor() {
         super();
 

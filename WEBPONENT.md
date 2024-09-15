@@ -1,5 +1,7 @@
 # The Webponent class
 
+Guidlines for creating a Web Component using the `Webponent` class.
+
 The `Webponent` class is a base class for all components. It provides a set of methods and properties that are common to all components.
 
 > **Legend:**

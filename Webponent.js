@@ -61,9 +61,7 @@ export default class Webponent extends HTMLElement {
 	 */
 	async connectedCallback() {
 		this.attachShadow({ mode: 'open' });
-		if (this.styleUrl?.length) {
-			this.addStyle();
-		}
+		this.constructor.addStyle(this.shadowRoot);
 
 		const template = await this.getTemplate();
 		return { template };
@@ -162,24 +160,21 @@ export default class Webponent extends HTMLElement {
 		return this;
 	}
 	static addStyle(to, ...urls) {
-		if (urls.length > 0) {
-			// Apply external styles to the shadow DOM
-			urls.forEach(url => {
-				const linkElem = document.createElement('link');
-				linkElem.setAttribute('rel', 'stylesheet');
-				linkElem.setAttribute('href', this.baseUrl(url));
-				to.appendChild(linkElem);
-			});
-			return this;
-		}
-		if (this.styleUrl) {
+		if (urls.length === 0) {
+			if (!this.styleUrl) return this;
 			if (this.styleUrl instanceof Array) {
-				this.addStyle(to, ...this.styleUrl);
+				urls = this.styleUrl;
 			} else {
-				this.addStyle(to, this.styleUrl);
+				urls = [this.styleUrl];
 			}
-			return this;
 		}
+		// Apply external styles to the shadow DOM
+		urls.forEach(url => {
+			const linkElem = document.createElement('link');
+			linkElem.setAttribute('rel', 'stylesheet');
+			linkElem.setAttribute('href', this.baseUrl(url));
+			to.appendChild(linkElem);
+		});
 		return this;
 	}
 	transferStyles(from, to) {
@@ -199,13 +194,32 @@ export default class Webponent extends HTMLElement {
 			}
 		}
 	}
-	addSlotEvents(evt = this.slotEvt) {
+
+
+
+	/**
+	 * Adds event listeners to slot elements within the shadow DOM.
+	 *
+	 * @param {Object} [evt=this.slotEvt] - An object where keys are slot names and values are event handler functions.
+	 * @returns {this} The current instance for chaining.
+	 * @private
+	 */
+	_addSlotEvents(evt = this.slotEvt) {
 		for (let key in evt) {
 			const selector = key ? 'slot[name="' + key + '"]' : 'slot:not([name])';
 			this.shadowRoot.querySelector(selector)?.addEventListener('slotchange', evt[key].bind(this));
 		}
 		return this;
 	}
+
+
+	/**
+	 * Parses a given value and converts it to a pixel value if necessary.
+	 *
+	 * @param {string|number} value - The value to be parsed. It can be a string with units or a number.
+	 * @param {string} [property='width'] - The CSS property for which the value is being parsed.
+	 * @returns {number|string} - The parsed value in pixels or the original value if it cannot be converted.
+	 */
 	parseValue(value, property = 'width') {
 		const allUnits = {
 			absolute: ['cm', 'mm', 'q', 'in', 'pc', 'pt', 'px'],
@@ -217,10 +231,10 @@ export default class Webponent extends HTMLElement {
 			time: ['s', 'ms'],
 			frequency: ['Hz', 'kHz'],
 			resolution: ['dpi', 'dpcm', 'dppx'],
-			grid: ['fr']
+			grid: ['fr'],
 		};
 		if (typeof value !== 'string') return value;
-		const parts = value.match(/([+-]?)(\d+\.\d+|\d+|\.\d+)([a-zA-Z%]+)?/);
+		// const parts = value.match(/([+-]?)(\d+\.\d+|\d+|\.\d+)([a-zA-Z%]+)?/);
 		var [found, sign, number, unit] = value.match(/([+-]?)(\d+\.\d+|\d+|\.\d+)([a-zA-Z%]+)?/);
 		sign = (sign === '-') ? -1 : 1;
 		number *= sign;
@@ -233,16 +247,7 @@ export default class Webponent extends HTMLElement {
 		}
 		unit = unit.toLowerCase();
 		if (allUnits.absolute.includes(unit)) {
-			const pixelRatios = {
-				cm: 96 / 2.54,
-				mm: 96 / 2.54 / 10,
-				q: 96 / 2.54 / 40,
-				in: 96,
-				pc: 96 / 6,
-				pt: 96 / 72,
-				px: 1,
-			};
-			return number * pixelRatios[unit];
+			return this.convertToPx(number, unit);
 		}
 		let dummy = this.appendChild(document.createElement('div'));
 		dummy.style.position = 'absolute';
@@ -253,36 +258,74 @@ export default class Webponent extends HTMLElement {
 			return result;
 		}
 		if (allUnits.percentage.includes(unit)) {
-			number /= 100;
-			if (property === 'font-size' || property === 'line-height') {
-				return this.parseValue(`${number}em`);
-			}
-			let box = this.offsetParent.getBoundingClientRect();
-			if (property === 'width') {
-				return box.width * number;
-			}
-			if (property === 'height') {
-				return box.height * number;
-			}
-			if (property.startsWith('padding')) {
-				console.error('padding percentage not supported yet');
-			}
-			if (property.startsWith('margin-')) {
-				property = property.replace('margin-', '');
-				if (property === 'left' || property === 'right') {
-					return box.width * number;
-				}
-				if (property === 'top' || property === 'bottom') {
-					return box.height * number;
-				}
-			}
-			if (['top', 'right', 'bottom', 'left'].includes(property)) {
-				console.warn('top, right, bottom, left percentage not fully supported yet. Using margin instead');
-				return this.parseValue(found, 'margin-' + property);
-			}
-			return number;
+			return this.connvertPercentageToPx(number, property);
 		}
+		return value;
 	}
+	/**
+	 * Converts a percentage value to pixels based on the specified property.
+	 *
+	 * @param {number} value - The percentage value to convert.
+	 * @param {string} [property='width'] - The CSS property to base the conversion on. 
+	 *                                       Supported properties are 'width', 'height', 'font-size', 'line-height', 
+	 *                                       'padding-*', 'margin-*', 'top', 'right', 'bottom', 'left'.
+	 * @returns {number|string} - The converted value in pixels or em units, or a percentage string for unsupported properties.
+	 */
+	connvertPercentageToPx(value, property = 'width') {
+		var result = value / 100;
+		if (property === 'font-size' || property === 'line-height') {
+			return this.parseValue(`${result}em`);
+		}
+		let box = this.offsetParent.getBoundingClientRect();
+		if (property === 'width') {
+			return box.width * result;
+		}
+		if (property === 'height') {
+			return box.height * result;
+		}
+		if (property.startsWith('padding')) {
+			console.error('padding percentage not supported yet');
+		}
+		if (property.startsWith('margin-')) {
+			property = property.replace('margin-', '');
+			if (property === 'left' || property === 'right') {
+				return box.width * result;
+			}
+			if (property === 'top' || property === 'bottom') {
+				return box.height * result;
+			}
+		}
+		if (['top', 'right', 'bottom', 'left'].includes(property)) {
+			console.warn('top, right, bottom, left percentage not fully supported yet. Using margin instead');
+			return this.parseValue(`${value}%`, 'margin-' + property);
+		}
+		return result;
+	}
+	/**
+	 * Converts a given value from a specified unit to pixels.
+	 *
+	 * @param {number} value - The numerical value to be converted.
+	 * @param {string} unit - The unit of the value to be converted. 
+	 *                        Supported units are: 'cm', 'mm', 'q', 'in', 'pc', 'pt', 'px'.
+	 * @returns {number} - The equivalent value in pixels.
+	 */
+	convertToPx(value, unit) {
+		const pixelRatios = {
+			cm: 96 / 2.54,
+			mm: 96 / 2.54 / 10,
+			q: 96 / 2.54 / 40,
+			in: 96,
+			pc: 96 / 6,
+			pt: 96 / 72,
+			px: 1,
+		};
+		return value * pixelRatios[unit];
+	}
+	/**
+	 * Asynchronously retrieves and returns a cloned template.
+	 * 
+	 * @returns {Promise<DocumentFragment|boolean>} A promise that resolves to the cloned template if successful, or false if no template is available.
+	 */
 	async getTemplate() {
 		// Template is already loaded, return it
 		if (this.template) return this.template;
@@ -315,6 +358,17 @@ export default class Webponent extends HTMLElement {
 		const doc = new DOMParser().parseFromString(htmlString, 'text/html');
 		return this._template_ = doc.querySelector('template').content;
 	}
+	/**
+	 * Defines properties on the class prototype with optional reflection to attributes.
+	 * 
+	 * @param {Object} props - An object where keys are property names and values are property definitions.
+	 * @param {boolean} [props[].reflect] - If true, the property will reflect to an attribute.
+	 * @param {*} [props[].value] - The default value of the property.
+	 * @param {function} [props[].get] - A getter function for the property.
+	 * @param {function} [props[].set] - A setter function for the property.
+	 * 
+	 * @returns {Function} The class itself for chaining.
+	 */
 	static defineProps(props) {
 		for (let prop in props) {
 			const definition = props[prop];

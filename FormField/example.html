@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>FormField</title>
+	<script type="module">
+		import FormField from './index.js';
+	</script>
+	<style>
+	body{
+		background-color: #667;
+		min-height: 100vh;
+	}
+	:slotted(.form-field){
+		background-color: red;
+	}
+	.form-field-ponent{
+		display: grid;
+		width: 100%;
+		max-width: 300px;
+		margin: 0 auto;
+		padding: 10px;
+		background-color: #fff;
+		border-radius: 5px;
+		box-shadow: 0 0 10px rgba(0,0,0,.1);
+	}
+	</style>
+</head>
+<body>
+	<form action="">
+		<form-field-ponent label="Age">
+			<input type="number" name="" id="">
+		</form-field-ponent>
+		<form-field-ponent tag="fieldset" label="ok">
+			<!-- <span slot="label">autre</span> -->
+			<input type="text" name="" id="">
+		</form-field-ponent>
+
+	</form>
+</body>
+</html>
+
+

@@ -2,8 +2,8 @@ import Webponent from "../Webponent.js";
 
 export default class Modal extends Webponent {
     static url = import.meta.url;
-    static tagName = 'web-modal';
-    static templateUrl = 'index.tpl';
+    static tagName = 'modal-ponent';
+    // static templateUrl = 'index.tpl';
     static styleUrl = 'style.css';
     labels = {
         'ok': 'OK',
@@ -121,9 +121,9 @@ export default class Modal extends Webponent {
             return result;
         },
     };
-    // async getTemplate() {
-    //     return this.DOM.main();
-    // }
+    async getTemplate() {
+        return this.DOM.main();
+    }
     async connectedCallback() {
         let { template } = await super.connectedCallback();
         if (!template && this.DOM?.main) {
@@ -136,7 +136,7 @@ export default class Modal extends Webponent {
             this.appendChild(this.DOM.buttons(buttons));
         }
         this.addEvents();
-        this.addSlotEvents();
+        this._addSlotEvents();
         this.applyAttributes();
 
         this.setStyle({});
@@ -480,4 +480,4 @@ export default class Modal extends Webponent {
     };
 
 }
-Modal.init();
+Modal.init(import.meta);

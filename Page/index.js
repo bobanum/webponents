@@ -3,7 +3,7 @@ import Webponent from "../Webponent.js";
  * Represents a page class for generating printable pages with specific settings.
 */
 export default class Page extends Webponent {
-    static tagName = "web-page";
+    static tagName = "page-ponent";
     static styleUrl = "css/style.css";
     static observedProps = {
         rows: {
