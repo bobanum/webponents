@@ -51,16 +51,16 @@ export default class Webponent extends HTMLElement {
 	 * Represents a component.
 	 * @constructor
 	 */
-	// constructor() {
-	// 	super();
-	// }
+	constructor() {
+		super();
+		this.attachShadow({ mode: 'open' });
+	}
 
 	/**
 	 * Callback method called when the custom element is connected to the document's DOM.
 	 * Attaches a shadow root and adds styles if specified. Retrieves and appends the template to the shadow root.
 	 */
 	async connectedCallback() {
-		this.attachShadow({ mode: 'open' });
 		this.constructor.addStyle(this.shadowRoot);
 
 		const template = await this.getTemplate();

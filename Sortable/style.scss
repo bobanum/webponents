@@ -1,0 +1,32 @@
+:host {
+	--gap: 1rem;
+	display: grid;
+	// border: 1px solid #ccc;
+	background-color: #f8f8f8;
+	background-color: #eee;
+	gap: var(--gap);
+	padding: var(--gap);
+}
+
+.sortable-item {
+	display: flex;
+	padding: var(--gap);
+	padding-left: 0;
+	background-color: #fff;
+	border-radius: 0.25rem;
+	box-shadow: 0 0 .2rem rgba(0, 0, 0, 0.1);
+
+	cursor: move;
+	.sortable-handle {
+		display: flex;
+		padding: calc(.5 * var(--gap));
+		margin: calc(-.5 * var(--gap)) 0;
+
+		&::before {
+			content: '';
+			width: .2rem;
+			border-radius: 1rem;
+			background-image: linear-gradient(90deg, #0002 0%, 20%, #0000 60%, #fff0 60%, #fff 100%);
+		}
+	}
+}

@@ -1,0 +1,29 @@
+:host {
+  --gap: 1rem;
+  display: grid;
+  background-color: #f8f8f8;
+  background-color: #eee;
+  gap: var(--gap);
+  padding: var(--gap);
+}
+
+.sortable-item {
+  display: flex;
+  padding: var(--gap);
+  padding-left: 0;
+  background-color: #fff;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.1);
+  cursor: move;
+}
+.sortable-item .sortable-handle {
+  display: flex;
+  padding: calc(0.5 * var(--gap));
+  margin: calc(-0.5 * var(--gap)) 0;
+}
+.sortable-item .sortable-handle::before {
+  content: "";
+  width: 0.2rem;
+  border-radius: 1rem;
+  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.1333333333) 0%, 20%, rgba(0, 0, 0, 0) 60%, rgba(255, 255, 255, 0) 60%, #fff 100%);
+}
