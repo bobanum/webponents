@@ -45,15 +45,16 @@ To create a Webponent, you need to extend the `Webponent` class and define the c
 
 ## Components
 
-| Component                                | Description                        |
-| ---------------------------------------- | ---------------------------------- |
-| [Button](Button/README.md)               | A button component just for tests. |
-| [DraggableList](DraggableList/README.md) | A list of draggable items.         |
-| [Page](Page/README.md)                   | A page component to help printing. |
-| [Panel](Panel/README.md) ‡               | A panel component.                 |
-| [Tabs](Tabs/README.md) ‡                 | A tabs component.                  |
-| [TOC](TOC/README.md) ‡                   | A table of contents component.     |
-| [Upload](Upload/README.md)               | A file upload component.           |
-| [Window](Window/README.md)               | A window component. Modal or not   |
+| Component                      | Description                        | Status      |
+| ------------------------------ | ---------------------------------- | ----------- |
+| [Button](Button/README.md)     | A button component just for tests. | Test        |
+| [Page](Page/README.md)         | A page component to help printing. | Functionnal |
+| [Panel](Panel/README.md) ‡     | A panel component.                 | To Do       |
+| [Sortable](Sortable/README.md) | A sortable list component.         | Skeleton    |
+| [Tabs](Tabs/README.md) ‡       | A tabs component.                  | To Do       |
+| [TOC](TOC/README.md) ‡         | A table of contents component.     | To Do       |
+| [Upload](Upload/README.md)     | A file upload component.           | Functionnal |
+| [Modal](Modal/README.md)       | A window component. Modal or not   | Functionnal |
+| [Starter](Starter/README.md)   | A starter base component.          | Example     |
 
 ‡ = Webponent idea

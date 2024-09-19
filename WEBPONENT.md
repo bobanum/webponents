@@ -77,6 +77,17 @@ static observedProps = {
 - If there is only a `coerce` function or a `validate` function, pass the value to that function and return the result.
 - Else return the value.
 
+### The `DOM` property
+An object that contains the DOM creation functions.
+- `main`: The main DOM element. Called by `getTemplate` within `connectedCallback`.
+
+### The `EVT` property
+An object that contains the events to be added to the component.
+Structure : `{selector: {event: callback}}`
+  - selector: CSS selector for the elements to listen to
+  - event: Space separated list of event types to listen to
+  - callback: The function to call when the event is triggered
+
 ### The 'slotEvt' property
 
 To be documented.
@@ -135,3 +146,39 @@ export default class MyComponent extends Webponent {
 }
 MyComponent.init(import.meta);
 ```
+
+
+## Property List
+| Property                 | Description |  Pr   |  St   |  Me   |  Ov   |
+| ------------------------ | ----------- | :---: | :---: | :---: | :---: |
+| _addSlotEvents           |             |   ●   |       |   ●   |       |
+| _baseUrl                 |             |   ●   |   ●   |       |       |
+| _meta                    |             |   ●   |   ●   |       |       |
+| addEventsTo              |             |       |       |   ●   |       |
+| addEventTo               |             |       |       |   ●   |       |
+| addListener              |             |       |       |   ●   |       |
+| addStyle                 |             |       |   ●   |   ●   |       |
+| adoptedCallback          |             |       |       |   ●   |       |
+| applyAttributes          |             |       |       |   ●   |       |
+| attributeChangedCallback |             |       |       |   ●   |       |
+| baseUrl                  |             |       |   ●   |       |       |
+| connectedCallback        |             |       |       |   ●   |       |
+| convertPercentageToPx   |             |       |       |   ●   |       |
+| constructor              |             |       |       |   ●   |       |
+| convertToPx              |             |       |       |   ●   |       |
+| defineProps              |             |       |   ●   |   ●   |       |
+| disconnectedCallback     |             |       |       |   ●   |       |
+| EVT                      |             |       |       |       |       |
+| getTemplate              |             |       |       |   ●   |       |
+| init                     |             |       |   ●   |   ●   |       |
+| loadTemplate             |             |       |   ●   |   ●   |       |
+| observedAttributes       |             |       |   ●   |       |       |
+| observedProps            |             |       |   ●   |       |       |
+| parseValue               |             |       |       |   ●   |       |
+| processEvents            |             |       |       |   ●   |       |
+| setStyle                 |             |       |       |   ●   |       |
+| slotEvt                  |             |       |       |       |       |
+| styleUrl                 |             |       |   ●   |       |       |
+| transferStyles           |             |       |       |   ●   |       |
+
+St = Static, Pr = Prototype, Me = Method, Ov = Override

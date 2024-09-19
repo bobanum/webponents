@@ -1,0 +1,43 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.draggable {
+  width: 150px;
+  height: 150px;
+  background-color: lightcoral;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  cursor: grab;
+}
+
+.dropzone {
+  width: 200px;
+  height: 200px;
+  border: 2px dashed lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: lightgray;
+}
+    

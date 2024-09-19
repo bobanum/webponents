@@ -1,3 +1,5 @@
+import Utils from "./src/Utils.js";
+
 /**
  * Webponent is a custom HTML element that extends HTMLElement.
  * It provides a base structure for creating web components with various utility methods
@@ -17,8 +19,9 @@ export default class Webponent extends HTMLElement {
 	 * @private
 	 */
 	static _baseUrl = '';
+	static _appUrl = '';
 
-	static _meta;
+	static _meta = {};
 	static styleUrl;
 	/**
 	 * Event object.
@@ -61,9 +64,10 @@ export default class Webponent extends HTMLElement {
 	 * Attaches a shadow root and adds styles if specified. Retrieves and appends the template to the shadow root.
 	 */
 	async connectedCallback() {
-		this.constructor.addStyle(this.shadowRoot);
+		this.addStyle();
 
 		const template = await this.getTemplate();
+		this.processEvents(template);
 		return { template };
 	}
 
@@ -137,23 +141,27 @@ export default class Webponent extends HTMLElement {
 			}
 		}
 	}
-	static baseUrl(url) {
-		if (!this._baseUrl) {
-			this._baseUrl = new URL(this._meta.url).href.split("/").slice(0, -1).join("/");
-		}
+	static appUrl(url) {
+		let result = this._appUrl;
 		if (url) {
-			return this._baseUrl + '/' + url;
+			return result + '/' + url;
 		}
-		return this._baseUrl;
+		return result;
+	}
+	appUrl(url) {
+		return this.constructor.appUrl(url);
+	}
+	static baseUrl(url) {
+		if (!this._meta) return this.appUrl(url);
+
+		let result = this._meta.baseUrl;
+		if (url) {
+			result += '/' + url;
+		}
+		return result;
 	}
 	baseUrl(url) {
 		return this.constructor.baseUrl(url);
-	}
-	setStyle(style, obj = this) {
-		for (let propertyName in style) {
-			obj.style.setProperty(propertyName, style[propertyName]);
-		}
-		return this;
 	}
 	addStyle(...urls) {
 		this.constructor.addStyle(this.shadowRoot, ...urls);
@@ -169,33 +177,50 @@ export default class Webponent extends HTMLElement {
 			}
 		}
 		// Apply external styles to the shadow DOM
-		urls.forEach(url => {
-			const linkElem = document.createElement('link');
-			linkElem.setAttribute('rel', 'stylesheet');
-			linkElem.setAttribute('href', this.baseUrl(url));
-			to.appendChild(linkElem);
+		Utils.addStyle(to, urls.map(this.baseUrl));
+		return this;
+	}
+	processEvents(root = this.shadowRoot, evt = this.EVT) {
+		if (!evt) return;
+		// this._addSlotEvents(root);
+		for (let selector in evt) {
+			this.addEventsTo([...root.querySelectorAll(selector)], evt[selector]);
+		}
+	}
+	addListener(eventNames, listener, ...objects) {
+		if (typeof eventNames === 'string') {
+			eventNames = eventNames.split(' ');
+		}
+		eventNames.forEach(eventName => {
+			this.addEventTo(eventName, listener, ...objects);
+		});
+	}
+	// addEvents(events, ...objects) {
+	// }
+
+	addEventsTo(objects, events) {
+		if (typeof objects === 'string') {
+			objects = [...this.shadowRoot.querySelectorAll(objects)];
+		}
+		if (!Array.isArray(objects)) {
+			objects = [objects];
+		}
+		for (let eventName in events) {
+			objects.forEach(object => {
+				this.addEventTo(object, eventName, events[eventName]);
+			});
+		}
+		return this;
+	}
+	addEventTo(object, eventName, listener) {
+		if (typeof eventName === 'string') {
+			eventName = eventName.split(/\s+/);
+		}
+		eventName.forEach(evtName => {
+			object.addEventListener(evtName, listener.bind(this));
 		});
 		return this;
 	}
-	transferStyles(from, to) {
-		for (let key of from.style) {
-			if (!key.startsWith('-')) continue;
-			to.style.setProperty(key, from.style.getPropertyValue(key));
-			from.style.removeProperty(key);
-		}
-		return this;
-	}
-	addEvents(evt = this.EVT) {
-		for (let key in evt) {
-			for (let event in evt[key]) {
-				this.shadowRoot.querySelectorAll(key).forEach(elem => {
-					elem.addEventListener(event, evt[key][event].bind(this));
-				});
-			}
-		}
-	}
-
-
 
 	/**
 	 * Adds event listeners to slot elements within the shadow DOM.
@@ -211,119 +236,8 @@ export default class Webponent extends HTMLElement {
 		}
 		return this;
 	}
-
-
-	/**
-	 * Parses a given value and converts it to a pixel value if necessary.
-	 *
-	 * @param {string|number} value - The value to be parsed. It can be a string with units or a number.
-	 * @param {string} [property='width'] - The CSS property for which the value is being parsed.
-	 * @returns {number|string} - The parsed value in pixels or the original value if it cannot be converted.
-	 */
-	parseValue(value, property = 'width') {
-		const allUnits = {
-			absolute: ['cm', 'mm', 'q', 'in', 'pc', 'pt', 'px'],
-			font: ['cap', 'rcap', 'em', 'rem', 'ex', 'rex', 'ch', 'rch', 'ic', 'ric', 'lh', 'rlh'],
-			viewport: ['vw', 'vh', 'vmin', 'vmax', 'vb', 'lvb', 'dvb', 'vi', 'lvi', 'dvi'],
-			containerquery: ['cqw', 'cqh', 'cqi', 'cqb', 'cqmin', 'cqmax'],
-			angle: ['deg', 'grad', 'rad', 'turn'],
-			percentage: ['%'],
-			time: ['s', 'ms'],
-			frequency: ['Hz', 'kHz'],
-			resolution: ['dpi', 'dpcm', 'dppx'],
-			grid: ['fr'],
-		};
-		if (typeof value !== 'string') return value;
-		// const parts = value.match(/([+-]?)(\d+\.\d+|\d+|\.\d+)([a-zA-Z%]+)?/);
-		var [found, sign, number, unit] = value.match(/([+-]?)(\d+\.\d+|\d+|\.\d+)([a-zA-Z%]+)?/);
-		sign = (sign === '-') ? -1 : 1;
-		number *= sign;
-		property = property.replace(/[A-Z]/g, '-$&').toLowerCase();
-		if (!unit) {
-			if (property === 'line-height') {
-				return this.parseValue(`${number}em`);
-			}
-			return parseFloat(value);
-		}
-		unit = unit.toLowerCase();
-		if (allUnits.absolute.includes(unit)) {
-			return this.convertToPx(number, unit);
-		}
-		let dummy = this.appendChild(document.createElement('div'));
-		dummy.style.position = 'absolute';
-		if ([...allUnits.font, ...allUnits.viewport].includes(unit)) {
-			dummy.style.width = found;
-			let result = parseFloat(getComputedStyle(dummy).width);
-			dummy.remove();
-			return result;
-		}
-		if (allUnits.percentage.includes(unit)) {
-			return this.connvertPercentageToPx(number, property);
-		}
-		return value;
-	}
-	/**
-	 * Converts a percentage value to pixels based on the specified property.
-	 *
-	 * @param {number} value - The percentage value to convert.
-	 * @param {string} [property='width'] - The CSS property to base the conversion on. 
-	 *                                       Supported properties are 'width', 'height', 'font-size', 'line-height', 
-	 *                                       'padding-*', 'margin-*', 'top', 'right', 'bottom', 'left'.
-	 * @returns {number|string} - The converted value in pixels or em units, or a percentage string for unsupported properties.
-	 */
-	connvertPercentageToPx(value, property = 'width') {
-		var result = value / 100;
-		if (property === 'font-size' || property === 'line-height') {
-			return this.parseValue(`${result}em`);
-		}
-		let box = this.offsetParent.getBoundingClientRect();
-		if (property === 'width') {
-			return box.width * result;
-		}
-		if (property === 'height') {
-			return box.height * result;
-		}
-		if (property.startsWith('padding')) {
-			console.error('padding percentage not supported yet');
-		}
-		if (property.startsWith('margin-')) {
-			property = property.replace('margin-', '');
-			if (property === 'left' || property === 'right') {
-				return box.width * result;
-			}
-			if (property === 'top' || property === 'bottom') {
-				return box.height * result;
-			}
-		}
-		if (['top', 'right', 'bottom', 'left'].includes(property)) {
-			console.warn('top, right, bottom, left percentage not fully supported yet. Using margin instead');
-			return this.parseValue(`${value}%`, 'margin-' + property);
-		}
-		return result;
-	}
-	/**
-	 * Converts a given value from a specified unit to pixels.
-	 *
-	 * @param {number} value - The numerical value to be converted.
-	 * @param {string} unit - The unit of the value to be converted. 
-	 *                        Supported units are: 'cm', 'mm', 'q', 'in', 'pc', 'pt', 'px'.
-	 * @returns {number} - The equivalent value in pixels.
-	 */
-	convertToPx(value, unit) {
-		const pixelRatios = {
-			cm: 96 / 2.54,
-			mm: 96 / 2.54 / 10,
-			q: 96 / 2.54 / 40,
-			in: 96,
-			pc: 96 / 6,
-			pt: 96 / 72,
-			px: 1,
-		};
-		return value * pixelRatios[unit];
-	}
 	/**
 	 * Asynchronously retrieves and returns a cloned template.
-	 * 
 	 * @returns {Promise<DocumentFragment|boolean>} A promise that resolves to the cloned template if successful, or false if no template is available.
 	 */
 	async getTemplate() {
@@ -332,9 +246,14 @@ export default class Webponent extends HTMLElement {
 		// Load the template and return it
 		const template = await this.constructor.loadTemplate();
 		// There is no template to load
-		if (!template) return false;
-		// Clone the template and return it
-		return this.template = template.cloneNode(true);
+		if (template) {
+			this.template = template.cloneNode(true);
+		} else if (this.DOM?.main) {
+			this.template = this.DOM.main();
+		}
+		if (!this.template) return false;
+		this.processEvents(this.template);
+		return this.template;
 	}
 	/**
 	 * Asynchronously loads an HTML template.
@@ -354,8 +273,7 @@ export default class Webponent extends HTMLElement {
 		// There is no template URL specified
 		if (!templateUrl) return false;
 		// Load the template and return it
-		const htmlString = await fetch(this.baseUrl(templateUrl)).then(response => response.text());
-		const doc = new DOMParser().parseFromString(htmlString, 'text/html');
+		const doc = await Utils.loadHTML(this.baseUrl(url));
 		return this._template_ = doc.querySelector('template').content;
 	}
 	/**
@@ -402,7 +320,13 @@ export default class Webponent extends HTMLElement {
 		}
 		return this;
 	}
-
+	static get meta() {
+		return this._meta;
+	}
+	static set meta(meta) {
+		this._meta = meta;
+		this._meta.baseUrl = new URL(this._meta.url).href.split("/").slice(0, -1).join("/");
+	}
 	/**
 	 * Initializes the component with the provided metadata.
 	 * Loads the template and defines the custom element.
@@ -411,7 +335,8 @@ export default class Webponent extends HTMLElement {
 	 * @returns {Promise<this>} A promise that resolves to the initialized component.
 	 */
 	static async init(meta) {
-		this._meta = meta;
+		this.meta = meta;
+		this._appUrl = new URL(location.href).href.split("/").slice(0, -1).join("/");
 
 		this._template_ = await this.loadTemplate();
 		customElements.define(this.tagName, this);

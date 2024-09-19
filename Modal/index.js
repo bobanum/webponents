@@ -1,3 +1,4 @@
+import Utils from "../src/Utils.js";
 import Webponent from "../Webponent.js";
 
 export default class Modal extends Webponent {
@@ -22,6 +23,185 @@ export default class Modal extends Webponent {
         'width': undefined,
         'height': undefined,
     };
+    async connectedCallback() {
+        let { template } = await super.connectedCallback();
+        if (!template) return;
+        
+        this.shadowRoot.appendChild(template);
+        Utils.transferStyles(this, this.dom);
+        if (this.hasAttribute('buttons')) {
+            const buttons = this.getAttribute('buttons').split(';');
+            this.appendChild(this.DOM.buttons(buttons));
+        }
+        // this.processEvents();
+        this._addSlotEvents();
+        this.applyAttributes();
+
+        Utils.setStyle({});
+        ['x', 'y', 'width', 'height'].forEach(property => {
+            this[property] = this.getAttribute(property) || this.properties[property];
+        });
+        // const observer = new MutationObserver((mutationsList) => {
+        //     console.log('Content changed:', mutationsList);
+        //     for (let mutation of mutationsList) {
+        //         console.log('Content changed:', mutation);
+        //         if (mutation.type === 'childList') {
+        //         }
+        //     }
+        // });
+        // observer.observe(this, { childList: true, attributes: true, attributeFilter: ['width', 'height', 'x', 'y'] });
+        return;
+    }
+    get dom() {
+        if (this._dom === undefined) {
+            this._dom = this.shadowRoot.querySelector('.modal');
+        }
+        return this._dom;
+    }
+    get x() {
+        return this.properties.x;
+    }
+    set x(value) {
+        value = Utils.parseValue(value, "left");
+        this.properties.x = parseFloat(value);
+        // debugger;
+        Utils.setStyle({
+            'left': this.x + 'px',
+        });
+    }
+    get y() {
+        return this.properties.y;
+    }
+    set y(value) {
+        this.properties.y = value;
+        Utils.setStyle({
+            'top': this.y + 'px',
+        });
+    }
+    get width() {
+        if (this.properties.width === undefined) {
+            return this.offsetParent.clientWidth;
+        }
+        return this.properties.width;
+    }
+    set width(value) {
+        if (value === undefined) return;
+        value = Utils.parseValue(value, "width");
+        value = Math.max(this.properties.minWidth, value);
+        this.properties.width = value;
+        Utils.setStyle({
+            'width': this.width + 'px',
+        });
+    }
+    get height() {
+        return this.properties.height;
+    }
+    set height(value) {
+        if (value === undefined) return;
+        value = Utils.parseValue(value, "height");
+        value = Math.max(this.properties.minHeight, value);
+        this.properties.height = value;
+        Utils.setStyle({
+            'height': this.height + 'px',
+        });
+    }
+    get top() {
+        return this.properties.x;
+    }
+    set top(value) {
+        const height = this.properties.height;
+        this.height += this.properties.y - value;
+        this.properties.y += height - this.properties.height;
+        Utils.setStyle({
+            'top': this.properties.y + 'px',
+            'height': this.properties.height + 'px',
+        });
+    }
+    get right() {
+        return this.properties.x + this.properties.width;
+    }
+    set right(value) {
+        this.width = value - this.properties.x;
+        Utils.setStyle({
+            'width': this.properties.width + 'px',
+        });
+    }
+    get bottom() {
+        return this.properties.y + this.properties.height;
+    }
+    set bottom(value) {
+        this.height = value - this.properties.y;
+        Utils.setStyle({
+            'height': this.properties.height + 'px',
+        });
+    }
+    get left() {
+        return this.properties.x;
+    }
+    set left(value) {
+        const width = this.properties.width;
+        this.width += this.properties.x - value;
+        this.properties.x += width - this.properties.width;
+        Utils.setStyle({
+            'left': this.x + 'px',
+            'width': this.width + 'px',
+        });
+    }
+    restore() {
+        Utils.setStyle({
+            'top': this.y + 'px',
+            'left': this.x + 'px',
+            'width': this.width + 'px',
+            'height': this.height + 'px',
+        });
+        this.dom.classList.remove('maximized', 'minimized', 'maximized-y');
+    }
+    maximize() {
+        Utils.setStyle({
+            'top': '0',
+            'left': '0',
+            'width': '100%',
+            'height': '100%',
+        });
+        this.dom.classList.remove('minimized', 'maximized-y');
+        this.dom.classList.add('maximized');
+        return this;
+    }
+    getMoveListener(callback) {
+        return (e) => {
+            document.body.addEventListener('mousemove', callback);
+            document.body.addEventListener('mouseup', (e) => {
+                document.body.style.removeProperty('user-select');
+                document.body.removeEventListener('mousemove', callback);
+            }, { once: true });
+            document.body.style.setProperty('user-select', 'none');
+        };
+    }
+    draggingStart = (e) => {
+        const rect = this.getBoundingClientRect();
+        const offset = {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        };
+        const mousemove = (e) => {
+            if (this.dom.classList.contains('maximized')) {
+                this.restore();
+                offset.x = this.width / 2;
+            } else {
+                this.x = e.clientX - offset.x;
+                this.y = e.clientY - offset.y;
+            }
+        };
+        document.body.addEventListener('mousemove', mousemove);
+        document.body.addEventListener('mouseup', (e) => {
+            document.body.style.removeProperty('user-select');
+            document.body.removeEventListener('mousemove', mousemove);
+        }, { once: true });
+        document.body.style.setProperty('user-select', 'none');
+    };
+    /**
+     * Object containing the DOM elements
+     */
     DOM = {
         'main': () => {
             const result = document.createDocumentFragment();
@@ -121,187 +301,13 @@ export default class Modal extends Webponent {
             return result;
         },
     };
-    async getTemplate() {
-        return this.DOM.main();
-    }
-    async connectedCallback() {
-        let { template } = await super.connectedCallback();
-        if (!template && this.DOM?.main) {
-            template = this.DOM.main();
-        }
-        this.shadowRoot.appendChild(template);
-        this.transferStyles(this, this.dom);
-        if (this.hasAttribute('buttons')) {
-            const buttons = this.getAttribute('buttons').split(';');
-            this.appendChild(this.DOM.buttons(buttons));
-        }
-        this.addEvents();
-        this._addSlotEvents();
-        this.applyAttributes();
-
-        this.setStyle({});
-        ['x', 'y', 'width', 'height'].forEach(property => {
-            this[property] = this.getAttribute(property) || this.properties[property];
-        });
-        // const observer = new MutationObserver((mutationsList) => {
-        //     console.log('Content changed:', mutationsList);
-        //     for (let mutation of mutationsList) {
-        //         console.log('Content changed:', mutation);
-        //         if (mutation.type === 'childList') {
-        //         }
-        //     }
-        // });
-        // observer.observe(this, { childList: true, attributes: true, attributeFilter: ['width', 'height', 'x', 'y'] });
-        return;
-    }
-    get dom() {
-        if (this._dom === undefined) {
-            this._dom = this.shadowRoot.querySelector('.modal');
-        }
-        return this._dom;
-    }
-    get x() {
-        return this.properties.x;
-    }
-    set x(value) {
-        value = this.parseValue(value, "left");
-        this.properties.x = parseFloat(value);
-        // debugger;
-        this.setStyle({
-            'left': this.x + 'px',
-        });
-    }
-    get y() {
-        return this.properties.y;
-    }
-    set y(value) {
-        this.properties.y = value;
-        this.setStyle({
-            'top': this.y + 'px',
-        });
-    }
-    get width() {
-        if (this.properties.width === undefined) {
-            return this.offsetParent.clientWidth;
-        }
-        return this.properties.width;
-    }
-    set width(value) {
-        if (value === undefined) return;
-        value = this.parseValue(value, "width");
-        value = Math.max(this.properties.minWidth, value);
-        this.properties.width = value;
-        this.setStyle({
-            'width': this.width + 'px',
-        });
-    }
-    get height() {
-        return this.properties.height;
-    }
-    set height(value) {
-        if (value === undefined) return;
-        value = this.parseValue(value, "height");
-        value = Math.max(this.properties.minHeight, value);
-        this.properties.height = value;
-        this.setStyle({
-            'height': this.height + 'px',
-        });
-    }
-    get top() {
-        return this.properties.x;
-    }
-    set top(value) {
-        const height = this.properties.height;
-        this.height += this.properties.y - value;
-        this.properties.y += height - this.properties.height;
-        this.setStyle({
-            'top': this.properties.y + 'px',
-            'height': this.properties.height + 'px',
-        });
-    }
-    get right() {
-        return this.properties.x + this.properties.width;
-    }
-    set right(value) {
-        this.width = value - this.properties.x;
-        this.setStyle({
-            'width': this.properties.width + 'px',
-        });
-    }
-    get bottom() {
-        return this.properties.y + this.properties.height;
-    }
-    set bottom(value) {
-        this.height = value - this.properties.y;
-        this.setStyle({
-            'height': this.properties.height + 'px',
-        });
-    }
-    get left() {
-        return this.properties.x;
-    }
-    set left(value) {
-        const width = this.properties.width;
-        this.width += this.properties.x - value;
-        this.properties.x += width - this.properties.width;
-        this.setStyle({
-            'left': this.x + 'px',
-            'width': this.width + 'px',
-        });
-    }
-    restore() {
-        this.setStyle({
-            'top': this.y + 'px',
-            'left': this.x + 'px',
-            'width': this.width + 'px',
-            'height': this.height + 'px',
-        });
-        this.dom.classList.remove('maximized', 'minimized', 'maximized-y');
-    }
-    maximize() {
-        this.setStyle({
-            'top': '0',
-            'left': '0',
-            'width': '100%',
-            'height': '100%',
-        });
-        this.dom.classList.remove('minimized', 'maximized-y');
-        this.dom.classList.add('maximized');
-        return this;
-    }
-    getMoveListener(callback) {
-        return (e) => {
-            document.body.addEventListener('mousemove', callback);
-            document.body.addEventListener('mouseup', (e) => {
-                document.body.style.removeProperty('user-select');
-                document.body.removeEventListener('mousemove', callback);
-            }, { once: true });
-            document.body.style.setProperty('user-select', 'none');
-        };
-    }
-    draggingStart = (e) => {
-        const rect = this.getBoundingClientRect();
-        const offset = {
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top
-        };
-        const mousemove = (e) => {
-            if (this.dom.classList.contains('maximized')) {
-                this.restore();
-                offset.x = this.width / 2;
-            } else {
-                this.x = e.clientX - offset.x;
-                this.y = e.clientY - offset.y;
-            }
-        };
-        document.body.addEventListener('mousemove', mousemove);
-        document.body.addEventListener('mouseup', (e) => {
-            document.body.style.removeProperty('user-select');
-            document.body.removeEventListener('mousemove', mousemove);
-        }, { once: true });
-        document.body.style.setProperty('user-select', 'none');
-    };
-
+    /**
+     * Object containing the event listeners
+     * @type {Object}
+     * Structure: {selector: {event: callback}}
+     * selector: CSS selector for the elements to listen to
+     * event: Space separated list of event types to listen to
+     */
     EVT = {
         ".n-resize": {
             mousedown: this.getMoveListener((e) => {
@@ -423,7 +429,7 @@ export default class Modal extends Webponent {
                 if (this.dom.classList.contains('maximized')) {
                     this.restore();
                 }
-                this.setStyle({
+                Utils.setStyle({
                     'height': 'min-content',
                 });
                 this.dom.classList.remove('maximized');

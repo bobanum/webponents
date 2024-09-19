@@ -16,7 +16,7 @@ export default class Sortable extends Webponent {
      * @type {string}
      */
     // static templateUrl = 'index.tpl';
-	static styleUrl = "style.css";
+    static styleUrl = "style.css";
 
     constructor() {
         super();
@@ -31,12 +31,14 @@ export default class Sortable extends Webponent {
         [...this.children].forEach(child => {
             const slotname = `slot${Math.random().toString(36).substring(1)}`;
             child.setAttribute('slot', slotname);
-            const element = this.shadowRoot.appendChild(document.createElement('div'));
-            element.classList.add('sortable-item');
-            const handle = element.appendChild(document.createElement('span'));
+            const item = this.shadowRoot.appendChild(document.createElement('div'));
+            item.classList.add('sortable-item');
+            item.draggable = true;
+            const handle = item.appendChild(document.createElement('span'));
             handle.classList.add('sortable-handle');
-            const slot = element.appendChild(document.createElement('slot'));
+            const slot = item.appendChild(document.createElement('slot'));
             slot.setAttribute('name', slotname);
+
         });
         return;
     }
@@ -45,25 +47,41 @@ export default class Sortable extends Webponent {
      * Event handlers for the Sortable component.
      * @type {Object}
      */
-    evt = {
-        ".selector": {
-            /**
-             * Event handler for the specified event.
-             * @param {Event} e - The event object.
-             */
-            eventName: (e) => {
-                // Event handler logic
+    EVT = {
+        "[draggable]": {
+            "dragstart": (e) => {
+                e.dataTransfer.setData('text/plain', e.target.id);
+                e.target.style.opacity = '0.5';
+            },
+            "dragend": (e) => {
+                e.target.style.opacity = '1';
             },
         },
+        ".dropzone": {
+            "dragover": (e) => {
+                e.preventDefault(); // Necessary to allow a drop
+                e.target.style.backgroundColor = '#f0f0f0';
+            },
+            "dragleave": (e) => {
+                e.target.style.backgroundColor = '';
+            },
+            "drop": (e) => {
+                e.preventDefault();
+                const draggableId = e.dataTransfer.getData('text');
+                const draggedElement = document.getElementById(draggableId);
+                e.target.appendChild(draggedElement);
+                e.target.style.backgroundColor = '';
+            },
+        }
     };
-	slotEvt = {
-		"": (e) => {
-			console.log(this, 'Unnamed slot changed');
-		},
-		"name": (e) => {
-			console.log(this, 'Slot "name" changed');
-		}
-	};
+    slotEvt = {
+        "": (e) => {
+            console.log(this, 'Unnamed slot changed');
+        },
+        "name": (e) => {
+            console.log(this, 'Slot "name" changed');
+        }
+    };
 
     /**
      * The observed attributes for the Sortable component.
@@ -80,7 +98,7 @@ export default class Sortable extends Webponent {
             },
         },
     };
-}
+};
 
 /**
  * Initializes the Sortable component.
