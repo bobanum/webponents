@@ -1,3 +1,4 @@
+import Utils from "../src/Utils.js";
 import Webponent from "../Webponent.js";
 
 /**
@@ -23,13 +24,21 @@ export default class Ref extends Webponent {
      */
     async connectedCallback() {
         super.connectedCallback();
-        const doc = Utils.loadHTML(this.appUrl('page.html'));
-        this.shadowRoot.appendChild(doc.querySelectorAll('body').content.cloneNode(true));
-        console.log(this.selector);
-        
+        const doc = await Utils.loadHTML(this.appUrl('page.html'));
+        const elements = [...doc.querySelector('body').children];
+        elements.forEach((el) => {
+            this.shadowRoot.appendChild(el);
+        });
         return;
     }
-
+    get href() {
+        return this.getAttribute('href');
+    }
+    get hash() {
+        console.log(new URL(this.href));
+        
+        return this.getAttribute('href');
+    }
     get selector() {
         let selector;
         if (this.hasAttribute('selector')) {

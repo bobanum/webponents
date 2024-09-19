@@ -67,8 +67,10 @@ export default class Webponent extends HTMLElement {
 		this.addStyle();
 
 		const template = await this.getTemplate();
+		if (!template) return;
+		
 		this.processEvents(template);
-		return { template };
+		return template;
 	}
 
 	/**
@@ -181,6 +183,8 @@ export default class Webponent extends HTMLElement {
 		return this;
 	}
 	processEvents(root = this.shadowRoot, evt = this.EVT) {
+		console.log(root);
+		
 		if (!evt) return;
 		// this._addSlotEvents(root);
 		for (let selector in evt) {

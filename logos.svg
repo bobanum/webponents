@@ -1,0 +1,40 @@
+<svg width="2880" height="3456" version="1.1" viewBox="0 0 2880 3456" xmlns="http://www.w3.org/2000/svg">
+    <g>
+        <g id="abcd" transform="translate(0,0)">
+            <path id="a" transform="translate(0)" d="m0 64v448h224v-96h64v96h224v-448l-64-64h-384zm224 128h64v32h-64z" opacity=".5" />
+            <path id="b" transform="translate(512)" d="m0 0v512h448l64-64v-128l-64-64 64-64v-128l-64-64zm224 192h64v32h-64zm0 96h64v32h-64z" opacity=".5" />
+            <path id="c" transform="translate(1024)" d="m64 0-64 64v384l64 64h384l64-64v-160h-224v32h-64v-128h64v32h224v-160l-64-64z" opacity=".5" />
+            <path id="d" transform="translate(1536)" d="m0 0v512h448l64-64v-384l-64-64zm224 192h64v128h-64z" opacity=".5" />
+            <path id="e" transform="translate(2048)" d="m0 0v512h512v-192h-320v-32h320v-64h-320v-32h320v-192z" opacity=".5" />
+        </g>
+        <g id="abcd" transform="translate(0,512)">
+            <path id="f" transform="translate(0)" d="m0 0v512h192v-96h256v-192h-256v-32h320v-192z" opacity=".5" />
+            <path id="g" transform="translate(512)" d="m64 0-64 64v384l64 64h448v-288h-224v96h-64v-128h288v-192z" opacity=".5" />
+            <path id="h" transform="translate(1024)" d="m224 0v160h64v-160h224v512h-224v-160h-64v160h-224v-512z" opacity=".5" />
+            <path id="i" transform="translate(1536)" d="m0 416h64v-320h-64v-96h512v96h-64v320h64v96h-512z" opacity=".5" />
+            <path id="j" transform="translate(2048)" d="m512 0h-224v320h-64v-128h-224v256l64 64h384l64-64z" opacity=".5" />
+        </g>
+        <g id="abcd" transform="translate(0,1024)">
+            <path id="k" transform="translate(0)" d="m224 0v160h64v-160h224v192l-64 64 64 64v192h-224v-160h-64v160h-224v-512z" opacity=".5" />
+            <path id="l" transform="translate(512)" d="m0 0v512h512v-320h-224v128h-64v-320z" opacity=".5" />
+            <path id="m" transform="translate(1024)" d="m0 0v512h192v-64l64 64 64-64v64h192v-512h-192l-64 64-64-64z" opacity=".5" />
+            <path id="n" transform="translate(1536)" d="m0 0v512h224v-64l64 64h224v-512h-224v64l-64-64z" opacity=".5" />
+            <path id="o" transform="translate(2048)" d="m64 0-64 64v384l64 64h384l64-64v-384l-64-64zm160 192h64v128h-64z" opacity=".5" />
+        </g>
+        <g id="abcd" transform="translate(0,1536)">
+            <path id="p" transform="translate(0)" d="m0 0v512h224v-96h224l64-64v-288l-64-64zm224 192h64v32h-64z" opacity=".5" />
+            <path id="q" transform="translate(512)" d="m64 0-64 64v384l64 64h448v-448l-64-64zm160 192h64v128h-64z" opacity=".5" />
+            <path id="r" transform="translate(1024)" d="m0 0v512h224v-96h64v96h224v-128l-64-64 64-64v-192l-64-64zm224 192h64v32h-64z" opacity=".5" />
+            <path id="s" transform="translate(1536)" d="m64 0-64 64v160l64 64h224v32h-288v192h448l64-64v-160l-64-64h-224v-32h288v-192z" opacity=".5" />
+            <path id="t" transform="translate(2048)" d="m0 0v96h96v416h320v-416h96v-96z" opacity=".5" />
+        </g>
+        <g id="abcd" transform="translate(0,2048)">
+            <path id="u" transform="translate(0)" d="m32 2336v448l64 64h384l64-64v-448h-224v320h-64v-320z" opacity=".5" />
+            <path id="v" transform="translate(512)" d="m608 2336v352l160 160h192l160-160v-352h-224v320h-64v-320z" opacity=".5" />
+            <path id="w" transform="translate(1024)" d="m1184 2848v-512h192v64l64-64 64 64v-64h192v512h-192l-64-64-64 64z" opacity=".5" />
+            <path id="x" transform="translate(1536)" d="m1760 2336v192l64 64-64 64v192h192l64-64 64 64h192v-192l-64-64 64-64v-192h-192l-64 64-64-64z" fill-rule="evenodd" opacity=".5" stop-color="#000000" style="-inkscape-stroke:none;font-variation-settings:normal" />
+            <path id="y" transform="translate(2048)" d="m2336 2336v192l64 64v256h384v-256l64-64v-192h-192l-64 64-64-64z" fill-rule="evenodd" opacity=".5" stop-color="#000000" style="-inkscape-stroke:none;font-variation-settings:normal" />
+        </g>
+        <path id="z" transform="translate(0)" d="m544 2912h-512v192h64l-64 64v256h512v-192h-64l64-64z" opacity=".5" />
+    </g>
+</svg>
