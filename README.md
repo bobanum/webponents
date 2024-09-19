@@ -31,7 +31,6 @@ To create a Webponent, you need to extend the `Webponent` class and define the c
 
 [read Webponent documentation](WEBPONENT.md)
 
-```javascript
 ### Files
 
 ```text
@@ -45,16 +44,17 @@ To create a Webponent, you need to extend the `Webponent` class and define the c
 
 ## Components
 
-| Component                      | Description                        | Status      |
-| ------------------------------ | ---------------------------------- | ----------- |
-| [Button](Button/README.md)     | A button component just for tests. | Test        |
-| [Page](Page/README.md)         | A page component to help printing. | Functionnal |
-| [Panel](Panel/README.md) ‡     | A panel component.                 | To Do       |
-| [Sortable](Sortable/README.md) | A sortable list component.         | Skeleton    |
-| [Tabs](Tabs/README.md) ‡       | A tabs component.                  | To Do       |
-| [TOC](TOC/README.md) ‡         | A table of contents component.     | To Do       |
-| [Upload](Upload/README.md)     | A file upload component.           | Functionnal |
-| [Modal](Modal/README.md)       | A window component. Modal or not   | Functionnal |
-| [Starter](Starter/README.md)   | A starter base component.          | Example     |
+| Logo |Component                      | Description                        | Status      |
+| --|------------------------------ | ---------------------------------- | ----------- |
+| ![](Page/logo.svg)|[Page](Page/README.md)         | A page component to help printing. | Functionnal |
+| ![](Panel/logo.svg)|[Panel](Panel/README.md) ‡     | A panel component.                 | To Do       |
+| ![](Sortable/logo.svg)|[Sortable](Sortable/README.md) | A sortable list component.         | Skeleton    |
+| ![](Tabs/logo.svg)|[Tabs](Tabs/README.md) ‡       | A tabs component.                  | To Do       |
+| ![](TOC/logo.svg)|[TOC](TOC/README.md) ‡         | A table of contents component.     | To Do       |
+| ![](Upload/logo.svg)|[Upload](Upload/README.md)     | A file upload component.           | Functionnal |
+| ![](Modal/logo.svg)|[Modal](Modal/README.md)       | A window component. Modal or not   | Functionnal |
+| ![](Starter/logo.svg)|[Starter](Starter/README.md)   | A starter base component.          | Example     |
+| ![](Ref/logo.svg)|[Ref](Ref/README.md)   | Include another page in the page          | In progress     |
+| ![](Menu/logo.svg)|[Menu](Menu/README.md)   | Include another page in the page          | In progress     |
 
 ‡ = Webponent idea
