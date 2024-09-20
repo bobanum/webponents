@@ -68,7 +68,7 @@ export default class Webponent extends HTMLElement {
 
 		const template = await this.getTemplate();
 		if (!template) return;
-		
+
 		this.processEvents(template);
 		return template;
 	}
@@ -143,24 +143,15 @@ export default class Webponent extends HTMLElement {
 			}
 		}
 	}
-	static appUrl(url) {
-		let result = this._appUrl;
-		if (url) {
-			return result + '/' + url;
-		}
-		return result;
+	static appUrl(url = ".") {
+		return new URL(url, location.href);
 	}
 	appUrl(url) {
 		return this.constructor.appUrl(url);
 	}
-	static baseUrl(url) {
+	static baseUrl(url = ".") {
 		if (!this._meta) return this.appUrl(url);
-
-		let result = this._meta.baseUrl;
-		if (url) {
-			result += '/' + url;
-		}
-		return result;
+		return new URL(url, this._meta.url);
 	}
 	baseUrl(url) {
 		return this.constructor.baseUrl(url);
@@ -184,7 +175,7 @@ export default class Webponent extends HTMLElement {
 	}
 	processEvents(root = this.shadowRoot, evt = this.EVT) {
 		console.log(root);
-		
+
 		if (!evt) return;
 		// this._addSlotEvents(root);
 		for (let selector in evt) {
@@ -328,8 +319,8 @@ export default class Webponent extends HTMLElement {
 		return this._meta;
 	}
 	static set meta(meta) {
-		this._meta = meta;
-		this._meta.baseUrl = new URL(this._meta.url).href.split("/").slice(0, -1).join("/");
+		this._meta = meta;		
+		this._baseUrl = Utils.parseUrl(meta.url);
 	}
 	/**
 	 * Initializes the component with the provided metadata.
@@ -339,8 +330,10 @@ export default class Webponent extends HTMLElement {
 	 * @returns {Promise<this>} A promise that resolves to the initialized component.
 	 */
 	static async init(meta) {
-		this.meta = meta;
-		this._appUrl = new URL(location.href).href.split("/").slice(0, -1).join("/");
+		if (meta) {
+			this.meta = meta;
+		}
+		this._appUrl = Utils.parseUrl(location.href);
 
 		this._template_ = await this.loadTemplate();
 		customElements.define(this.tagName, this);

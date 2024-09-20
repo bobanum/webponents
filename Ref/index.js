@@ -24,20 +24,44 @@ export default class Ref extends Webponent {
      */
     async connectedCallback() {
         super.connectedCallback();
-        const doc = await Utils.loadHTML(this.appUrl('page.html'));
-        const elements = [...doc.querySelector('body').children];
-        elements.forEach((el) => {
-            this.shadowRoot.appendChild(el);
-        });
-        return;
+        console.log(this.href);
+        
+        const doc = await Utils.loadHTML(this.href);
+        this.transferElement(doc.querySelectorAll('style'));
+        this.transferChildren(doc.querySelectorAll('body'));
+        return this;
+    }
+    transferElement(element, prepend = false) {
+        if (element.length !== undefined) {
+            return element.forEach((el) => this.transferElement(el, prepend));
+        }
+        this.shadowRoot.insertBefore(element, prepend ? this.shadowRoot.firstChild : null);
+        return this;
+    }
+    transferChildren(element, prepend = false) {
+        if (element.length !== undefined) {
+            return element.forEach((el) => this.transferChildren(el, prepend));
+        }
+        this.transferElement([...element.children], prepend);
+        return this;
+    }
+    get url() {
+        if (!this.hasAttribute('href')) return new URL(location);
+        let ref = this.getAttribute('href');
+        try {
+            return new URL(ref, location);
+        } catch (e) {
+            return this.appUrl(ref);
+        }
     }
     get href() {
-        return this.getAttribute('href');
+        return this.url.href;
     }
     get hash() {
-        console.log(new URL(this.href));
-        
-        return this.getAttribute('href');
+        return this.url.hash;
+        // let url = new URL(location.href);
+        // url.href = url.origin + "/" + this.getAttribute('href');
+        // return url.href.slice(1);
     }
     get selector() {
         let selector;
@@ -46,7 +70,7 @@ export default class Ref extends Webponent {
         } else {
             selector = 'body';
         }
-        let hash; 
+        let hash;
         if (hash = this.href.match(/#([a-zA-Z0-9]+(?:[._-][a-zA-Z0-9]+)*)$/)) {
             console.log(hash[1]);
         }

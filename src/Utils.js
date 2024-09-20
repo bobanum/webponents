@@ -9,6 +9,18 @@ export default class Utils {
 		px: 1,
 	};
 
+	static dirname(path) {
+		return path.split('/').slice(0, -1).join('/');
+	}
+	static basename(path) {
+		return path.split('/').slice(-1)[0];
+	}
+	static parseUrl(url) {
+		var result = new URL(url);
+		result.root = this.dirname(result.href);
+		result.file = this.basename(result.href);
+		return result;
+	}
 	static setStyle(style, obj) {
 		for (let propertyName in style) {
 			obj.style.setProperty(propertyName, style[propertyName]);
