@@ -59,9 +59,6 @@ export default class Ref extends Webponent {
     }
     get hash() {
         return this.url.hash;
-        // let url = new URL(location.href);
-        // url.href = url.origin + "/" + this.getAttribute('href');
-        // return url.href.slice(1);
     }
     get selector() {
         let selector;
