@@ -308,7 +308,7 @@ export default class Modal extends Webponent {
      * selector: CSS selector for the elements to listen to
      * event: Space separated list of event types to listen to
      */
-    EVT = {
+    static EVT = {
         ".n-resize": {
             mousedown: this.getMoveListener((e) => {
                 this.top = e.clientY;

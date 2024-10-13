@@ -1,0 +1,63 @@
+@charset "UTF-8";
+ul {
+  list-style-type: none;
+  padding-left: 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+}
+ul button.delete {
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+ul button.delete::after {
+  content: "❌︎";
+  text-shadow: 0 1px black;
+}
+ul button.delete::before {
+  position: absolute;
+  border-width: 0.3em;
+  border-style: solid;
+  border-color: currentcolor;
+  left: 0.25em;
+  align-self: flex-start;
+}
+ul button.delete.add-up::before {
+  content: "";
+  border-color: currentcolor transparent transparent currentcolor;
+  top: 0.25em;
+}
+ul button.delete.add-up::after {
+  content: "➕︎";
+}
+ul button.delete.add-down::before {
+  content: "";
+  border-color: transparent transparent currentcolor currentcolor;
+  bottom: 0.25em;
+}
+ul button.delete.add-down::after {
+  content: "➕︎";
+}
+ul li {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1/-1;
+}
+ul li::before {
+  content: "⋮";
+  color: rgba(255, 255, 255, 0.6666666667);
+  text-shadow: 0 1px black;
+  width: 1ch;
+  cursor: ns-resize;
+}
+ul li:last-child::before {
+  content: "";
+}

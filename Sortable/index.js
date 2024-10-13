@@ -47,7 +47,7 @@ export default class Sortable extends Webponent {
      * Event handlers for the Sortable component.
      * @type {Object}
      */
-    EVT = {
+    static EVT = {
         "[draggable]": {
             "dragstart": (e) => {
                 e.dataTransfer.setData('text/plain', e.target.id);

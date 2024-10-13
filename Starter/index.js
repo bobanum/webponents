@@ -16,7 +16,7 @@ export default class Starter extends Webponent {
      * @type {string}
      */
     // static templateUrl = 'index.tpl';
-	// static styleUrl = "style.css";
+    // static styleUrl = "style.css";
 
     constructor() {
         super();
@@ -28,14 +28,21 @@ export default class Starter extends Webponent {
      */
     connectedCallback() {
         super.connectedCallback();
+        this.shadowRoot.appendChild(document.createElement('slot'));
         return;
     }
-
+    DOM = {
+        main: () => {
+            const main = document.createElement('div');
+            main.textContent = 'Starter Component';
+            return main;
+        },
+    };
     /**
      * Event handlers for the Starter component.
      * @type {Object}
      */
-    evt = {
+    static EVT = {
         ".selector": {
             /**
              * Event handler for the specified event.
@@ -46,14 +53,14 @@ export default class Starter extends Webponent {
             },
         },
     };
-	slotEvt = {
-		"": (e) => {
-			console.log(this, 'Unnamed slot changed');
-		},
-		"name": (e) => {
-			console.log(this, 'Slot "name" changed');
-		}
-	};
+    slotEvt = {
+        "": (e) => {
+            console.log(this, 'Unnamed slot changed');
+        },
+        "name": (e) => {
+            console.log(this, 'Slot "name" changed');
+        }
+    };
 
     /**
      * The observed attributes for the Starter component.

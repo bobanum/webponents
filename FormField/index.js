@@ -94,7 +94,7 @@ export default class FormField extends Webponent {
      * Event handlers for the Starter component.
      * @type {Object}
      */
-    evt = {
+    static EVT = {
         ".selector": {
             /**
              * Event handler for the specified event.

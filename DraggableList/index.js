@@ -29,7 +29,7 @@ class Draggable extends HTMLElement {
 		placeholder.original = dragging;
 		this.placeholder = placeholder;
 	}
-	evt = {
+	static EVT = {
 		mousedown: (e) => {
 			if (e.target.parentNode === e.currentTarget || e.target.matches(this.trigger)) {
 				this.addPlaceholder(e);

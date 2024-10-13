@@ -148,4 +148,9 @@ export default class Utils {
 		const htmlString = await fetch(url).then(response => response.text());
 		return new DOMParser().parseFromString(htmlString, 'text/html');
 	}
+	static uniqueId(prefix = '', length = 6) {
+		let num = Date.now() * 3600 + Math.floor(Math.random() * 3600);
+		let result = num.toString(36);
+		return `${prefix}${result.slice(-length)}`;
+	}
 }

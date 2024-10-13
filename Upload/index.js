@@ -28,7 +28,6 @@ class Upload extends Webponent {
 	constructor() {
 		super();
 		this.internals_ = this.attachInternals();
-		this.attachShadow({ mode: 'open' });
 		this.internals_.role = 'upload';
 
 		if (this.hasAttribute('accept')) {
@@ -154,7 +153,7 @@ class Upload extends Webponent {
 			return fileInput;
 		},
 	};
-	evt = {
+	static EVT = {
 		dropArea: {
 			'dragenter|dragover|dragleave|drop': (e) => {
 				e.preventDefault();

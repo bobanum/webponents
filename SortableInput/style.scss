@@ -1,0 +1,77 @@
+ul {
+	list-style-type: none;
+	padding-left: 0;
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+
+	button.delete {
+		border: none;
+		background-color: transparent;
+		color: inherit;
+		cursor: pointer;
+		padding: 0;
+		margin: 0;
+		position: relative;
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		justify-content: center;
+
+		&::after {
+			content: "❌\fe0e";
+			text-shadow: 0 1px black;
+		}
+
+		&::before {
+			position: absolute;
+			border-width: .3em;
+			border-style: solid;
+			border-color: currentcolor;
+			left: .25em;
+			align-self: flex-start;
+		}
+
+		&.add-up {
+			&::before {
+				content: "";
+				border-color: currentcolor transparent transparent currentcolor;
+				top: .25em;
+			}
+
+			&::after {
+				content: "➕︎";
+			}
+		}
+
+		&.add-down {
+			&::before {
+				content: "";
+				border-color: transparent transparent currentcolor currentcolor;
+				bottom: .25em;
+
+			}
+
+			&::after {
+				content: "➕︎";
+			}
+		}
+	}
+
+	li {
+		display: grid;
+		grid-template-columns: subgrid;
+		grid-column: 1 / -1;
+
+		&::before {
+			content: "⋮";
+			color: #fffa;
+			text-shadow: 0 1px black;
+			width: 1ch;
+			cursor: ns-resize;
+		}
+
+		&:last-child::before {
+			content: "";
+		}
+	}
+}

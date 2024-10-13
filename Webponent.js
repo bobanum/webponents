@@ -18,6 +18,7 @@ export default class Webponent extends HTMLElement {
 	 * @type {string}
 	 * @private
 	 */
+	static Utils = Utils;
 	static _baseUrl = '';
 	static _appUrl = '';
 
@@ -27,7 +28,10 @@ export default class Webponent extends HTMLElement {
 	 * Event object.
 	 * @type {Object}
 	 */
-	EVT = {};
+	get EVT() {
+		return this.constructor.EVT;
+	}
+	static EVT = {};
 
 	/**
 	 * Represents the slot event object.
@@ -64,12 +68,19 @@ export default class Webponent extends HTMLElement {
 	 * Attaches a shadow root and adds styles if specified. Retrieves and appends the template to the shadow root.
 	 */
 	async connectedCallback() {
+		var template;
 		this.addStyle();
 
-		const template = await this.getTemplate();
-		if (!template) return;
+		if (this.DOM && this.DOM.main) {
+			template = this.DOM.main();
+		} else {
+			template = await this.getTemplate();
+			console.log(template);
+			if (!template) return;
+		}
 
 		this.processEvents(template);
+		this.shadowRoot.appendChild(template);
 		return template;
 	}
 
@@ -170,7 +181,7 @@ export default class Webponent extends HTMLElement {
 			}
 		}
 		// Apply external styles to the shadow DOM
-		Utils.addStyle(to, urls.map(this.baseUrl));
+		Utils.addStyle(to, urls.map(this.baseUrl.bind(this)));
 		return this;
 	}
 	processEvents(root = this.shadowRoot, evt = this.EVT) {
@@ -271,6 +282,20 @@ export default class Webponent extends HTMLElement {
 		const doc = await Utils.loadHTML(this.baseUrl(url));
 		return this._template_ = doc.querySelector('template').content;
 	}
+	static loadScript(url) {
+		var script = document.body.appendChild(document.createElement('script'));
+		script.src = url;
+		script.type = 'module';
+		return new Promise((resolve, reject) => {
+			script.addEventListener('load', e => {
+				console.log('Script loaded:', e, script.src);
+				resolve(script);
+			});
+			script.addEventListener('error', e => {
+				reject(e);
+			});
+		});
+	}
 	/**
 	 * Defines properties on the class prototype with optional reflection to attributes.
 	 * 
@@ -319,7 +344,7 @@ export default class Webponent extends HTMLElement {
 		return this._meta;
 	}
 	static set meta(meta) {
-		this._meta = meta;		
+		this._meta = meta;
 		this._baseUrl = Utils.parseUrl(meta.url);
 	}
 	/**
@@ -332,6 +357,14 @@ export default class Webponent extends HTMLElement {
 	static async init(meta) {
 		if (meta) {
 			this.meta = meta;
+		}
+		console.log(this.DOM, super.DOM);
+		
+		if (this.DOM && super.DOM) {
+			this.DOM = Object.assign(Object.create(super.DOM), this.DOM);
+		}
+		if (this.EVT && super.EVT) {
+			this.EVT = Object.assign(Object.create(super.EVT), this.EVT);
 		}
 		this._appUrl = Utils.parseUrl(location.href);
 

@@ -76,7 +76,7 @@ export default class Ref extends Webponent {
      * Event handlers for the Ref component.
      * @type {Object}
      */
-    EVT = {
+    static EVT = {
         ".selector": {
             /**
              * Event handler for the specified event.

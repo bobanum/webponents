@@ -1,0 +1,136 @@
+.window {
+  --h: 0;
+  --s: 0%;
+  --l: 80%;
+  --d: 10%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  border-radius: 0.25rem;
+  box-shadow: 0.1em 0.1em 0.3em rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: hsl(var(--h), var(--s), calc(var(--l) + 20%));
+  background-color: hsl(var(--h), var(--s), calc(var(--d)));
+}
+.window.maximized .maximize {
+  display: none;
+}
+.window.minimized .minimize {
+  display: none;
+}
+.window.minimized > :not(header) {
+  display: none;
+}
+.window:not(.maximized):not(.minimized) .restore {
+  display: none;
+}
+.window header {
+  line-height: 1;
+  display: flex;
+  padding: 0.2em 0.5em;
+  cursor: move;
+  font-weight: bold;
+  background-color: hsl(var(--h), var(--s), calc(var(--l)));
+  color: hsl(var(--h), var(--s), calc(var(--d) - 10%));
+}
+.window header svg {
+  display: block;
+  padding: 0 0.25em;
+  fill: currentColor;
+  cursor: pointer;
+  width: 12px;
+  height: 100%;
+  padding: 0 4px;
+}
+.window header #title {
+  margin-right: auto;
+}
+.window header .icons {
+  margin: -4px 0;
+  margin-left: 1ch;
+  display: flex;
+}
+.window > .main {
+  overflow-y: auto;
+  padding: 0.5em;
+}
+.window footer {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(5ch, auto);
+  justify-content: center;
+  gap: 1ch;
+  padding: 0.5em;
+}
+.window button {
+  cursor: pointer;
+  background-color: hsl(var(--h), var(--s), calc(var(--l) - 10%));
+  color: hsl(var(--h), var(--s), 0%);
+  border: none;
+  border-radius: 0.25em;
+}
+.window button:hover {
+  background-color: hsl(var(--h), var(--s), calc(var(--l) + 30%));
+  color: hsl(var(--h), var(--s), calc(var(--l) - 30%));
+}
+.window .close {
+  cursor: pointer;
+}
+.window .resize {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: hsl(var(--h), var(--s), calc(var(--l) - 0%));
+}
+
+.controls {
+  display: contents;
+  font-size: 8px;
+}
+.maximized + .controls, .minimized + .controls {
+  display: none;
+}
+.controls > * {
+  position: absolute;
+  z-index: 3000;
+}
+.controls > *.nw-resize, .controls > *.ne-resize, .controls > *.sw-resize, .controls > *.se-resize {
+  width: 1.5em;
+  height: 1.5em;
+  margin: -0.5em;
+  z-index: 3001;
+}
+.controls > *.n-resize, .controls > *.s-resize {
+  width: 100%;
+  height: 1em;
+  margin: -0.5em 0;
+  cursor: ns-resize;
+}
+.controls > *.w-resize, .controls > *.e-resize {
+  width: 1em;
+  height: 100%;
+  margin: 0 -0.5em;
+  cursor: ew-resize;
+}
+.controls > *.nw-resize, .controls > *.n-resize, .controls > *.ne-resize {
+  top: 0;
+}
+.controls > *.sw-resize, .controls > *.s-resize, .controls > *.se-resize {
+  bottom: 0;
+}
+.controls > *.nw-resize, .controls > *.w-resize, .controls > *.sw-resize {
+  left: 0;
+}
+.controls > *.ne-resize, .controls > *.e-resize, .controls > *.se-resize {
+  right: 0;
+}
+.controls > *.nw-resize, .controls > *.se-resize {
+  cursor: nwse-resize;
+}
+.controls > *.ne-resize, .controls > *.sw-resize {
+  cursor: nesw-resize;
+}
