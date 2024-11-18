@@ -44,6 +44,31 @@ Is a generic object that contains the attributes to be observed by the component
 - If the 'definition' is a function, the attribute is observed and the function is called when the attribute is changed.
 - If the 'definition' is an object, the attribute is observed and the value is processed according to the `definition` object.
 
+#### Add
+| OV\NV      | `null` | `not null` |
+| ---------- | :----: | :--------: |
+| `null`     |   /    |    yes     |
+| `not null` |   no   |     no     |
+
+#### Change
+| OV\NV      | `null` | `not null` |
+| ---------- | :----: | :--------: |
+| `null`     |   /    |     no     |
+| `not null` |   no   |    yes     |
+
+#### Remove
+| OV\NV      | `null` | `not null` |
+| ---------- | :----: | :--------: |
+| `null`     |   /    |     no     |
+| `not null` |  Yes   |     no     |
+
+#### Set
+| OV\NV      | `null` | `not null` |
+| ---------- | :----: | :--------: |
+| `null`     |   /    |    yes*    |
+| `not null` |   no   |    yes     |
+> * If `add` is set, the both `add` and `set` are called. Use `change` to avoid this. 
+
 #### The `definition` object
 
 - The `definition` object can have the following properties:
@@ -163,7 +188,7 @@ MyComponent.init(import.meta);
 | attributeChangedCallback |             |       |       |   ●   |       |
 | baseUrl                  |             |       |   ●   |       |       |
 | connectedCallback        |             |       |       |   ●   |       |
-| convertPercentageToPx   |             |       |       |   ●   |       |
+| convertPercentageToPx    |             |       |       |   ●   |       |
 | constructor              |             |       |       |   ●   |       |
 | convertToPx              |             |       |       |   ●   |       |
 | defineProps              |             |       |   ●   |   ●   |       |

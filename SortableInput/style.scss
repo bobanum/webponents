@@ -1,10 +1,14 @@
+:host-context(body) ul {
+	background-color: red !important;
+}
+
 ul {
+	background-color: blue;
 	list-style-type: none;
 	padding-left: 0;
 	display: grid;
 	grid-template-columns: auto 1fr auto;
-
-	button.delete {
+	button {
 		border: none;
 		background-color: transparent;
 		color: inherit;
@@ -16,6 +20,19 @@ ul {
 		align-items: center;
 		flex-direction: column;
 		justify-content: center;
+	}
+	button.add {
+		&::after {
+			content: "➕︎\fe0e";
+			text-shadow: 0 1px black;
+		}
+	}
+	button.delete {
+		html.ShiftKey & {
+			&::after {
+				content: "➕︎sasa";
+			}
+		}
 
 		&::after {
 			content: "❌\fe0e";

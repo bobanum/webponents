@@ -167,7 +167,7 @@ export default class Modal extends Webponent {
         this.dom.classList.add('maximized');
         return this;
     }
-    getMoveListener(callback) {
+    static getMoveListener(callback) {
         return (e) => {
             document.body.addEventListener('mousemove', callback);
             document.body.addEventListener('mouseup', (e) => {

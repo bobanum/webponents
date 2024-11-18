@@ -52,6 +52,7 @@ export default class Webponent extends HTMLElement {
 	 * @type {Array<string>}
 	 */
 	static get observedAttributes() {
+		if (!this.observedProps) return [];
 		return [...Object.keys(this.observedProps)];
 	};
 	/**
@@ -70,12 +71,15 @@ export default class Webponent extends HTMLElement {
 	async connectedCallback() {
 		var template;
 		this.addStyle();
+		if (this.DOM?.style) {
+			this.shadowRoot.appendChild(this.DOM.style());
+		}
 
-		if (this.DOM && this.DOM.main) {
+		if (this.DOM?.main) {
 			template = this.DOM.main();
 		} else {
 			template = await this.getTemplate();
-			console.log(template);
+			// console.log(template);
 			if (!template) return;
 		}
 
@@ -118,35 +122,23 @@ export default class Webponent extends HTMLElement {
 	 * };
 	 */
 	attributeChangedCallback(name, oldValue, newValue) {
-		console.log(arguments);
-
 		if (!this.shadowRoot) return;
 		const definition = this.constructor.observedProps[name];
 
 		if (typeof definition === 'function') {
 			return definition.call(this, newValue);
 		}
-		if (typeof definition === 'object') {
-			return definition.call(this, newValue);
+		
+		if (newValue === null) {
+			return definition.remove?.call(this, oldValue);
 		}
-		if (oldValue === null && definition.add) {
-			return definition.add.call(this, newValue);
+		 else if (oldValue === null) {
+			definition.add?.call(this, newValue);
+		} else {
+			definition.change?.call(this, newValue);
 		}
-		if (newValue === null && definition.remove) {
-			return definition.remove.call(this, oldValue);
-		}
-		return definition.set.call(this, newValue);
+		definition.set?.call(this, newValue);
 	}
-	// attributeChangedCallback(name, oldValue, newValue) {
-	//     console.log("onAttributeChanged", name, oldValue, newValue);
-	//     if (oldValue === newValue) {
-	//         return;
-	//     }
-	//     if (name === "marks") {
-	//         this.page.removeChild(this.page.querySelector(".marks"));
-	//         this.page.appendChild(this.dom.marks());
-	//     }
-	// }
 	applyAttributes() {
 		for (let attr of this.constructor.observedAttributes) {
 			if (this.hasAttribute(attr)) {
@@ -185,14 +177,13 @@ export default class Webponent extends HTMLElement {
 		return this;
 	}
 	processEvents(root = this.shadowRoot, evt = this.EVT) {
-		console.log(root);
-
 		if (!evt) return;
 		// this._addSlotEvents(root);
 		for (let selector in evt) {
 			this.addEventsTo([...root.querySelectorAll(selector)], evt[selector]);
 		}
 	}
+	//TODO Clean UP MESS...
 	addListener(eventNames, listener, ...objects) {
 		if (typeof eventNames === 'string') {
 			eventNames = eventNames.split(' ');
@@ -201,9 +192,18 @@ export default class Webponent extends HTMLElement {
 			this.addEventTo(eventName, listener, ...objects);
 		});
 	}
-	// addEvents(events, ...objects) {
-	// }
-
+	static addListenerTo(listener, eventNames, ...objects) {
+		if (typeof eventNames === 'string') {
+			eventNames = eventNames.split(/[\s|]+/);
+		}
+		eventNames.forEach(evtName => {
+			objects = objects.flat();
+			objects.forEach(object => {
+				object.addEventListener(evtName, listener.bind(this));
+			});
+		});
+		return this;
+	}
 	addEventsTo(objects, events) {
 		if (typeof objects === 'string') {
 			objects = [...this.shadowRoot.querySelectorAll(objects)];
@@ -358,8 +358,8 @@ export default class Webponent extends HTMLElement {
 		if (meta) {
 			this.meta = meta;
 		}
-		console.log(this.DOM, super.DOM);
-		
+		// console.log(this.DOM, super.DOM);
+
 		if (this.DOM && super.DOM) {
 			this.DOM = Object.assign(Object.create(super.DOM), this.DOM);
 		}
@@ -370,6 +370,34 @@ export default class Webponent extends HTMLElement {
 
 		this._template_ = await this.loadTemplate();
 		customElements.define(this.tagName, this);
+		
 		return this;
+	}
+	static trackKeyModifiers(e) {
+		if (window.keyModifiers !== undefined) return;
+		console.log("Tracking key modifiers...", window.keyModifiers);
+		
+		window.keyModifiers = 0;
+		window.MODIFIERS = {
+			SHIFT: 1,
+			CTRL: 2,
+			ALT: 4,
+			META: 8,
+			CAPS: 16,
+			NUM: 32,
+			ALTGR: 64,
+			OS: 128,
+		};
+		this.addListenerTo(e => {
+			if (e.repeat) return;
+			
+			window.keyModifiers = ["Shift", "Control", "Alt", "Meta", "CapsLock", "NumLock", "AltGraph", "OS"].reduce((acc, key, i) => {
+				let state = e.getModifierState(key);
+				
+				document.documentElement?.classList.toggle(key + "Key", state);
+				acc += e.getModifierState(key) << i;
+				return acc;
+			}, 0);
+		}, ["keydown", "keyup"], window);
 	}
 }

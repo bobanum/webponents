@@ -50,13 +50,6 @@ export default class SortableInput extends Formponent {
             const result = document.createElement("ul");
             result.classList.add("sortable");
             result.appendChild(this.DOM.liNew());
-            result.addEventListener("keydown", (e) => {
-                if (e.repeat) return;
-                if (e.shiftKey) {
-                    console.log(e);
-                    
-                }
-            });
             return result;
         },
         li: (txt = "", val = 1) => {
@@ -95,7 +88,7 @@ export default class SortableInput extends Formponent {
             // result.textContent = "➖︎";
             result.addEventListener("mousemove", (e) => {
                 result.classList.remove("add-up", "add-down");
-                if (e.shiftKey) {
+                if (window.keyModifiers | window.MODIFIERS?.SHIFT) {
                     result.classList.add("add-up");
                 }
                 if (e.ctrlKey) {
@@ -112,11 +105,9 @@ export default class SortableInput extends Formponent {
         },
         btnAdd: () => {
             const result = document.createElement("button");
-            result.textContent = "➕︎";
-            // result.addEventListener("click", (e) => {
-            //     e.target.closest("li").after(this.DOM.liNew());
-            //     result.replaceWith(this.DOM.btnDelete());
-            // });
+            result.type = "button";
+            result.classList.add("add");
+            // result.textContent = "➕︎";
             return result;
         },
     };
@@ -168,6 +159,10 @@ export default class SortableInput extends Formponent {
             },
         },
     };
+    static init() {
+        super.init(...arguments);
+        this.trackKeyModifiers();
+    }
 }
 
 /**
