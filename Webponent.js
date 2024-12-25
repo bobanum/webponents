@@ -21,9 +21,34 @@ export default class Webponent extends HTMLElement {
 	static Utils = Utils;
 	static _baseUrl = '';
 	static _appUrl = '';
+	static _tagName;
 
 	static _meta = {};
-	static styleUrl;
+	static _styleUrl;
+	static get tagName() {
+		if (this.hasOwnProperty('_tagName')) return this._tagName;
+		let name = this.name.replace(/([A-Z])/g, ' $1').trim().toLowerCase().split(" ");
+		if (name.length <= 1) {
+			name.push("ponent");
+		}
+
+		return this._tagName = name.join("-");
+	}
+	static set tagName(tagName) {
+		this._tagName = tagName;
+	}
+	static get styleUrl() {
+		console.trace(this.constructor.name,super.constructor.name);
+		
+		return this._styleUrl;
+	}
+	static set styleUrl(url) {
+		console.log(super.constructor.name);
+		this._styleUrl = url;
+	}
+	get DOM() {
+        return this.constructor.DOM;
+    }
 	/**
 	 * Event object.
 	 * @type {Object}
@@ -128,11 +153,11 @@ export default class Webponent extends HTMLElement {
 		if (typeof definition === 'function') {
 			return definition.call(this, newValue);
 		}
-		
+
 		if (newValue === null) {
 			return definition.remove?.call(this, oldValue);
 		}
-		 else if (oldValue === null) {
+		else if (oldValue === null) {
 			definition.add?.call(this, newValue);
 		} else {
 			definition.change?.call(this, newValue);
@@ -165,15 +190,20 @@ export default class Webponent extends HTMLElement {
 	}
 	static addStyle(to, ...urls) {
 		if (urls.length === 0) {
+			console.trace(this, this.constructor, this.styleUrl);
+			
+			if (!this.hasOwnProperty('styleUrl')) return this;
 			if (!this.styleUrl) return this;
 			if (this.styleUrl instanceof Array) {
 				urls = this.styleUrl;
 			} else {
 				urls = [this.styleUrl];
 			}
+		} else {
+			urls = urls.map(this.baseUrl.bind(this));
 		}
 		// Apply external styles to the shadow DOM
-		Utils.addStyle(to, urls.map(this.baseUrl.bind(this)));
+		Utils.addStyle(to, urls);
 		return this;
 	}
 	processEvents(root = this.shadowRoot, evt = this.EVT) {
@@ -182,6 +212,20 @@ export default class Webponent extends HTMLElement {
 		for (let selector in evt) {
 			this.addEventsTo([...root.querySelectorAll(selector)], evt[selector]);
 		}
+	}
+	addEventListeners(evts, ...destinations) {
+
+		if (destinations.length === 0) {
+			destinations = [this];
+		}
+		if (typeof evts === "function") {
+			evts = { click: evts };
+		}
+		destinations.forEach(destination => {
+			for (let evtName in evts) {
+				destination.addEventListener(evtName, evts[evtName].bind(this));
+			}
+		});
 	}
 	//TODO Clean UP MESS...
 	addListener(eventNames, listener, ...objects) {
@@ -279,7 +323,7 @@ export default class Webponent extends HTMLElement {
 		// There is no template URL specified
 		if (!templateUrl) return false;
 		// Load the template and return it
-		const doc = await Utils.loadHTML(this.baseUrl(url));
+		const doc = await Utils.loadHTML(this.baseUrl(templateUrl));
 		return this._template_ = doc.querySelector('template').content;
 	}
 	static loadScript(url) {
@@ -358,7 +402,7 @@ export default class Webponent extends HTMLElement {
 		if (meta) {
 			this.meta = meta;
 		}
-		// console.log(this.DOM, super.DOM);
+		console.log(this.prototype, super.prototype);
 
 		if (this.DOM && super.DOM) {
 			this.DOM = Object.assign(Object.create(super.DOM), this.DOM);
@@ -369,14 +413,16 @@ export default class Webponent extends HTMLElement {
 		this._appUrl = Utils.parseUrl(location.href);
 
 		this._template_ = await this.loadTemplate();
-		customElements.define(this.tagName, this);
+		console.log(this.tagName, this);
 		
+		customElements.define(this.tagName, this);
+
 		return this;
 	}
 	static trackKeyModifiers(e) {
 		if (window.keyModifiers !== undefined) return;
 		console.log("Tracking key modifiers...", window.keyModifiers);
-		
+
 		window.keyModifiers = 0;
 		window.MODIFIERS = {
 			SHIFT: 1,
@@ -390,14 +436,22 @@ export default class Webponent extends HTMLElement {
 		};
 		this.addListenerTo(e => {
 			if (e.repeat) return;
-			
+
 			window.keyModifiers = ["Shift", "Control", "Alt", "Meta", "CapsLock", "NumLock", "AltGraph", "OS"].reduce((acc, key, i) => {
 				let state = e.getModifierState(key);
-				
+
 				document.documentElement?.classList.toggle(key + "Key", state);
 				acc += e.getModifierState(key) << i;
 				return acc;
 			}, 0);
 		}, ["keydown", "keyup"], window);
 	}
+	static DOM = {
+		main: () => {
+			alert("ok");
+		},
+		style: () => {
+			alert("styy");
+		}
+	 }
 }
