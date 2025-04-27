@@ -69,7 +69,9 @@ export default class Webponent extends HTMLElement {
 	 * Attaches a shadow root and adds styles if specified. Retrieves and appends the template to the shadow root.
 	 */
 	async connectedCallback() {
+		if (this.debug) console.log(`Custom element '${this.nodeName}' added to page.`);
 		var template;
+		
 		this.addStyle();
 		if (this.DOM?.style) {
 			this.shadowRoot.appendChild(this.DOM.style());
@@ -92,14 +94,14 @@ export default class Webponent extends HTMLElement {
 	 * Called when the custom element is removed from the DOM.
 	 */
 	disconnectedCallback() {
-		console.log("Custom element removed from page.");
+		if (this.debug) console.log(`Custom element '${this.nodeName}' removed from page.`);
 	}
 
 	/**
 	 * Called when the custom element is moved to a new document.
 	 */
 	adoptedCallback() {
-		console.log("Custom element moved to new page.");
+		if (this.debug) console.log(`Custom element '${this.nodeName}' moved to new page.`);
 	}
 
 	/**
@@ -175,6 +177,21 @@ export default class Webponent extends HTMLElement {
 		// Apply external styles to the shadow DOM
 		Utils.addStyle(to, urls.map(this.baseUrl.bind(this)));
 		return this;
+	}
+	static from(source) {
+		let result = new this();
+		if (!source) {
+			return result;
+		} else if (source instanceof this) {
+			Object.assign(result, source);
+			return result;
+		} else if (typeof source === 'object') {
+			Object.assign(result, source);
+			return result;
+		} else if (typeof source === 'string') {
+			Object.assign(result, JSON.parse(source));
+			return result;
+		}
 	}
 	processEvents(root = this.shadowRoot, evt = this.EVT) {
 		if (!evt) return;
