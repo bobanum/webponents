@@ -12,11 +12,6 @@ export default class SortableInput extends Formponent {
      */
     static tagName = 'si-ponent';
 
-    /**
-     * The template file for the SortableInput component. (optional)
-     * @type {string}
-     */
-    // static templateUrl = 'index.tpl';
     static styleUrl = "style.css";
 
     constructor() {

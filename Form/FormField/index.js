@@ -1,4 +1,4 @@
-import Webponent from "../Webponent.js";
+import Webponent from "../../Webponent.js";
 
 /**
  * Represents the Starter component.
@@ -11,12 +11,7 @@ export default class FormField extends Webponent {
      */
     static tagName = 'form-field-ponent';
 
-    /**
-     * The template file for the Starter component. (optional)
-     * @type {string}
-     */
-    // static templateUrl = 'index.tpl';
-	// static styleUrl = "style.css";
+    // static styleUrl = "style.css";
     constructor() {
         super();
     }

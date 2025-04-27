@@ -21,52 +21,20 @@ export default class Webponent extends HTMLElement {
 	static Utils = Utils;
 	static _baseUrl = '';
 	static _appUrl = '';
-	static _tagName;
 
 	static _meta = {};
-	static _styleUrl;
-	static get slug() {
-		return this.name.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
-	}
-	static _prefixe;
-	static _suffixe = "ponent";
-	get dom() {
-		return this.DOM;
-	}
-	static get tagName() {
-		if (this.hasOwnProperty('_tagName')) return this._tagName;
-		let name = this.slug.split("-");
-		if (name.length <= 1) {
-			if (this._prefixe) {
-				name.unshift(this._prefixe);
-			}
-			if (this._suffixe) {
-				name.push(this._suffixe);
-			}
-		}
-		return this._tagName = name.join("-");
-	}
-	static set tagName(tagName) {
-		this._tagName = tagName;
-	}
-	static get styleUrl() {
-		return this._styleUrl;
-	}
-	static set styleUrl(url) {
-		this._styleUrl = url;
-	}
+	static styleUrl;
+	
 	/**
-	 * Event listeners
+	 * Event listener object.
 	 * @type {Object}
 	 */
 	EVT = {};
-
 	/**
-	 * DOM creation functions
+	 * DOM creation functions object.
 	 * @type {Object}
 	 * @example
-	 */
-	// DOM = {};
+	DOM = {};
 
 	/**
 	 * Represents the slot event object.
@@ -103,20 +71,19 @@ export default class Webponent extends HTMLElement {
 	 * Callback method called when the custom element is connected to the document's DOM.
 	 * Attaches a shadow root and adds styles if specified. Retrieves and appends the template to the shadow root.
 	 */
-	async connectedCallback() {
-		var template;
+	connectedCallback() {
+		var dom;
 		this.addStyle();
-		console.log(this.DOM);
-		
 		if (this.DOM?.style) {
 			this.shadowRoot.appendChild(this.DOM.style());
 		}
 
 		if (this.DOM?.main) {
-			this.shadowRoot.appendChild(this.DOM.main());
+			dom = this.DOM.main();
 		}
 
-		return this;
+		this.shadowRoot.appendChild(dom);
+		return dom;
 	}
 
 	/**
@@ -159,11 +126,11 @@ export default class Webponent extends HTMLElement {
 		if (typeof definition === 'function') {
 			return definition.call(this, newValue);
 		}
-
+		
 		if (newValue === null) {
 			return definition.remove?.call(this, oldValue);
 		}
-		else if (oldValue === null) {
+		 else if (oldValue === null) {
 			definition.add?.call(this, newValue);
 		} else {
 			definition.change?.call(this, newValue);
@@ -190,53 +157,32 @@ export default class Webponent extends HTMLElement {
 	baseUrl(url) {
 		return this.constructor.baseUrl(url);
 	}
-	addStyle(...urls) {		
-		this.constructor.addStylesTo(this.shadowRoot, ...urls);
+	addStyle(...urls) {
+		this.constructor.addStyle(this.shadowRoot, ...urls);
 		return this;
 	}
-	static addStylesTo(to, ...urls) {
+	static addStyle(to, ...urls) {
 		if (urls.length === 0) {
-			if (!this.hasOwnProperty('_styleUrl')) return this;
-			if (!this._styleUrl) return this;
-			if (this._styleUrl instanceof Array) {
+			if (!this.styleUrl) return this;
+			if (this.styleUrl instanceof Array) {
 				urls = this.styleUrl;
 			} else {
 				urls = [this.styleUrl];
 			}
-		} else {
-			urls = urls.map(this.baseUrl.bind(this));
 		}
-		urls.forEach(url => {
-			const linkElem = document.createElement('link');
-			linkElem.setAttribute('rel', 'stylesheet');
-			linkElem.setAttribute('href', url);
-			to.appendChild(linkElem);
-		});
+		// Apply external styles to the shadow DOM
+		Utils.addStyle(to, urls.map(this.baseUrl.bind(this)));
 		return this;
 	}
-	processEvents(root = this.shadowRoot, evt = this.EVT) {
+	zzzprocessEvents(root = this.shadowRoot, evt = this.EVT) {
 		if (!evt) return;
 		// this._addSlotEvents(root);
 		for (let selector in evt) {
 			this.addEventsTo([...root.querySelectorAll(selector)], evt[selector]);
 		}
 	}
-	addEventListeners(evts, ...destinations) {
-
-		if (destinations.length === 0) {
-			destinations = [this];
-		}
-		if (typeof evts === "function") {
-			evts = { click: evts };
-		}
-		destinations.forEach(destination => {
-			for (let evtName in evts) {
-				destination.addEventListener(evtName, evts[evtName].bind(this));
-			}
-		});
-	}
 	//TODO Clean UP MESS...
-	addListener(eventNames, listener, ...objects) {
+	zzzaddListener(eventNames, listener, ...objects) {
 		if (typeof eventNames === 'string') {
 			eventNames = eventNames.split(' ');
 		}
@@ -244,7 +190,7 @@ export default class Webponent extends HTMLElement {
 			this.addEventTo(eventName, listener, ...objects);
 		});
 	}
-	static addListenerTo(listener, eventNames, ...objects) {
+	static zzzaddListenerTo(listener, eventNames, ...objects) {
 		if (typeof eventNames === 'string') {
 			eventNames = eventNames.split(/[\s|]+/);
 		}
@@ -256,7 +202,7 @@ export default class Webponent extends HTMLElement {
 		});
 		return this;
 	}
-	addEventsTo(objects, events) {
+	zzzaddEventsTo(objects, events) {
 		if (typeof objects === 'string') {
 			objects = [...this.shadowRoot.querySelectorAll(objects)];
 		}
@@ -270,7 +216,7 @@ export default class Webponent extends HTMLElement {
 		}
 		return this;
 	}
-	addEventTo(object, eventName, listener) {
+	zzzaddEventTo(object, eventName, listener) {
 		if (typeof eventName === 'string') {
 			eventName = eventName.split(/\s+/);
 		}
@@ -293,60 +239,6 @@ export default class Webponent extends HTMLElement {
 			this.shadowRoot.querySelector(selector)?.addEventListener('slotchange', evt[key].bind(this));
 		}
 		return this;
-	}
-	/**
-	 * Asynchronously retrieves and returns a cloned template.
-	 * @returns {Promise<DocumentFragment|boolean>} A promise that resolves to the cloned template if successful, or false if no template is available.
-	 */
-	async getTemplate() {
-		// Template is already loaded, return it
-		if (this.template) return this.template;
-		// Load the template and return it
-		const template = await this.constructor.loadTemplate();
-		// There is no template to load
-		if (template) {
-			this.template = template.cloneNode(true);
-		} else if (this.DOM?.main) {
-			this.template = this.DOM.main();
-		}
-		if (!this.template) return false;
-		this.processEvents(this.template);
-		return this.template;
-	}
-	/**
-	 * Asynchronously loads an HTML template.
-	 *
-	 * @returns {Promise<DocumentFragment|boolean>} A promise that resolves to the loaded template content as a DocumentFragment,
-	 * or false if no template URL is specified.
-	 *
-	 * @example
-	 * const templateContent = await MyComponent.loadTemplate();
-	 * if (templateContent) {
-	 *   // Do something with the template content
-	 * }
-	 */
-	static async loadTemplate(templateUrl = this.templateUrl) {
-		// Template is already loaded, return it
-		if (this._template_) return this._template_;
-		// There is no template URL specified
-		if (!templateUrl) return false;
-		// Load the template and return it
-		const doc = await Utils.loadHTML(this.baseUrl(templateUrl));
-		return this._template_ = doc.querySelector('template').content;
-	}
-	static loadScript(url) {
-		var script = document.body.appendChild(document.createElement('script'));
-		script.src = url;
-		script.type = 'module';
-		return new Promise((resolve, reject) => {
-			script.addEventListener('load', e => {
-				console.log('Script loaded:', e, script.src);
-				resolve(script);
-			});
-			script.addEventListener('error', e => {
-				reject(e);
-			});
-		});
 	}
 	/**
 	 * Defines properties on the class prototype with optional reflection to attributes.
@@ -410,8 +302,8 @@ export default class Webponent extends HTMLElement {
 		if (meta) {
 			this.meta = meta;
 		}
-		console.log("Initializing component:", this.prototype);
-		
+		// console.log(this.DOM, super.DOM);
+
 		if (this.DOM && super.DOM) {
 			this.DOM = Object.assign(Object.create(super.DOM), this.DOM);
 		}
@@ -421,13 +313,13 @@ export default class Webponent extends HTMLElement {
 		this._appUrl = Utils.parseUrl(location.href);
 
 		customElements.define(this.tagName, this);
-
+		
 		return this;
 	}
 	static trackKeyModifiers(e) {
 		if (window.keyModifiers !== undefined) return;
 		console.log("Tracking key modifiers...", window.keyModifiers);
-
+		
 		window.keyModifiers = 0;
 		window.MODIFIERS = {
 			SHIFT: 1,
@@ -441,10 +333,10 @@ export default class Webponent extends HTMLElement {
 		};
 		this.addListenerTo(e => {
 			if (e.repeat) return;
-
+			
 			window.keyModifiers = ["Shift", "Control", "Alt", "Meta", "CapsLock", "NumLock", "AltGraph", "OS"].reduce((acc, key, i) => {
 				let state = e.getModifierState(key);
-
+				
 				document.documentElement?.classList.toggle(key + "Key", state);
 				acc += e.getModifierState(key) << i;
 				return acc;

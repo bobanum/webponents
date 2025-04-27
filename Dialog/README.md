@@ -1,14 +1,14 @@
-# Window Component
+# Dialog Component
 
-The Window component is a container that can be used to display content in a window-like container. It can be used to display content in a modal or a popup.
+The Dialog component is a container that can be used to display content in a window-like container. It can be used to display content in a modal or a popup.
 
 ## Usage
 
 ```html
 	<script type="module">
-		import Window from './src/components/Window/index.js';
+		import Dialog from './src/components/Dialog/index.js';
 		// OR
-		// import { Window } from './src/components/index.js';
+		// import { Dialog } from './src/components/index.js';
 		// OR
 		// import './src/components/index.js';
 	</script>

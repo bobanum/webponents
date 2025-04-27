@@ -27,7 +27,7 @@ export default class Utils {
 		}
 		return this;
 	}
-	static addStyle(to, ...urls) {
+	static zzzaddStyle(to, ...urls) {
 		// Apply external styles <link> inside an element
 		urls.forEach(url => {
 			const linkElem = document.createElement('link');

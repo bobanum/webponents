@@ -11,11 +11,6 @@ export default class Markdown extends Webponent {
      */
     static tagName = 'markdown-ponent';
 
-    /**
-     * The template file for the Markdown component. (optional)
-     * @type {string}
-     */
-    // static templateUrl = 'index.tpl';
     // static styleUrl = "style.css";
 
     constructor() {

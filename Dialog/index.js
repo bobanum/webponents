@@ -13,16 +13,17 @@ export default class Dialog extends Webponent {
         'width': undefined,
         'height': undefined,
     };
-    static icons = {
+    icons = {
         minimize: "m64 384h384v64h-384z",
         restore: "m128 64v64h256v256h64v-320zm-64 128v256h256v-256zm64 64h128v128h-128z",
         maximize: "m64 64v384h384v-384zm64 64h256v256h-256z",
         close: "m64 64v64l128 128-128 128v64h64l128-128 128 128h64v-64l-128-128 128-128v-64h-64l-128 128-128-128h-64z",
     };
     connectedCallback() {
+        this.tabIndex = 0;
         super.connectedCallback();
         console.log('Dialog constructor', this.constructor, super.constructor);
-        
+
         this.style.left = this.properties.x + 'px';
         this.style.top = this.properties.y + 'px';
         if (this.properties.minWidth) {
@@ -33,6 +34,11 @@ export default class Dialog extends Webponent {
         }
         return;
     }
+    test() {
+        console.log('Super test');
+        return 'Super test';
+    }
+        
     get x() {
         return this.properties.x;
     }
@@ -196,82 +202,61 @@ export default class Dialog extends Webponent {
             draggingStop(e);
         }, { once: true });
     };
-    static DOM = {
-        main: () => {
-            console.log(this.DOM);
-            
-            let result = document.createDocumentFragment();
-            result.appendChild(this.DOM.header());
-            result.appendChild(this.DOM.content());
-            result.appendChild(this.DOM.footer());
-            result.appendChild(this.DOM.controls());
-            return result;
-        },
-        header: () => {
-            let result = document.createElement('header');
-            result.appendChild(this.DOM.title());
-            result.appendChild(this.DOM.icons());
-            this.addEventListeners(this.evt.header, result);
-            return result;
-        },
-        title: () => {
-            let result = document.createElement('span');
-            result.id = 'title';
-            result.textContent = 'Untitled';
-            return result;
-        },
-        icons: () => {
-            let result = document.createElement('div');
-            result.classList.add('icons');
-            result.appendChild(this.DOM.icon('minimize'));
-            result.appendChild(this.DOM.icon('restore'));
-            result.appendChild(this.DOM.icon('maximize'));
-            result.appendChild(this.DOM.icon('close'));
-            return result;
-        },
-        icon: (name) => {
-            let result = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            result.classList.add('icon', name);
-            result.setAttribute('viewBox', '0 0 512 512');
-            result.innerHTML = `<path d="${this.icons[name]}"></path>`;
-            this.addEventListeners(this.evt[name], result);
-            return result;
-        },
-        content: () => {
-            let result = document.createElement('main');
-            result.appendChild(document.createElement('slot'));
-            return result;
-        },
-        footer: () => {
-            let result = document.createElement('footer');
-            result.appendChild(this.DOM.button('btn_ok', 'OK', this.evt.btn_ok));
-            result.appendChild(this.DOM.button('btn_cancel', 'Cancel', this.evt.btn_cancel));
-            return result;
-        },
-        button: (id, text, evts = {}) => {
-            let result = document.createElement('button');
-            result.id = id;
-            result.textContent = text;
-            this.addEventListeners(evts, result);
-            return result;
-        },
-        controls: () => {
-            let result = document.createElement('div');
-            result.classList.add('controls');
-            ['nw', 'n', 'ne', 'w', 'e', 'sw', 's', 'se'].forEach(name => {
-                name += '-resize';
-                let div = document.createElement('div');
-                div.classList.add('control', name);
-                this.addEventListeners(this.evt[name], div);
-                result.appendChild(div);
-            });
-            return result;
-        }
-    };
     getCoords(e) {
         return [e.clientX - this.offsetParent.offsetLeft, e.clientY - this.offsetParent.offsetTop];
     }
-    static EVT = {
+    static observableAttributes = {
+        'headerless': {
+            set: function (value) {
+                if (value === 'false' || value === null) {
+                    this.removeAttribute('headerless');
+                    this.removeEventListener('mousedown', this.draggingStart);
+                } else {
+                    this.setAttribute('headerless', '');
+                    this.addEventListener('mousedown', this.draggingStart);
+                }
+            },
+        },
+        'footerless': {
+            set: function (value) {
+                if (value === 'false' || value === null) {
+                    this.removeAttribute('footerless');
+                } else {
+                    this.setAttribute('footerless', '');
+                }
+            },
+        },
+        'title': {
+            set: function (value) {
+                this.shadowRoot.querySelector('#title').textContent = value;
+                this.removeAttribute('title');
+            },
+            remove: function () {
+                // Title removed: do nothing
+            },
+        },
+        'x': {
+            set: function (value) {
+                this.properties.x = value;
+            },
+        },
+        'y': {
+            set: function (value) {
+                this.properties.y = value;
+            },
+        },
+        'width': {
+            set: function (value) {
+                this.properties.width = value;
+            },
+        },
+        'height': {
+            set: function (value) {
+                this.properties.height = value;
+            },
+        },
+    };
+    EVT = {
         "n-resize": {
             mousedown: this.getMoveListener((e) => {
                 this.top = this.getCoords(e)[1];
@@ -373,57 +358,78 @@ export default class Dialog extends Webponent {
             }
         },
     };
-    static observableAttributes = {
-        'headerless': {
-            set: function (value) {
-                if (value === 'false' || value === null) {
-                    this.removeAttribute('headerless');
-                    this.removeEventListener('mousedown', this.draggingStart);
-                } else {
-                    this.setAttribute('headerless', '');
-                    this.addEventListener('mousedown', this.draggingStart);
-                }
-            },
-        },
-        'footerless': {
-            set: function (value) {
-                if (value === 'false' || value === null) {
-                    this.removeAttribute('footerless');
-                } else {
-                    this.setAttribute('footerless', '');
-                }
-            },
-        },
-        'title': {
-            set: function (value) {
-                this.shadowRoot.querySelector('#title').textContent = value;
-                this.removeAttribute('title');
-            },
-            remove: function () {
-                // Title removed: do nothing
-            },
-        },
-        'x': {
-            set: function (value) {
-                this.properties.x = value;
-            },
-        },
-        'y': {
-            set: function (value) {
-                this.properties.y = value;
-            },
-        },
-        'width': {
-            set: function (value) {
-                this.properties.width = value;
-            },
-        },
-        'height': {
-            set: function (value) {
-                this.properties.height = value;
-            },
-        },
-    };
 }
+Dialog.prototype.DOM = {
+    main: () => {
+        console.log(this.DOM);
+
+        let result = document.createDocumentFragment();
+        result.appendChild(this.DOM.header());
+        result.appendChild(this.DOM.content());
+        result.appendChild(this.DOM.footer());
+        result.appendChild(this.DOM.controls());
+        return result;
+    },
+    header: () => {
+        let result = document.createElement('header');
+        result.appendChild(this.DOM.title());
+        result.appendChild(this.DOM.icons());
+        this.addEventListeners(this.EVT.header, result);
+        return result;
+    },
+    title: () => {
+        let result = document.createElement('span');
+        result.id = 'title';
+        result.textContent = 'Untitled';
+        return result;
+    },
+    icons: () => {
+        let result = document.createElement('div');
+        result.classList.add('icons');
+        result.appendChild(this.DOM.icon('minimize'));
+        result.appendChild(this.DOM.icon('restore'));
+        result.appendChild(this.DOM.icon('maximize'));
+        result.appendChild(this.DOM.icon('close'));
+        return result;
+    },
+    icon: (name) => {
+        let result = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        result.classList.add('icon', name);
+        result.setAttribute('viewBox', '0 0 512 512');
+        result.innerHTML = `<path d="${this.icons[name]}"></path>`;
+        this.addEventListeners(this.EVT[name], result);
+        return result;
+    },
+    content: () => {
+        let result = document.createElement('main');
+        result.appendChild(document.createElement('slot'));
+        return result;
+    },
+    footer: () => {
+        let result = document.createElement('footer');
+        result.appendChild(this.DOM.button('btn_ok', 'OK', this.EVT.btn_ok));
+        result.appendChild(this.DOM.button('btn_cancel', 'Cancel', this.EVT.btn_cancel));
+        return result;
+    },
+    button: (id, text, evts = {}) => {
+        let result = document.createElement('button');
+        result.id = id;
+        result.textContent = text;
+        this.addEventListeners(evts, result);
+        return result;
+    },
+    controls: () => {
+        let result = document.createElement('div');
+        result.classList.add('controls');
+        ['nw', 'n', 'ne', 'w', 'e', 'sw', 's', 'se'].forEach(name => {
+            name += '-resize';
+            let div = document.createElement('div');
+            div.classList.add('control', name);
+            this.addEventListeners(this.EVT[name], div);
+            result.appendChild(div);
+        });
+        return result;
+    }
+};
 
 Dialog.init(import.meta);

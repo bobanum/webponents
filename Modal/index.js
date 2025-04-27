@@ -4,7 +4,6 @@ import Webponent from "../Webponent.js";
 export default class Modal extends Webponent {
     static url = import.meta.url;
     static tagName = 'modal-ponent';
-    // static templateUrl = 'index.tpl';
     static styleUrl = 'style.css';
     labels = {
         'ok': 'OK',
@@ -24,11 +23,7 @@ export default class Modal extends Webponent {
         'height': undefined,
     };
     async connectedCallback() {
-        let { template } = await super.connectedCallback();
-        if (!template) return;
-        
-        this.shadowRoot.appendChild(template);
-        Utils.transferStyles(this, this.dom);
+        super.connectedCallback();
         if (this.hasAttribute('buttons')) {
             const buttons = this.getAttribute('buttons').split(';');
             this.appendChild(this.DOM.buttons(buttons));

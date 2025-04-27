@@ -1,40 +1,46 @@
-import Webponent from "../Webponent.js";
+import Dialog from "../Dialog/index.js";
 
 /**
- * Represents the Starter component.
+ * Represents the D component.
  * @extends Webponent
  */
-export default class Starter extends Webponent {
+export default class D extends Dialog {
     /**
-     * The tag name of the Starter component.
+     * The tag name of the D component.
      * @type {string}
      */
-    static tagName = 'starter-ponent';
+    static _tagName = 'd-ponent';
 
     // static styleUrl = "style.css";
 
-    constructor() {
-        super();
-    }
+    // constructor() {
+    //     super();
+    // }
 
     /**
-     * Called when the Starter component is connected to the DOM.
+     * Called when the D component is connected to the DOM.
      * @override
      */
-    connectedCallback() {
-        super.connectedCallback();
-        this.shadowRoot.appendChild(document.createElement('slot'));
-        return;
+    // connectedCallback() {
+    //     super.connectedCallback();
+    //     this.shadowRoot.appendChild(document.createElement('slot'));
+    //     return;
+    // }
+    test() {
+        console.log('test');
+        return 'test';
     }
-    DOM = {
+    DOMzzz = {
         main: () => {
+            console.log(this, 'D component', super.__proto__);
+            
             const main = document.createElement('div');
-            main.textContent = 'Starter Component';
+            main.textContent = 'D Component';
             return main;
         },
     };
     /**
-     * Event handlers for the Starter component.
+     * Event handlers for the D component.
      * @type {Object}
      */
     static EVT = {
@@ -58,7 +64,7 @@ export default class Starter extends Webponent {
     };
 
     /**
-     * The observed attributes for the Starter component.
+     * The observed attributes for the D component.
      * @type {Object}
      */
     static observedProps = {
@@ -75,6 +81,18 @@ export default class Starter extends Webponent {
 }
 
 /**
- * Initializes the Starter component.
+ * Initializes the D component.
  */
-Starter.init(import.meta);
+console.log('D init', D.prototype.DOM);
+D.prototype.DOM = {
+    main: () => {
+        // console.log(this, 'D component', super.__proto__);
+        console.log(this);
+        
+        const main = document.createElement('div');
+        main.textContent = 'D Component';
+        return main;
+    },
+};
+
+D.init(import.meta);

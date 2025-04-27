@@ -12,10 +12,6 @@ export default class Ref extends Webponent {
      */
     static tagName = 'ref-ponent';
 
-    /**
-     * The template file for the Ref component. (optional)
-     * @type {string}
-     */
     // static styleUrl = "style.css";
 
     /**

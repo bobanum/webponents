@@ -1,5 +1,4 @@
-import Webponent from "./Webponent.js";
-import Utils from "./src/Utils.js";
+import Webponent from "../Webponent0.js";
 
 /**
  * Formponent is a custom HTML element that extends HTMLElement.
@@ -15,6 +14,11 @@ export default class Formponent extends Webponent {
 	 * @type {Object}
 	 */
 	static EVT = {};
+	/**
+	 * DOM function object.
+	 * @type {Object}
+	 */
+	static DOM = {};
 
 	/**
 	 * Represents a component.

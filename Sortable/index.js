@@ -11,11 +11,6 @@ export default class Sortable extends Webponent {
      */
     static tagName = 'sortable-ponent';
 
-    /**
-     * The template file for the Sortable component. (optional)
-     * @type {string}
-     */
-    // static templateUrl = 'index.tpl';
     static styleUrl = "style.css";
 
     constructor() {

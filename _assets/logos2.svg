@@ -1,0 +1,43 @@
+<svg width="2880" height="3456" version="1.1" viewBox="0 0 2880 3456" xmlns="http://www.w3.org/2000/svg">
+    <g fill="SlateGray">
+        <g id="abcde" transform="translate(0)">
+            <path id="a" d="m0 80v432h192v-160h128v160h192v-432l-80-80h-352zm192 80h128v128h-128z"/>
+            <path id="b" transform="translate(512)" d="m0 0v512h432l80-80v-112l-64-64 64-64v-112l-80-80zm192 160h128v64h-128zm0 128h128v64h-128z"/>
+            <path id="c" transform="translate(1024)" d="m80 0-80 80v352l80 80h352l80-80v-144h-192v64h-128v-192h128v64h192v-144l-80-80z"/>
+            <path id="d" transform="translate(1536)" d="m0 0v512h432l80-80v-352l-80-80zm192 160h128v192h-128z"/>
+            <path id="e" transform="translate(2048)" d="m0 0v512h512v-160h-320v-64h256v-64h-256v-64h320v-160z"/>
+        </g>
+        <g id="fghij" transform="translate(0,512)">
+            <path id="f" d="m0 0v512h192v-224h256v-64h-256v-64h320v-160z"/>
+            <path id="g" transform="translate(512)" d="m80 0-80 80v352l80 80h432v-288h-192v128h-128v-192h320v-160z"/>
+            <path id="h" transform="translate(1024)" d="m192 0v224h128v-224h192v512h-192v-224h-128v224h-192v-512z"/>
+            <path id="i" transform="translate(1536)" d="m0 416h64v-320h-64v-96h512v96h-64v320h64v96h-512z"/>
+            <path id="j" transform="translate(2048)" d="m512 0h-192v352h-128v-160h-192v240l80 80h352l80-80z"/>
+        </g>
+        <g id="klmno" transform="translate(0,1024)">
+            <path id="k" d="m192 0v224h64l64-64v-160h192v176l-80 80 80 80v176h-192v-160l-64-64h-64v224h-192v-512z"/>
+            <path id="l" transform="translate(512)" d="m0 0v512h512v-320h-192v160h-128v-352z"/>
+            <path id="m" transform="translate(1024)" d="m0 0v512h192v-128l64 64 64-64v128h192v-512h-160l-96 96-96-96z"/>
+            <path id="n" transform="translate(1536)" d="m0 0v512h192v-128l128 128h192v-512h-192v128l-128-128z"/>
+            <path id="o" transform="translate(2048)" d="m80 0-80 80v352l80 80h352l80-80v-352l-80-80zm112 160h128v192h-128z"/>
+        </g>
+        <g id="pqrst" transform="translate(0,1536)">
+            <path id="p" d="m0 0v512h192v-96h240l80-80v-256l-80-80zm192 160h128v96h-128z"/>
+            <path id="q" transform="translate(512)" d="m80 0-80 80v352l80 80h432v-432l-80-80zm112 160h128v128l-64 64h-64z"/>
+            <path id="r" transform="translate(1024)" d="m0 0v512h192v-96h128v96h192v-112l-80-80 80-80v-160l-80-80zm192 160h128v96h-128z"/>
+            <path id="s" transform="translate(1536)" d="m80 0-80 80v128l80 80h256v64h-336v160h432l80-80v-128l-80-80h-240v-64h320v-160z"/>
+            <path id="t" transform="translate(2048)" d="m0 0v96h96v416h320v-416h96v-96z"/>
+        </g>
+        <g id="uvwxy" transform="translate(0,2048)">
+            <path id="u" d="m0 0v432l80 80h352l80-80v-432h-192v352h-128v-352z"/>
+            <path id="v" transform="translate(512)" d="m0 0v352l160 160h192l160-160v-352h-192v288l-64 64-64-64v-288z"/>
+            <path id="w" transform="translate(1024)" d="m0 512v-512h192v128l64-64 64 64v-128h192v512h-160l-96-96-96 96z"/>
+            <path id="x" transform="translate(1536)" d="m0 0v144l112 112-112 112v144h160l96-96 96 96h160v-160l-96-96 96-96v-160h-160l-96 96-96-96z" fill-rule="evenodd" stop-color="#000000" style="-inkscape-stroke:none;font-variation-settings:normal"/>
+            <path id="y" transform="translate(2048)" d="m0 0v160l160 160v192h192v-192l160-160v-160h-160l-96 96-96-96z" fill-rule="evenodd" stop-color="#000000" style="-inkscape-stroke:none;font-variation-settings:normal"/>
+        </g>
+        <g id="z_" transform="translate(0,2560)">
+            <path id="z" d="m512 0h-512v192h128l-128 128v192h512v-192h-128l128-128z"/>
+        </g>
+        <rect x="1632" y="2768" width="192" height="160" fill="#f00" fill-opacity=".5" fill-rule="evenodd" opacity=".5" stop-color="#000000" stroke-linejoin="round" stroke-width="56"/>
+    </g>
+</svg>
