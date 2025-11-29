@@ -1,5 +1,4 @@
 import Webponent from "./Webponent.js";
-import Utils from "./src/Utils.js";
 
 /**
  * Formponent is a custom HTML element that extends HTMLElement.

@@ -1,10 +1,10 @@
-import Webponent from '../Webponent.js';
+import Formponent from '../Formponent.js';
 /**
  * Represents a custom file upload element.
  * @class
- * @extends Webponent
+ * @extends Formponent
  */
-class Upload extends Webponent {
+class Upload extends Formponent {
 	/**
 	 * The tag name of the custom element.
 	 * @type {string}
@@ -125,35 +125,35 @@ class Upload extends Webponent {
 				border-color: #333;
 				background-color: #f0f0f0;
 			}
-			.file-input {
+			.input {
 				display: none;
 			}`;
 			return style;
 		},
 		drop_area: () => {
-			const dropArea = document.createElement('div');
+			const dropArea = document.createElement('label');
+			dropArea.htmlFor = `input`;
 			dropArea.classList.add('drop-area');
 			const slot = dropArea.appendChild(document.createElement('slot'));
 			slot.textContent = 'Drag & Drop Files Here';
-			const fileInput = dropArea.appendChild(this.dom.file_input());
+			this.fileInput = dropArea.appendChild(this.dom.file_input());
 			this.addEventListeners(this.evt.dropArea, dropArea);
 
 			return dropArea;
 		},
 		file_input: () => {
 			const fileInput = document.createElement('input');
-			fileInput.classList.add('file-input');
 			fileInput.type = 'file';
+			fileInput.id = `input`;
 			fileInput.multiple = this.multiple;
 			fileInput.name = this.name;
 			fileInput.accept = this.accept;
-
 			this.addEventListeners(this.evt.fileInput, fileInput);
 
 			return fileInput;
 		},
 	};
-	static EVT = {
+	evt = {
 		dropArea: {
 			'dragenter|dragover|dragleave|drop': (e) => {
 				e.preventDefault();
@@ -178,14 +178,6 @@ class Upload extends Webponent {
 			},
 			'dragleave|drop': (e) => {
 				e.currentTarget.classList.remove('hover');
-			},
-			click: () => {
-				fetch('http://localhost:8888/api.php').then(response => {
-					return response;
-				}).catch(error => {
-					console.error('Error uploading file:', error);
-				});
-				// fileInput.click();
 			}
 		},
 		// Handle file selection via file input

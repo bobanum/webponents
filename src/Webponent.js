@@ -1,4 +1,4 @@
-import Utils from "./src/Utils.js";
+import Utils from "./Utils.js";
 
 /**
  * Webponent is a custom HTML element that extends HTMLElement.

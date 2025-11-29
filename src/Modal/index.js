@@ -1,4 +1,4 @@
-import Utils from "../src/Utils.js";
+import Utils from "../Utils.js";
 import Webponent from "../Webponent.js";
 
 export default class Modal extends Webponent {
