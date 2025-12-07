@@ -89,16 +89,40 @@ class ToolbarItem extends Component {
 			const button = this.button;
 			button.type = 'button';
 			button.id = this.id || '';
-			button.title = this.getAttribute('label') || '';
+			button.title = this.label || '';
 			button.tabIndex = 1;
-			if (this.hasAttribute('icon')) {
-				button.style.fontFamily = 'Material Icons';
+			console.log(this.icon);
+
+			if (this.icon) {
+				console.log(this.dom.icon(this.icon));
+
+				button.appendChild(this.dom.icon(this.icon));
+			} else {
+				button.textContent = this.label || '';
 			}
-			button.textContent = this.getAttribute('icon') || this.getAttribute('label');
 			button.addEventListener('click', (e) => {
 				this.dispatchEvent(new Event('click'));
 			});
 			return button;
+		},
+		icon: (content) => {
+			const result = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+			const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+			rect.setAttribute('width', '100%');
+			rect.setAttribute('height', '100%');
+			rect.setAttribute('fill', 'yellow');
+			const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+			use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `icons.svg#${content}`);
+			result.setAttribute('viewBox', '0 0 24 24');
+			result.appendChild(rect);
+			result.appendChild(use);
+			return result;
+		},
+		icon0: (content) => {
+			const icon = document.createElement('span');
+			// icon.className = 'material-icons';
+			icon.textContent = content;
+			return icon;
 		}
 	};
 }

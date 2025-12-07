@@ -5,8 +5,29 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script type="module" src="./Upload.js"></script>
 	<title>Upload</title>
+	<script type="module">
+		window.addEventListener('DOMContentLoaded', () => {
+			const uploadPonent = document.querySelector('upload-ponent');
+			uploadPonent.addEventListener('change', (event) => {
+				console.log('Files selected:', uploadPonent.files);
+			});
+			const form = document.querySelector('form');
+			form.addEventListener('submit', (event) => {
+				event.preventDefault();
+				const formData = new FormData(form);
+				for (const [key, value] of formData.entries()) {
+					console.log(`${key}:`, value);
+				}
+			});
+			form.addEventListener('change', () => {
+				console.log('Form changed');
+			});
+		});
+	</script>
 </head>
 <body>
-	<upload-ponent name="file">Drag & Drop Files ICI</upload-ponent>
+	<form action="#">
+		<upload-ponent name="file" accept="image/*">Drag & Drop Files ICI</upload-ponent>
+	</form>
 </body>
 </html>

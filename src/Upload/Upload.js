@@ -11,12 +11,6 @@ class Upload extends Component {
 	 */
 	static formAssociated = true;
 	/**
-	 * An array of attribute names to be observed for changes.
-	 * @type {string[]}
-	 * @static
-	 */
-	// static observedAttributes = ['accept', 'multiple'];
-	/**
 	 * Constructor for the Upload class.
 	 * @constructor
 	 */
@@ -24,58 +18,25 @@ class Upload extends Component {
 		super();
 		this.internals_ = this.attachInternals();
 		this.internals_.role = 'upload';
-
-		// if (this.hasAttribute('accept')) {
-		// 	this.accept = this.getAttribute('accept');
-		// }
-		// this.multiple = this.hasAttribute('multiple');
+		this.fileInput = document.createElement('input');
 	}
 	static properties = {
-		accept: {
-			type: 'string',
-			get() {
-				return this._.accept;
-			},
+		accept: this.createProperty('accept', {
 			set(value) {
-				if (this._.accept === value) return;
-				this._.accept = value;
+				this.fileInput.accept = value;
 			}
-		},
-		multiple: {
-			type: 'string',
-			get() {
-				return this._.multiple;
-			},
+		}),
+		multiple: this.createProperty('multiple', {
 			set(value) {
-				if (this._.multiple === value) return;
-				this._.multiple = value;
-				
 				this.fileInput.multiple = (value === '') || value;
 			}
-		},
-		name: {
-			type: 'string',
-			get() {
-				return this._.name;
-			},
+		}),
+		name: this.createProperty('name', {
 			set(value) {
-				if (this._.name === value) return;
-				this._.name = value;
+				this.fileInput.name = value;
 			}
-		},
+		})
 	};
-	get api() {
-		if (this.hasAttribute('api')) {
-			return this.getAttribute('api');
-		}
-		if (this.hasAttribute('formaction')) {
-			return this.getAttribute('formaction');
-		}
-		if (this.form?.hasAttribute('action')) {
-			return this.form.getAttribute('action');
-		}
-		return 'api';
-	}
 	get form() {
 		return this.internals_.form;
 	}
@@ -95,17 +56,18 @@ class Upload extends Component {
 		});
 	}
 
-	handleFiles(files) {
-		return this.upload(files).catch((error) => {
+	static async handleFiles(files, url) {
+		let response;
+		try {
+			response = await this.upload(files, url);
+		} catch (error) {
 			console.error('Error uploading file:', error);
-		}).then((response) => {
-			// console.log('File uploaded:', response);
-			return response;
-		});
+			const response = undefined;
+		}
+		return response;
 	}
 
-	upload(files) {
-		const url = this.api;
+	static async upload(files, url) {
 		const name = this.name || 'file';
 		const formData = new FormData();
 		if (this.multiple) {
@@ -119,14 +81,15 @@ class Upload extends Component {
 			method: 'POST',
 			body: formData
 		};
-	
-		return fetch(url, options)
-			.catch(error => {
-				console.error('Error uploading file:', error);
-				return false;
-			}).then(response => {
-				return response.json();
-			});
+
+		let response;
+		try {
+			response = await fetch(url, options);
+		} catch (error) {
+			console.error('Error uploading file:', error);
+			response = false;
+		}
+		return response.json();
 	}
 
 	dom = {
@@ -165,18 +128,15 @@ class Upload extends Component {
 			dropArea.classList.add('drop-area');
 			const slot = dropArea.appendChild(document.createElement('slot'));
 			slot.textContent = 'Drag & Drop Files Here';
-			this.fileInput = dropArea.appendChild(this.dom.file_input());
+			dropArea.appendChild(this.dom.file_input());
 			this.addEventListeners(this.evt.dropArea, dropArea);
 
 			return dropArea;
 		},
 		file_input: () => {
-			const fileInput = document.createElement('input');
+			const fileInput = this.fileInput;
 			fileInput.type = 'file';
 			fileInput.id = `input`;
-			fileInput.multiple = this.multiple;
-			fileInput.name = this.name;
-			fileInput.accept = this.accept;
 			this.addEventListeners(this.evt.fileInput, fileInput);
 
 			return fileInput;
@@ -189,31 +149,44 @@ class Upload extends Component {
 				e.stopPropagation();
 			},
 			'dragenter|dragover': (e) => {
+				console.log(e.type);
 				e.currentTarget.classList.add('hover');
 			},
 			'drop': (e) => {
 				// TODO - Check accepted files
+				console.log(e.type);
 				const dt = e.dataTransfer;
 				const files = dt.files;
-				this.handleFiles(files).then((response) => {
-					// Send event
-					const event = new CustomEvent('upload', {
-						detail: response,
-						bubbles: true,
-						cancelable: true,
-					});
-					this.dispatchEvent(event);
+				this.fileInput.files = files;
+				const event = new CustomEvent('change', {
+					detail: files,
+					bubbles: true,
+					cancelable: true,
 				});
+				console.log(event);
+				this.dispatchEvent(event);
+				// this.handleFiles(files).then((response) => {
+				// 	// Send event
+				// 	const event = new CustomEvent('upload', {
+				// 		detail: response,
+				// 		bubbles: true,
+				// 		cancelable: true,
+				// 	});
+				// 	this.dispatchEvent(event);
+				// });
 			},
 			'dragleave|drop': (e) => {
+				console.log(e.type);
 				e.currentTarget.classList.remove('hover');
 			}
 		},
 		// Handle file selection via file input
 		fileInput: {
 			change: (e) => {
+				console.log(e.type);
+				
 				const files = e.target.files;
-				this.handleFiles(files);
+				// this.static handleFiles(files);
 			},
 		}
 

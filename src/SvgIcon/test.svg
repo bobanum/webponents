@@ -1,0 +1,5 @@
+<svg width="128" height="128" version="1.1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <rect id="rect1" x="32" y="52" width="16" height="24" d="m 32,52 h 16 v 24 h -16 z" stroke="currentColor"/>
+    <path id="path1" x="32" y="8" width="16" height="24" d="m32 8h16v24h-16z" style="stroke-width:context-value;fill:context-stroke; stroke:context-fill"/>
+    <use id="use1" x="32" y="92" width="16" height="24" xlink:href="#path1" fill="red" stroke="pink" stroke-width="4"/>
+</svg>
