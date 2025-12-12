@@ -1,0 +1,121 @@
+<svg color="darkmagenta" stroke-width="6" version="1.1" viewBox="0 0 512 256" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <style>
+        .plein {
+            fill: currentColor;
+            stroke: none;
+        }
+
+        .contour {
+            fill: none;
+            stroke: currentColor;
+        }
+
+        .plein.contour {
+            fill: currentColor;
+            stroke: currentColor;
+        }
+
+        .contour.fill {
+            fill: currentColor;
+            fill-opacity: .1;
+        }
+    </style>
+    <rect width="100%" height="100%" fill="yellow" />
+    <use x="0" y="0" width="32" height="32" xlink:href="icons-stroke.svg#home" />
+    <use x="32" y="0" width="32" height="32" xlink:href="icons-stroke.svg#save" />
+    <use x="64" y="0" width="32" height="32" xlink:href="icons-stroke.svg#print" />
+    <use x="96" y="0" width="32" height="32" xlink:href="icons-stroke.svg#edit" />
+    <use x="128" y="0" width="32" height="32" xlink:href="icons-stroke.svg#duplicate" />
+    <use x="160" y="0" width="32" height="32" xlink:href="icons-stroke.svg#delete" />
+    <use x="192" y="0" width="32" height="32" xlink:href="icons-stroke.svg#archives" />
+    <use x="224" y="0" width="32" height="32" xlink:href="icons-stroke.svg#copy" />
+    <use x="256" y="0" width="32" height="32" xlink:href="icons-stroke.svg#identification" />
+    <use x="288" y="0" width="32" height="32" xlink:href="icons-stroke.svg#grid" />
+    <use x="320" y="0" width="32" height="32" xlink:href="icons-stroke.svg#disposition" />
+    <use x="352" y="0" width="32" height="32" xlink:href="icons-stroke.svg#style" />
+    <use x="384" y="0" width="32" height="32" xlink:href="icons-stroke.svg#html" />
+    <use x="416" y="0" width="32" height="32" xlink:href="icons-stroke.svg#json" />
+    <use x="448" y="0" width="32" height="32" xlink:href="icons-stroke.svg#cut" />
+    <use x="480" y="0" width="32" height="32" xlink:href="icons-stroke.svg#paste" />
+    <use x="0" y="32" width="32" height="32" xlink:href="icons-stroke.svg#search" />
+    <use x="32" y="32" width="32" height="32" xlink:href="icons-stroke.svg#zoom-out" />
+    <use x="64" y="32" width="32" height="32" xlink:href="icons-stroke.svg#zoom-in" />
+    <use x="96" y="32" width="32" height="32" xlink:href="icons-stroke.svg#zoom-off" />
+    <use x="128" y="32" width="32" height="32" xlink:href="icons-stroke.svg#visible" />
+    <use x="160" y="32" width="32" height="32" xlink:href="icons-stroke.svg#hidden" />
+    <use x="192" y="32" width="32" height="32" xlink:href="icons-stroke.svg#gear" />
+    <use x="224" y="32" width="32" height="32" xlink:href="icons-stroke.svg#gear2" />
+    <use x="256" y="32" width="32" height="32" xlink:href="icons-stroke.svg#document" />
+    <use x="288" y="32" width="32" height="32" xlink:href="icons-stroke.svg#folder" />
+    <use x="320" y="32" width="32" height="32" xlink:href="icons-stroke.svg#folder-open" />
+    <use x="352" y="32" width="32" height="32" xlink:href="icons-stroke.svg#folder-doc" />
+    <use x="384" y="32" width="32" height="32" xlink:href="icons-stroke.svg#hamburger" />
+    <use x="416" y="32" width="32" height="32" xlink:href="icons-stroke.svg#ellipsis" />
+    <use x="448" y="32" width="32" height="32" xlink:href="icons-stroke.svg#hamburger-v" />
+    <use x="480" y="32" width="32" height="32" xlink:href="icons-stroke.svg#ellipsis-v" />
+    <use x="0" y="64" width="32" height="32" xlink:href="icons-stroke.svg#asterisk" />
+    <use x="0" y="96" width="32" height="32" xlink:href="icons-stroke.svg#undo" />
+    <use x="32" y="96" width="32" height="32" xlink:href="icons-stroke.svg#redo" />
+    <use x="64" y="96" width="32" height="32" xlink:href="icons-stroke.svg#restart" />
+    <use x="96" y="96" width="32" height="32" xlink:href="icons-stroke.svg#skip" />
+    <use x="128" y="96" width="32" height="32" xlink:href="icons-stroke.svg#undo-flip" />
+    <use x="160" y="96" width="32" height="32" xlink:href="icons-stroke.svg#redo-flip" />
+    <use x="192" y="96" width="32" height="32" xlink:href="icons-stroke.svg#restart-flip" />
+    <use x="224" y="96" width="32" height="32" xlink:href="icons-stroke.svg#skip-flip" />
+    <use x="256" y="96" width="32" height="32" xlink:href="icons-stroke.svg#undo2" />
+    <use x="288" y="96" width="32" height="32" xlink:href="icons-stroke.svg#redo2" />
+    <use x="320" y="96" width="32" height="32" xlink:href="icons-stroke.svg#restart2" />
+    <use x="352" y="96" width="32" height="32" xlink:href="icons-stroke.svg#skip2" />
+    <use x="384" y="96" width="32" height="32" xlink:href="icons-stroke.svg#undo2-flip" />
+    <use x="416" y="96" width="32" height="32" xlink:href="icons-stroke.svg#redo2-flip" />
+    <use x="448" y="96" width="32" height="32" xlink:href="icons-stroke.svg#restart2-flip" />
+    <use x="480" y="96" width="32" height="32" xlink:href="icons-stroke.svg#skip2-flip" />
+    <use x="0" y="128" width="32" height="32" xlink:href="icons-stroke.svg#undo3" />
+    <use x="32" y="128" width="32" height="32" xlink:href="icons-stroke.svg#redo3" />
+    <use x="64" y="128" width="32" height="32" xlink:href="icons-stroke.svg#restart3" />
+    <use x="96" y="128" width="32" height="32" xlink:href="icons-stroke.svg#skip3" />
+    <use x="128" y="128" width="32" height="32" xlink:href="icons-stroke.svg#undo3-flip" />
+    <use x="160" y="128" width="32" height="32" xlink:href="icons-stroke.svg#redo3-flip" />
+    <use x="192" y="128" width="32" height="32" xlink:href="icons-stroke.svg#restart3-flip" />
+    <use x="224" y="128" width="32" height="32" xlink:href="icons-stroke.svg#skip3-flip" />
+    <use x="256" y="128" width="32" height="32" xlink:href="icons-stroke.svg#undo4" />
+    <use x="288" y="128" width="32" height="32" xlink:href="icons-stroke.svg#redo4" />
+    <use x="320" y="128" width="32" height="32" xlink:href="icons-stroke.svg#restart4" />
+    <use x="352" y="128" width="32" height="32" xlink:href="icons-stroke.svg#skip4" />
+    <use x="384" y="128" width="32" height="32" xlink:href="icons-stroke.svg#undo4-flip" />
+    <use x="416" y="128" width="32" height="32" xlink:href="icons-stroke.svg#redo4-flip" />
+    <use x="448" y="128" width="32" height="32" xlink:href="icons-stroke.svg#restart4-flip" />
+    <use x="480" y="128" width="32" height="32" xlink:href="icons-stroke.svg#skip4-flip" />
+    <use x="0" y="160" width="32" height="32" xlink:href="icons-stroke.svg#arrow-w" />
+    <use x="32" y="160" width="32" height="32" xlink:href="icons-stroke.svg#arrow-nw" />
+    <use x="64" y="160" width="32" height="32" xlink:href="icons-stroke.svg#arrow-n" />
+    <use x="96" y="160" width="32" height="32" xlink:href="icons-stroke.svg#arrow-ne" />
+    <use x="128" y="160" width="32" height="32" xlink:href="icons-stroke.svg#arrow-e" />
+    <use x="160" y="160" width="32" height="32" xlink:href="icons-stroke.svg#arrow-se" />
+    <use x="192" y="160" width="32" height="32" xlink:href="icons-stroke.svg#arrow-s" />
+    <use x="224" y="160" width="32" height="32" xlink:href="icons-stroke.svg#arrow-sw" />
+    <use x="256" y="160" width="32" height="32" xlink:href="icons-stroke.svg#plus" />
+    <use x="288" y="160" width="32" height="32" xlink:href="icons-stroke.svg#minus" />
+    <use x="320" y="160" width="32" height="32" xlink:href="icons-stroke.svg#times" />
+    <use x="352" y="160" width="32" height="32" xlink:href="icons-stroke.svg#slash" />
+    <use x="384" y="160" width="32" height="32" xlink:href="icons-stroke.svg#backslash" />
+    <use x="416" y="160" width="32" height="32" xlink:href="icons-stroke.svg#pipe" />
+    <use x="448" y="160" width="32" height="32" xlink:href="icons-stroke.svg#divide" />
+    <use x="480" y="160" width="32" height="32" xlink:href="icons-stroke.svg#check" />
+    <use x="0" y="192" width="32" height="32" xlink:href="icons-stroke.svg#arrow-small-w" />
+    <use x="32" y="192" width="32" height="32" xlink:href="icons-stroke.svg#arrow-small-nw" />
+    <use x="64" y="192" width="32" height="32" xlink:href="icons-stroke.svg#arrow-small-n" />
+    <use x="96" y="192" width="32" height="32" xlink:href="icons-stroke.svg#arrow-small-ne" />
+    <use x="128" y="192" width="32" height="32" xlink:href="icons-stroke.svg#arrow-small-e" />
+    <use x="160" y="192" width="32" height="32" xlink:href="icons-stroke.svg#arrow-small-se" />
+    <use x="192" y="192" width="32" height="32" xlink:href="icons-stroke.svg#arrow-small-s" />
+    <use x="224" y="192" width="32" height="32" xlink:href="icons-stroke.svg#arrow-small-sw" />
+    <use x="256" y="192" width="32" height="32" xlink:href="icons-stroke.svg#plus-small" />
+    <use x="288" y="192" width="32" height="32" xlink:href="icons-stroke.svg#minus-small" />
+    <use x="320" y="192" width="32" height="32" xlink:href="icons-stroke.svg#times-small" />
+    <use x="352" y="192" width="32" height="32" xlink:href="icons-stroke.svg#slash-small" />
+    <use x="384" y="192" width="32" height="32" xlink:href="icons-stroke.svg#backslash-small" />
+    <use x="416" y="192" width="32" height="32" xlink:href="icons-stroke.svg#pipe-small" />
+    <use x="448" y="192" width="32" height="32" xlink:href="icons-stroke.svg#divide-small" />
+    <use x="480" y="192" width="32" height="32" xlink:href="icons-stroke.svg#check-small" />
+</svg>
