@@ -33,15 +33,17 @@ export class Title extends Webponent {
 		level: {
 			type: Number,
 			default: 1,
+			assert(value) {
+				value = Number(value);
+				if (isNaN(value)) return undefined;
+				return this.cycle(value);
+			},
 			get() {
 				return this._.level;
 			},
 			set(value) {
-				console.log(value);
-				
-				value = Number(value);
-				if (this._.level === value) return;
-				this._.level = this.cycle(value);
+				// if (this._.level === value) return;
+				// this._.level = this.cycle(value);
 				if (this.rendered) {
 					this.render();
 				} 
