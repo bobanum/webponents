@@ -1,5 +1,0 @@
-# DraggableList
-
-## Attributes
-
-## CSS Variables

@@ -1,0 +1,25 @@
+{
+  "name": "@bobanum/webponents",
+  "version": "1.0.0",
+  "description": "A lightweight Node.js module",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js",
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "lint": "echo 'No linter configured'",
+    "format": "echo 'No formatter configured'",
+    "build": "echo 'No build process configured'",
+    "prepublishOnly": "npm test"
+  },
+  "keywords": [
+    "module",
+    "vanilla-js",
+    "lightweight"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}
