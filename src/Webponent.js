@@ -70,24 +70,15 @@ export default class Webponent extends HTMLElement {
 		if (oldValue === newValue) return;
 		this[name] = newValue;
 	}
+	static get slug() {
+		return this.toKebabCase(this.name);
+	}
 	get dom() {
 		return {
-			style: (href) => {
-				const url = new URL(href, import.meta.url || location).href;
-				console.log(import.meta.url);
-				if (!import.meta.url) {
-					const result = document.createElement("style");
-					import(url).then(module => {
-						result.textContent = module.default;
-					});
-					return result;
-				} else {
-					const result = document.createElement("link");
-					result.rel = "stylesheet";
-					
-					result.href = url;
-					return result;
-				}
+			style: (content) => {
+				const result = document.createElement("style");
+				result.textContent = content;
+				return result;
 			},
 		};
 	}

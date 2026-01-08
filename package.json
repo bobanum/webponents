@@ -10,7 +10,8 @@
     "dev": "node --watch index.js",
     "lint": "echo 'No linter configured'",
     "format": "echo 'No formatter configured'",
-    "build": "echo 'No build process configured'",
+    "build": "node esbuild.config.js",
+    "build:watch": "node esbuild.config.js --watch",
     "prepublishOnly": "npm test"
   },
   "keywords": [
@@ -20,6 +21,8 @@
   ],
   "author": "Your Name",
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "esbuild": "^0.24.2"
+  },
   "dependencies": {}
 }
