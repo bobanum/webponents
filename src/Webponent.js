@@ -72,10 +72,22 @@ export default class Webponent extends HTMLElement {
 	}
 	get dom() {
 		return {
-			style: (styles) => {
-				const result = document.createElement("style");
-				result.textContent = styles;
-				return result;
+			style: (href) => {
+				const url = new URL(href, import.meta.url || location).href;
+				console.log(import.meta.url);
+				if (!import.meta.url) {
+					const result = document.createElement("style");
+					import(url).then(module => {
+						result.textContent = module.default;
+					});
+					return result;
+				} else {
+					const result = document.createElement("link");
+					result.rel = "stylesheet";
+					
+					result.href = url;
+					return result;
+				}
 			},
 		};
 	}
@@ -167,10 +179,10 @@ export default class Webponent extends HTMLElement {
 		prop.assert ??= PropsProxy.asserts[prop.type.name] ?? prop.type;
 		const descriptor = {
 			get() {
-				let result = prop.get ? prop.get.call(this) 
-				: (name in this._) ? this._[name] 
-				: this.hasAttribute(name) ? prop.assert.call(this, this.getAttribute(name)) 
-				: prop.default;
+				let result = prop.get ? prop.get.call(this)
+					: (name in this._) ? this._[name]
+						: this.hasAttribute(name) ? prop.assert.call(this, this.getAttribute(name))
+							: prop.default;
 				return result;
 			},
 			set(value) {
@@ -179,7 +191,7 @@ export default class Webponent extends HTMLElement {
 					delete this._[name];
 					return true;
 				}
-				
+
 				if (name in this._ && this._[name] === value) return;
 				this._[name] = value;
 				if (prop.set) {
