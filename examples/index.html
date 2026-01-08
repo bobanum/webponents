@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type="module" src="./index.js"></script>
+	<!-- <script type="module" src="../src/SvgIcon.js?icons.svg"></script> -->
+	<link rel="stylesheet" href="css/style.css">
+	<title>Webponents Examples</title>
+</head>
+
+<body>
+	<section>
+		<title-ponent level="1">This is a Title Webponent</title-ponent>
+	</section>
+	<section>
+		<h1>Webponent SvgIcon</h1>
+		<div class="svg-icons">
+			<svg-icon-ponent icon="home" href="icons.svg"></svg-icon-ponent>
+			<svg-icon-ponent icon="save" href="icons.svg"></svg-icon-ponent>
+			<svg-icon-ponent icon="cancel" href="icons.svg"></svg-icon-ponent>
+			<svg-icon-ponent icon="json" href="icons.svg"></svg-icon-ponent>
+			<svg-icon-ponent icon="html" href="icons.svg"></svg-icon-ponent>
+		</div>
+		<div class="svg-icons">
+			<svg-icon-ponent icon="home"></svg-icon-ponent>
+			<svg-icon-ponent icon="save"></svg-icon-ponent>
+			<svg-icon-ponent icon="cancel"></svg-icon-ponent>
+		</div>
+	</section>
+	<section>
+		<h1>Webponent Toolbar</h1>
+	<toolbar-ponent style="--size: 1.5em;">
+		<toolbar-item-ponent label="Accueil" icon="home"></toolbar-item-ponent>
+		<toolbar-item-ponent label="Sauvegarder la grille" icon="save"></toolbar-item-ponent>
+		<toolbar-item-ponent label="Imprimer la grille" icon="print"></toolbar-item-ponent>
+		<toolbar-item-ponent label="Dupliquer la grille" icon="duplicate"></toolbar-item-ponent>
+		<toolbar-item-ponent label="Récupérer une archive" icon="archives" style="display:flex; flex-direction: column;">
+			<toolbar-item-ponent label="Courant" icon="copy"></toolbar-item-ponent>
+			<toolbar-item-ponent label="2022-10-24 15:24:44"></toolbar-item-ponent>
+			<toolbar-item-ponent label="2022-10-24 15:21:00"></toolbar-item-ponent>
+		</toolbar-item-ponent>
+		<toolbar-item-ponent label="Annuler les modifications" icon="undo"></toolbar-item-ponent>
+		<toolbar-item-ponent label="Supprimer la grille" icon="delete"></toolbar-item-ponent>
+	</toolbar-ponent>
+	</section>
+</body>
+
+</html>

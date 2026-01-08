@@ -1,74 +1,225 @@
-# My Module
+# Webponents
 
-A lightweight Node.js module built with vanilla JavaScript.
+A lightweight framework for creating custom Web Components with reactive properties and declarative rendering. Built with vanilla JavaScript, Webponents provides a simple yet powerful API for building reusable UI components.
+
+## Features
+
+- 🚀 **Simple API**: Extend a single base class to create custom elements
+- ⚡ **Reactive Properties**: Automatic synchronization between attributes and properties
+- 🎯 **Type Coercion**: Built-in type conversion for Number, Boolean, Integer, and Float
+- 🔄 **Property Lifecycle**: Custom getters, setters, and assertions for properties
+- 🎨 **Shadow DOM**: Encapsulated styling and markup by default
+- 📦 **Zero Dependencies**: Pure vanilla JavaScript, no build tools required
 
 ## Installation
 
 ### Using npm
 
 ```bash
-npm install my-module
+npm install webponents
 ```
 
-### Using CDN
-
-For browser usage, you can include the module via a CDN (after publishing):
+### Using ES Modules
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/my-module@1.0.0/index.js"></script>
+<script type="module">
+  import { Webponent, Title } from './index.js';
+</script>
 ```
 
-## Usage
+## Quick Start
 
-### Node.js
+### Creating a Simple Component
 
 ```javascript
-import myModule from 'my-module';
+import Webponent from './src/Webponent.js';
 
-// Use the greet method
-console.log(myModule.greet());          // Output: Hello, World!
-console.log(myModule.greet('Alice'));   // Output: Hello, Alice!
+class MyButton extends Webponent {
+  connectedCallback() {
+    this.shadowRoot.innerHTML = `
+      <button><slot></slot></button>
+    `;
+  }
+  
+  static properties = {
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  };
+}
 
-// Use the add method
-console.log(myModule.add(2, 3));        // Output: 5
-
-// Or use the class directly
-import { MyModule } from 'my-module';
-const instance = new MyModule();
-console.log(instance.greet('Bob'));     // Output: Hello, Bob!
+MyButton.register();
 ```
 
-### Browser
+```html
+<my-button disabled>Click Me</my-button>
+```
 
-See the [browser example](examples/browser-example.html) for usage in a browser environment.
+### Using the Title Component
 
-## API
+The Title component demonstrates dynamic rendering and property cycling:
 
-### `greet(name)`
+```html
+<title-ponent level="2">My Heading</title-ponent>
+```
 
-Returns a greeting message.
+Click on the title to cycle through heading levels (h1-h6).
+
+## API Documentation
+
+### Webponent Base Class
+
+#### Static Properties
+
+- **`affix`** (string): Prefix or suffix (or both) for component tag name (Syntax: 'app-' => prefix 'app-tag', '-ponent'=>suffix 'tag-ponent', 'app-ponent' => both 'app-tag-ponent')
+- **`properties`** (object): Property definitions for the component
+
+#### Static Methods
+
+##### `register(name)`
+
+Registers the component as a custom element.
 
 - **Parameters:**
-  - `name` (string, optional) - The name to greet. Defaults to "World".
-- **Returns:** (string) A greeting message.
+  - `name` (string, optional): Custom element name. Defaults to class name in kebab-case
 
 **Example:**
 ```javascript
-myModule.greet('Alice');  // "Hello, Alice!"
+class MyComponent extends Webponent {}
+MyComponent.register(); // Registers as 'my-component-ponent'
+MyComponent.register('my-widget'); // Registers as 'my-widget'
 ```
 
-### `add(a, b)`
+##### `defineProperties(descriptors)`
 
-Adds two numbers together.
+Defines reactive properties with type conversion and lifecycle hooks.
 
 - **Parameters:**
-  - `a` (number) - First number
-  - `b` (number) - Second number
-- **Returns:** (number) Sum of a and b
+  - `descriptors` (object): Object mapping property names to descriptors
 
 **Example:**
 ```javascript
-myModule.add(2, 3);  // 5
+static properties = {
+  count: {
+    type: Number,
+    default: 0,
+    set(value) {
+      this.render();
+    }
+  }
+};
+```
+
+#### Property Descriptor Options
+
+- **`type`** (Function): Type constructor (String, Number, Boolean, etc.)
+- **`default`** (any): Default value for the property
+- **`assert`** (Function): Custom validation/coercion function
+- **`get`** (Function): Custom getter logic
+- **`set`** (Function): Custom setter logic (called after value changes)
+
+#### Built-in Type Assertions
+
+- **`Number`**: Converts to number, returns undefined if NaN
+- **`Boolean`**: Converts to boolean ('false' string → false)
+- **`Integer`**: Converts to integer using parseInt
+- **`Float`**: Converts to float using parseFloat
+
+#### Instance Methods
+
+##### `createProxy(obj)`
+
+Creates a proxy for automatic attribute synchronization.
+
+##### `attributeChangedCallback(name, oldValue, newValue)`
+
+Lifecycle hook called when observed attributes change.
+
+### Title Component
+
+A specialized component for rendering dynamic headings.
+
+#### Properties
+
+- **`level`** (Number, 1-6): Heading level that determines which h-tag to render
+
+#### Methods
+
+- **`render()`**: Updates the shadow DOM with the current heading level
+- **`cycle(num, min, max)`**: Cycles a number within a range
+
+#### Events
+
+- Clicking the title increments the heading level (cycles from h6 to h1)
+
+## Examples
+
+### Counter Component
+
+```javascript
+class Counter extends Webponent {
+  connectedCallback() {
+    this.render();
+  }
+  
+  render() {
+    this.shadowRoot.innerHTML = `
+      <style>
+        button { padding: 10px 20px; font-size: 16px; }
+        span { margin: 0 10px; font-weight: bold; }
+      </style>
+      <button id="dec">-</button>
+      <span>${this.count}</span>
+      <button id="inc">+</button>
+    `;
+    
+    this.shadowRoot.getElementById('inc').onclick = () => this.count++;
+    this.shadowRoot.getElementById('dec').onclick = () => this.count--;
+  }
+  
+  static properties = {
+    count: {
+      type: Number,
+      default: 0,
+      set() { this.render(); }
+    }
+  };
+}
+
+Counter.register('counter', '', '');
+```
+
+### Toggle Component
+
+```javascript
+class Toggle extends Webponent {
+  connectedCallback() {
+    this.render();
+    this.shadowRoot.querySelector('input').addEventListener('change', (e) => {
+      this.checked = e.target.checked;
+    });
+  }
+  
+  render() {
+    this.shadowRoot.innerHTML = `
+      <label>
+        <input type="checkbox" ${this.checked ? 'checked' : ''}>
+        <slot></slot>
+      </label>
+    `;
+  }
+  
+  static properties = {
+    checked: {
+      type: Boolean,
+      default: false,
+      set() { this.render(); }
+    }
+  };
+}
+
+Toggle.register();
 ```
 
 ## Development
@@ -88,25 +239,19 @@ npm test
 ### Examples
 
 Check the `examples/` folder for usage examples:
-- [node-example.js](examples/node-example.js) - Node.js usage
+- [title.html](examples/title.html) - Title component demo
 - [browser-example.html](examples/browser-example.html) - Browser usage
+- [node-example.js](examples/node-example.js) - Node.js usage
 
-## Publishing
+## Documentation
 
-To publish this module to npm:
-
-1. Update the `package.json` with your module name and details
-2. Create an npm account if you don't have one
-3. Login to npm: `npm login`
-4. Publish: `npm publish`
+Full documentation is available in the `docs/` folder:
+- [Title Component](docs/Title.md)
+- [Webponent Base Class](docs/Webponent.md)
 
 ## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
-
-## Author
-
-Your Name
 
 ## Contributing
 

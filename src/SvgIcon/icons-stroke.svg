@@ -1,0 +1,481 @@
+<svg color="darkmagenta" stroke-width="6" version="1.1" viewBox="128 0 128 128" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+
+    </defs>
+    <style>
+        .plein {
+            fill: currentColor;
+            stroke: none;
+        }
+
+        .contour {
+            fill: none;
+            stroke: currentColor;
+        }
+
+        .plein.contour {
+            fill: currentColor;
+            stroke: currentColor;
+        }
+
+        .contour.fill {
+            fill: currentColor;
+            fill-opacity: .1;
+        }
+    </style>
+    <g transform="translate(0)">
+        <g transform="matrix(.125 0 0 .125 0 48)">
+            <defs>
+                <symbol id="undo" viewBox="0 0 128 128">
+                    <path class="contour" d="m33.2 18.8-18.3 18.3a4 4 0 0 0 0 5.66l18.3 18.3a1.66 1.66 0 0 0 2.83-1.17v-8h36c11 0 20 8.95 20 20s-8.95 20-20 20c-8.27 0-15.4-5.02-18.4-12.2-0.862-2.03-2.97-3.81-5.18-3.81h-16.2c-2.21 0-3.86 1.79-3.46 3.96 3.75 20.5 21.7 36 43.3 36 24.3 0 44-19.7 44-44s-19.7-44-44-44h-36v-8a1.66 1.66 0 0 0-2.83-1.17z" />
+                </symbol>
+                <symbol id="redo" viewBox="0 0 128 128">
+                    <use transform="matrix(-1,0,0,1,128,0)" xlink:href="#undo" />
+                </symbol>
+                <symbol id="restart" viewBox="0 0 128 128">
+                    <use transform="rotate(-90,64,64)" xlink:href="#undo" />
+                </symbol>
+                <symbol id="skip" viewBox="0 0 128 128">
+                    <use transform="matrix(0,-1,-1,0,128,128)" xlink:href="#undo" />
+                </symbol>
+                <symbol id="undo-flip" viewBox="0 0 128 128">
+                    <use transform="matrix(1,0,0,-1,0,128)" xlink:href="#undo" />
+                </symbol>
+                <symbol id="redo-flip" viewBox="0 0 128 128">
+                    <use transform="rotate(180,64,64)" xlink:href="#undo" />
+                </symbol>
+                <symbol id="restart-flip" viewBox="0 0 128 128">
+                    <use transform="matrix(0,1,1,0,0,0)" xlink:href="#undo" />
+                </symbol>
+                <symbol id="skip-flip" viewBox="0 0 128 128">
+                    <use transform="rotate(90,64,64)" xlink:href="#undo" />
+                </symbol>
+                <symbol id="undo2">
+                    <path class="contour " d="m72 108c24.3 0 44-19.7 44-44s-19.7-44-44-44h-36v-8c0-1.48-1.78-2.22-2.83-1.17l-18.3 18.3c-1.56 1.56-1.56 4.09 0 5.66l18.3 18.3c1.04 1.04 2.83 0.305 2.83-1.17v-8h36c11 0 20 8.95 20 20s-8.95 20-20 20h-40a4 4 0 0 0-4 4v16a4 4 0 0 0 4 4z" />
+                </symbol>
+                <symbol id="redo2" viewBox="0 0 128 128">
+                    <use transform="matrix(-1,0,0,1,128,0)" xlink:href="#undo2" />
+                </symbol>
+                <symbol id="restart2" viewBox="0 0 128 128">
+                    <use transform="rotate(-90,64,64)" xlink:href="#undo2" />
+                </symbol>
+                <symbol id="skip2" viewBox="0 0 128 128">
+                    <use transform="matrix(0,-1,-1,0,128,128)" xlink:href="#undo2" />
+                </symbol>
+                <symbol id="undo2-flip" viewBox="0 0 128 128">
+                    <use transform="matrix(1,0,0,-1,0,128)" xlink:href="#undo2" />
+                </symbol>
+                <symbol id="redo2-flip" viewBox="0 0 128 128">
+                    <use transform="rotate(180,64,64)" xlink:href="#undo2" />
+                </symbol>
+                <symbol id="restart2-flip" viewBox="0 0 128 128">
+                    <use transform="matrix(0,1,1,0,0,0)" xlink:href="#undo2" />
+                </symbol>
+                <symbol id="skip2-flip" viewBox="0 0 128 128">
+                    <use transform="rotate(90,64,64)" xlink:href="#undo2" />
+                </symbol>
+            </defs>
+            <g>
+                <use xlink:href="#undo" />
+                <use x="128" xlink:href="#redo" />
+                <use x="256" xlink:href="#restart" />
+                <use x="384" xlink:href="#skip" />
+                <use x="512" xlink:href="#undo-flip" />
+                <use x="640" xlink:href="#redo-flip" />
+                <use x="768" xlink:href="#restart-flip" />
+                <use x="896" xlink:href="#skip-flip" />
+                <use x="1024" xlink:href="#undo2" />
+                <use x="1152" xlink:href="#redo2" />
+                <use x="1280" xlink:href="#restart2" />
+                <use x="1408" xlink:href="#skip2" />
+                <use x="1536" xlink:href="#undo2-flip" />
+                <use x="1664" xlink:href="#redo2-flip" />
+                <use x="1792" xlink:href="#restart2-flip" />
+                <use x="1920" xlink:href="#skip2-flip" />
+            </g>
+        </g>
+        <g transform="matrix(.125 0 0 .125 0 64)">
+            <defs>
+                <symbol id="undo3" viewBox="0 0 128 128">
+                    <path class="contour " d="m34.5 18.4c-0.467-0.0549-0.962 0.0852-1.35 0.477l-18.3 18.3c-1.56 1.56-1.56 4.09 0 5.66l18.3 18.3c1.04 1.04 2.83 0.304 2.83-1.17v-8h36c11 0 20 8.95 20 20s-8.95 20-20 20c-2.21 0-4 1.79-4 4v16c0 2.21 1.79 4 4 4 24.3 0 44-19.7 44-44s-19.7-44-44-44h-36v-8c0-0.923-0.697-1.56-1.47-1.65z" />
+                </symbol>
+                <symbol id="redo3" viewBox="0 0 128 128">
+                    <use transform="matrix(-1,0,0,1,128,0)" xlink:href="#undo3" />
+                </symbol>
+                <symbol id="restart3" viewBox="0 0 128 128">
+                    <use transform="rotate(-90,64,64)" xlink:href="#undo3" />
+                </symbol>
+                <symbol id="skip3" viewBox="0 0 128 128">
+                    <use transform="matrix(0,-1,-1,0,128,128)" xlink:href="#undo3" />
+                </symbol>
+                <symbol id="undo3-flip" viewBox="0 0 128 128">
+                    <use transform="matrix(1,0,0,-1,0,128)" xlink:href="#undo3" />
+                </symbol>
+                <symbol id="redo3-flip" viewBox="0 0 128 128">
+                    <use transform="rotate(180,64,64)" xlink:href="#undo3" />
+                </symbol>
+                <symbol id="restart3-flip" viewBox="0 0 128 128">
+                    <use transform="matrix(0,1,1,0,0,0)" xlink:href="#undo3" />
+                </symbol>
+                <symbol id="skip3-flip" viewBox="0 0 128 128">
+                    <use transform="rotate(90,64,64)" xlink:href="#undo3" />
+                </symbol>
+                <symbol id="undo4" viewBox="0 0 128 128">
+                    <path class="contour " d="m34.2 34.3c-0.355 0.0346-0.706 0.187-1 0.48l-18.3 18.3c-1.56 1.56-1.56 4.09 0 5.66l18.3 18.3c1.04 1.04 2.83 0.304 2.83-1.17v-8h36c11 0 20 8.95 20 20 0 2.21 1.79 4 4 4h16c2.21 0 4-1.79 4-4 0-24.3-19.7-44-44-44h-36v-8c0-0.923-0.697-1.56-1.47-1.65-0.117-0.0137-0.235-0.0154-0.354-0.0039z" />
+                </symbol>
+                <symbol id="redo4" viewBox="0 0 128 128">
+                    <use transform="matrix(-1,0,0,1,128,0)" xlink:href="#undo4" />
+                </symbol>
+                <symbol id="restart4" viewBox="0 0 128 128">
+                    <use transform="matrix(0,-1,1,0,0,128)" xlink:href="#undo4" />
+                </symbol>
+                <symbol id="skip4" viewBox="0 0 128 128">
+                    <use transform="matrix(0,-1,-1,0,128,128)" xlink:href="#undo4" />
+                </symbol>
+                <symbol id="undo4-flip" viewBox="0 0 128 128">
+                    <use transform="matrix(1,0,0,-1,0,128)" xlink:href="#undo4" />
+                </symbol>
+                <symbol id="redo4-flip" viewBox="0 0 128 128">
+                    <use transform="matrix(-1,0,0,-1,128,128)" xlink:href="#undo4" />
+                </symbol>
+                <symbol id="restart4-flip" viewBox="0 0 128 128">
+                    <use transform="matrix(0,1,1,0,0,0)" xlink:href="#undo4" />
+                </symbol>
+                <symbol id="skip4-flip" viewBox="0 0 128 128">
+                    <use transform="matrix(0,1,-1,0,128,0)" xlink:href="#undo4" />
+                </symbol>
+            </defs>
+            <use xlink:href="#undo3" />
+            <use x="128" xlink:href="#redo3" />
+            <use x="256" xlink:href="#restart3" />
+            <use x="384" xlink:href="#skip3" />
+            <use x="512" xlink:href="#undo3-flip" />
+            <use x="640" xlink:href="#redo3-flip" />
+            <use x="768" xlink:href="#restart3-flip" />
+            <use x="896" xlink:href="#skip3-flip" />
+            <use x="1024" xlink:href="#undo4" />
+            <use x="1152" xlink:href="#redo4" />
+            <use x="1280" xlink:href="#restart4" />
+            <use x="1408" xlink:href="#skip4" />
+            <use x="1536" xlink:href="#undo4-flip" />
+            <use x="1664" xlink:href="#redo4-flip" />
+            <use x="1792" xlink:href="#restart4-flip" />
+            <use x="1920" xlink:href="#skip4-flip" />
+        </g>
+        <g transform="matrix(.125 0 0 .125 0 80)">
+            <defs>
+                <symbol id="arrow-w" viewBox="0 0 128 128">
+                    <path class="contour" d="m61.2 113c1.04 1.04 2.83 0.305 2.83-1.17v-28h44c2.21 0 4-1.79 4-4v-32c0-2.21-1.79-4-4-4h-44v-28c0-1.48-1.78-2.22-2.83-1.17l-46.3 46.2c-1.56 1.56-1.56 4.09 0 5.66z" />
+                </symbol>
+                <symbol id="arrow-nw" viewBox="0 0 128 128">
+                    <use transform="rotate(45,64,64)" xlink:href="#arrow-w" />
+                </symbol>
+                <symbol id="arrow-n" viewBox="0 0 128 128">
+                    <use transform="rotate(90,64,64)" xlink:href="#arrow-w" />
+                </symbol>
+                <symbol id="arrow-ne" viewBox="0 0 128 128">
+                    <use transform="rotate(135,64,64)" xlink:href="#arrow-w" />
+                </symbol>
+                <symbol id="arrow-e" viewBox="0 0 128 128">
+                    <use transform="rotate(180,64,64)" xlink:href="#arrow-w" />
+                </symbol>
+                <symbol id="arrow-se" viewBox="0 0 128 128">
+                    <use transform="rotate(225 64 64)" xlink:href="#arrow-w" />
+                </symbol>
+                <symbol id="arrow-s" viewBox="0 0 128 128">
+                    <use transform="rotate(-90,64,64)" xlink:href="#arrow-w" />
+                </symbol>
+                <symbol id="arrow-sw" viewBox="0 0 128 128">
+                    <use transform="rotate(-45,64,64)" xlink:href="#arrow-w" />
+                </symbol>
+                <symbol id="plus" viewBox="0 0 128 128">
+                    <path class="contour" d="m52 24v28h-28a4 4 0 0 0-4 4v16a4 4 0 0 0 4 4h28v28a4 4 0 0 0 4 4h16a4 4 0 0 0 4-4v-28h28a4 4 0 0 0 4-4v-16a4 4 0 0 0-4-4h-28v-28a4 4 0 0 0-4-4h-16a4 4 0 0 0-4 4z" />
+                </symbol>
+                <symbol id="minus" viewBox="0 0 128 128">
+                    <path class="contour" d="m24 52c-2.21 0-4 1.79-4 4v16c0 2.21 1.79 4 4 4h80c2.21 0 4-1.79 4-4v-16c0-2.21-1.79-4-4-4z" />
+                </symbol>
+                <symbol id="times" viewBox="0 0 128 128">
+                    <use transform="rotate(45,64,64)" xlink:href="#plus" />
+                </symbol>
+                <symbol id="slash" viewBox="0 0 128 128">
+                    <use transform="rotate(-45,64,64)" xlink:href="#minus" />
+                </symbol>
+                <symbol id="backslash" viewBox="0 0 128 128">
+                    <use transform="rotate(45,64,64)" xlink:href="#minus" />
+                </symbol>
+                <symbol id="pipe" viewBox="0 0 128 128">
+                    <use transform="rotate(90,64,64)" xlink:href="#minus" />
+                </symbol>
+                <symbol id="divide" viewBox="0 0 128 128">
+                    <path class="contour" d="m64 12a12 12 0 0 0-12 12 12 12 0 0 0 12 12 12 12 0 0 0 12-12 12 12 0 0 0-12-12zm-40 40c-2.21 0-4 1.79-4 4v16c0 2.21 1.79 4 4 4h80c2.21 0 4-1.79 4-4v-16c0-2.21-1.79-4-4-4zm40 40a12 12 0 0 0-12 12 12 12 0 0 0 12 12 12 12 0 0 0 12-12 12 12 0 0 0-12-12z" />
+                </symbol>
+                <symbol id="check" viewBox="0 0 128 128">
+                    <path class="contour" d="m95.6 31.7c-1.02 0-2.05 0.389-2.83 1.17l-36.7 36.7-19.8-19.8c-1.56-1.56-4.09-1.56-5.66 0l-11.3 11.3c-1.56 1.56-1.56 4.09 0 5.66l34 34a4 4 0 0 0 5.66 0l50.9-50.9c1.56-1.56 1.56-4.09 0-5.66l-11.3-11.3c-0.781-0.781-1.8-1.17-2.83-1.17z" />
+                </symbol>
+            </defs>
+            <use xlink:href="#arrow-w" />
+            <use x="128" xlink:href="#arrow-nw" />
+            <use x="256" xlink:href="#arrow-n" />
+            <use x="384" xlink:href="#arrow-ne" />
+            <use x="512" xlink:href="#arrow-e" />
+            <use x="640" xlink:href="#arrow-se" />
+            <use x="768" xlink:href="#arrow-s" />
+            <use x="896" xlink:href="#arrow-sw" />
+            <use x="1024" xlink:href="#plus" />
+            <use x="1152" xlink:href="#minus" />
+            <use x="1280" xlink:href="#times" />
+            <use x="1408" xlink:href="#slash" />
+            <use x="1536" xlink:href="#backslash" />
+            <use x="1664" xlink:href="#pipe" />
+            <use x="1792" xlink:href="#divide" />
+            <use x="1920" xlink:href="#check" />
+        </g>
+        <g transform="matrix(.125 0 0 .125 0 96)">
+            <defs>
+                <symbol id="arrow-small-w">
+                    <path class="contour" d="m54.5 30.4c-0.467-0.0549-0.962 0.0852-1.35 0.477l-30.3 30.3c-1.56 1.56-1.56 4.09 0 5.66l30.3 30.3c1.04 1.04 2.83 0.304 2.83-1.17v-20h36c2.21 0 4-1.79 4-4v-16c0-2.21-1.79-4-4-4h-36v-20c0-0.923-0.697-1.56-1.47-1.65z" />
+                </symbol>
+                <symbol id="arrow-small-nw" viewBox="0 0 128 128">
+                    <use transform="rotate(45,64,64)" xlink:href="#arrow-small-w" />
+                </symbol>
+                <symbol id="arrow-small-n" viewBox="0 0 128 128">
+                    <use transform="rotate(90,64,64)" xlink:href="#arrow-small-w" />
+                </symbol>
+                <symbol id="arrow-small-ne" viewBox="0 0 128 128">
+                    <use transform="rotate(135,64,64)" xlink:href="#arrow-small-w" />
+                </symbol>
+                <symbol id="arrow-small-e" viewBox="0 0 128 128">
+                    <use transform="rotate(180,64,64)" xlink:href="#arrow-small-w" />
+                </symbol>
+                <symbol id="arrow-small-se" viewBox="0 0 128 128">
+                    <use transform="rotate(225 64 64)" xlink:href="#arrow-small-w" />
+                </symbol>
+                <symbol id="arrow-small-s" viewBox="0 0 128 128">
+                    <use transform="rotate(-90,64,64)" xlink:href="#arrow-small-w" />
+                </symbol>
+                <symbol id="arrow-small-sw" viewBox="0 0 128 128">
+                    <use transform="rotate(-45,64,64)" xlink:href="#arrow-small-w" />
+                </symbol>
+                <symbol id="plus-small" viewBox="0 0 128 128">
+                    <path class="contour" d="m56 44v12h-12a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h12v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4v-12h12a4 4 0 0 0 4-4v-8a4 4 0 0 0-4-4h-12v-12a4 4 0 0 0-4-4h-8a4 4 0 0 0-4 4z" />
+                </symbol>
+                <symbol id="minus-small" viewBox="0 0 128 128">
+                    <path class="contour" d="m44 56c-2.21 0-4 1.79-4 4v8c0 2.21 1.79 4 4 4h40c2.21 0 4-1.79 4-4v-8c0-2.21-1.79-4-4-4z" />
+                </symbol>
+                <symbol id="times-small" viewBox="0 0 128 128">
+                    <use transform="rotate(45,64,64)" xlink:href="#plus-small" />
+                </symbol>
+                <symbol id="slash-small" viewBox="0 0 128 128">
+                    <use transform="rotate(-45,64,64)" xlink:href="#minus-small" />
+                </symbol>
+                <symbol id="backslash-small" viewBox="0 0 128 128">
+                    <use transform="rotate(45,64,64)" xlink:href="#minus-small" />
+                </symbol>
+                <symbol id="pipe-small" viewBox="0 0 128 128">
+                    <use transform="rotate(90,64,64)" xlink:href="#minus-small" />
+                </symbol>
+                <symbol id="divide-small" viewBox="0 0 128 128">
+                    <path class="contour" d="m64 28a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8zm-20 28c-2.21 0-4 1.79-4 4v8c0 2.21 1.79 4 4 4h40c2.21 0 4-1.79 4-4v-8c0-2.21-1.79-4-4-4zm20 28a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8z" />
+                </symbol>
+                <symbol id="check-small" viewBox="0 0 128 128">
+                    <path class="contour" d="m78.7 48.7c-1.02 0-2.05 0.389-2.83 1.17l-19.8 19.8-8.49-8.47c-1.56-1.56-4.1-1.56-5.66 0l-5.66 5.66c-1.56 1.56-1.56 4.1 0 5.66l17 16.9c1.56 1.56 4.09 1.56 5.66 0l28.3-28.3c1.56-1.56 1.56-4.09 0-5.66l-5.66-5.66c-0.781-0.781-1.8-1.17-2.83-1.17z" />
+                </symbol>
+            </defs>
+            <use xlink:href="#arrow-small-w" />
+            <use x="128" xlink:href="#arrow-small-nw" />
+            <use x="256" xlink:href="#arrow-small-n" />
+            <use x="384" xlink:href="#arrow-small-ne" />
+            <use x="512" xlink:href="#arrow-small-e" />
+            <use x="640" xlink:href="#arrow-small-se" />
+            <use x="768" xlink:href="#arrow-small-s" />
+            <use x="896" xlink:href="#arrow-small-sw" />
+            <use x="1024" xlink:href="#plus-small" />
+            <use x="1152" xlink:href="#minus-small" />
+            <use x="1280" xlink:href="#times-small" />
+            <use x="1408" xlink:href="#slash-small" />
+            <use x="1536" xlink:href="#backslash-small" />
+            <use x="1664" xlink:href="#pipe-small" />
+            <use x="1792" xlink:href="#divide-small" />
+            <use x="1920" xlink:href="#check-small" />
+        </g>
+        <g transform="scale(.125)">
+            <defs>
+                <symbol id="home" viewBox="0 0 128 128">
+                    <path class="contour" d="m12 68h8v44a4 4 45 0 0 4 4h80a4 4 135 0 0 4-4v-44h8a1.66 1.66 112 0 0 1.17-2.83l-47.2-47.2a8.49 8.49 0 0 0-12 0l-47.2 47.2a1.66 1.66 67.5 0 0 1.17 2.83z" />
+                    <path class="plein" d="m32 16v28l16-16v-12zm0 52v16h16v-16zm24 0v40h16v-40zm24 0v16h16v-16z" />
+                </symbol>
+                <symbol id="save" viewBox="0 0 128 128">
+                    <path class="contour" d="m28 116v-52a4 4 0 0 1 4-4h64a4 4 0 0 1 4 4v52m-16-104v20a4 4 0 0 1-4 4h-40a4 4 0 0 1-4-4v-20m80 24v76a4 4 0 0 1-4 4h-96a4 4 0 0 1-4-4v-96a4 4 0 0 1 4-4h76a9.66 9.66 0 0 1 6.83 2.83l14.3 14.3a9.66 9.66 0 0 1 2.83 6.83z" />
+                    <path class="plein" d="m40 72v8h48v-8zm0 16v8h48v-8zm28-76h-32v20c0 2.21 1.79 4 4 4h40c2.21 0 4-1.79 4-4v-20h-8v20h-8z" />
+                </symbol>
+                <symbol id="print" viewBox="0 0 128 128">
+                    <path class="contour" d="m28 45c0-6.63 5.37-12 12-12h8v-9c0-6.63 5.37-12 12-12m-32 56v-24c0-5.12 2.03-10 5.66-13.7l12.7-12.7c3.62-3.62 8.53-5.66 13.7-5.66h28c2.21 0 4 1.79 4 4v52m-76 0h88c2.21 0 4 1.79 4 4v32c0 2.21-1.79 4-4 4h-88c-2.21 0-4-1.79-4-4v-32c0-2.21 1.79-4 4-4z" />
+                    <path class="plein" d="m24 80v8h8v-8z" />
+                    <path class="contour plein" d="m108 76v16h4c2.21 0 4-1.79 4-4v-8c0-2.21-1.79-4-4-4zm-88 32v4c0 2.21 1.79 4 4 4h4c2.21 0 4-1.79 4-4v-4zm68 0v4c0 2.21 1.79 4 4 4h4c2.21 0 4-1.79 4-4v-4z" />
+                </symbol>
+                <symbol id="edit" viewBox="0 0 128 128">
+                    <path class="contour" d="m12 116v-36a19.3 19.3 0 0 1 5.66-13.7l48.7-48.7a19.3 19.3 0 0 1 13.7-5.66h8a9.66 9.66 0 0 1 6.83 2.83l18.3 18.3a9.66 9.66 0 0 1 2.83 6.83v8a19.3 19.3 0 0 1-5.66 13.7l-48.7 48.7a19.3 19.3 0 0 1-13.7 5.66z" />
+                    <path class="plein" d="m12 116v-16l16 16zm88-76c-2.34 2.34-6.93 1.56-10.2-1.76-3.31-3.31-4.1-7.9-1.76-10.2s6.93-1.56 10.2 1.76c3.31 3.31 4.1 7.9 1.76 10.2" />
+                    <path class="contour" d="m22.8 61.2c-1.81 1.81-2.83 4.27-2.83 6.83v12c0 2.56 1.02 5.02 2.83 6.83l18.3 18.3c1.81 1.81 4.27 2.83 6.83 2.83h12c2.56 0 5.02-1.02 6.83-2.83m49.2-57.2c0 4.42-3.58 8-8 8h-8c-2.56 0-5.02-1.02-6.83-2.83l-18.3-18.3c-1.81-1.81-2.83-4.27-2.83-6.83v-8c0-4.42 3.58-8 8-8" />
+                </symbol>
+                <symbol id="duplicate" viewBox="0 0 128 128">
+                    <path class="contour" d="m84.1 61.1c0-6.63-5.37-12-12-12h-8v-9c0-6.63-5.37-12-12-12m56 16.9c0-6.63-5.37-12-12-12h-8v-9c0-6.63-5.37-12-12-12m-56.1 20c0-2.21 1.79-4 4-4h28c5.17 0 10.1 2.04 13.7 5.66l12.7 12.7c3.63 3.7 5.66 8.58 5.66 13.7v52c0 2.21-1.79 4-4 4h-56.1c-2.21 0-4-1.79-4-4zm24-4v-12.1c0-2.21 1.79-4 4-4h28c5.17 0 10.1 2.04 13.7 5.66l12.7 12.7c3.63 3.7 5.66 8.58 5.66 13.7v52c0 2.21-1.79 4-4 4h-20" />
+                </symbol>
+                <symbol id="delete" viewBox="0 0 128 128">
+                    <path class="contour" d="m28 36h72a3.62 3.62 0 0 1 3.6 3.98l-6.81 68.1a8.84 8.84 0 0 1-8.8 7.96h-48a8.84 8.84 0 0 1-8.8-7.96l-6.81-68.1a3.62 3.62 0 0 1 3.6-3.98z" />
+                    <path class="plein" d="m72 48h8v56h-8zm-24 0h8v56h-8z" />
+                    <path class="contour plein" d="m20 24c0-2.21 1.79-4 4-4h28c4.42 0 8-3.58 8-8h8c0 4.42 3.58 8 8 8h28c2.21 0 4 1.79 4 4" />
+                </symbol>
+                <symbol id="archives" viewBox="0 0 128 128">
+                    <path class="contour" d="m56 60h16c2.21 0 4 1.79 4 4v8c0 2.21-1.79 4-4 4h-16c-2.21 0-4-1.79-4-4v-8c0-2.21 1.79-4 4-4zm-36-16v60c0 2.21 1.79 4 4 4h80a4 4 0 0 0 4-4v-60m-92-16h96c2.21 0 4 1.79 4 4v12h-104v-12c0-2.21 1.79-4 4-4z" />
+                </symbol>
+                <symbol id="copy" viewBox="0 0 128 128">
+                    <path class="contour" d="m92 100 0.06 12c0.0111 2.21-1.79 4.02-4 4.02l-56.1 0.04c-2.21 0-4-1.81-4-4.02v-80.1c0-2.21 1.79-4.02 4-4l12 0.1m4 72c-2.21 0-4-1.79-4-4v-80.1c0-2.21 1.79-3.9 4-3.9h28c5.17 0 10.1 1.94 13.7 5.56l12.7 12.7c3.63 3.7 5.59 8.62 5.6 13.7l0.06 52c3e-3 2.21-1.79 4-4 4zm28-88c5.52 0 10 4.48 10 10v12h12c5.52 0 10 4.48 10 10" />
+                    <path class="plein" d="m56 48v8h40v-8zm0 24v8h40v-8z" />
+                </symbol>
+                <symbol id="identification" viewBox="0 0 128 128">
+                    <path class="contour" d="m56 12h16a4 4 0 0 1 4 4v32a4 4 0 0 1-4 4h-16a4 4 0 0 1-4-4v-32a4 4 0 0 1 4-4zm-4 32h-36a4 4 0 0 0-4 4v64a4 4 0 0 0 4 4h96a4 4 0 0 0 4-4v-64a4 4 0 0 0-4-4h-36" />
+                    <path class="plein" d="m44 64a12 12 0 0 0-12 12 12 12 0 0 0 8 11.3v1.17a20 20 0 0 0-15.5 15.5h39.1a20 20 0 0 0-15.6-15.6v-1.16a12 12 0 0 0 8-11.3 12 12 0 0 0-12-12zm28 0v8h32v-8zm0 16v8h32v-8zm0 16v8h32v-8z" />
+                </symbol>
+                <symbol id="grid" viewBox="0 0 128 128">
+                    <path class="contour" d="m16 48h96m-96 32h96m-32-64v96m-32-96v96m-28-96h88a4 4 0 0 1 4 4v88a4 4 0 0 1-4 4h-88a4 4 0 0 1-4-4v-88a4 4 0 0 1 4-4z" />
+                </symbol>
+                <symbol id="disposition" title="Disposition" viewBox="0 0 128 128">
+                    <path class="plein" d="m16 32h16a8 8 0 0 1 8 8v16a8 8 0 0 1-8 8h-16a8 8 0 0 1-8-8v-16a8 8 0 0 1 8-8zm40 0h16a8 8 0 0 1 8 8v16a8 8 0 0 1-8 8h-16a8 8 0 0 1-8-8v-16a8 8 0 0 1 8-8zm40 0h16a8 8 0 0 1 8 8v16a8 8 0 0 1-8 8h-16a8 8 0 0 1-8-8v-16a8 8 0 0 1 8-8zm-80 40h16a8 8 0 0 1 8 8v16a8 8 0 0 1-8 8h-16a8 8 0 0 1-8-8v-16a8 8 0 0 1 8-8zm40 0h16a8 8 0 0 1 8 8v16a8 8 0 0 1-8 8h-16a8 8 0 0 1-8-8v-16a8 8 0 0 1 8-8zm40 0h16a8 8 0 0 1 8 8v16a8 8 0 0 1-8 8h-16a8 8 0 0 1-8-8v-16a8 8 0 0 1 8-8z" />
+                </symbol>
+                <symbol id="style" viewBox="0 0 128 128">
+                    <path class="contour plein " d="m56 28a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8zm28 20a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8zm-48 4a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8z" />
+                    <path class="contour" d="m60 76c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm56-12c0 6.63-5.37 12-12 12h-12c-4.42 0-8 3.58-8 8s3.58 8 8 8h8c6.63 0 12 5.37 12 12s-5.37 12-12 12h-36c-28.7 0-52-23.3-52-52s23.3-52 52-52 52 23.3 52 52" />
+                </symbol>
+                <symbol id="html" viewBox="0 0 128 128">
+                    <path class="contour" d="m10.8 66.8 30.3 30.3a4 4 0 0 0 5.66 0l6.34-6.34a4 4 0 0 0 0-5.66l-21.2-21.2 21.2-21.2a4 4 0 0 0 0-5.66l-6.34-6.34a4 4 0 0 0-5.66 0l-30.3 30.3a4 4 0 0 0 0 5.66zm106 0-30.3 30.3a4 4 0 0 1-5.66 0l-6.34-6.34a4 4 0 0 1 0-5.66l21.2-21.2-21.2-21.2a4 4 0 0 1 0-5.66l6.34-6.34a4 4 0 0 1 5.66 0l30.3 30.3a4 4 0 0 1 0 5.66z" />
+                </symbol>
+                <symbol id="json" viewBox="0 0 128 128">
+                    <path class="contour" d="m93.7 66.3c-3.62 3.62-5.66 8.53-5.66 13.7v12c0 4.42-3.58 8-8 8-2.21 0-4 1.79-4 4v8c0 2.21 1.79 4 4 4 13.3 0 24-10.7 24-24v-12c0-4.42 3.58-8 8-8 2.21 0 4-1.79 4-4v-8c0-2.21-1.79-4-4-4-4.42 0-8-3.58-8-8v-12c0-13.3-10.7-24-24-24-2.21 0-4 1.79-4 4v8c0 2.21 1.79 4 4 4 4.42 0 8 3.58 8 8v12c0 5.12 2.03 10 5.66 13.7l2.34 2.34zm-59.3 0c3.62 3.62 5.66 8.53 5.66 13.7v12c0 4.42 3.58 8 8 8 2.21 0 4 1.79 4 4v8c0 2.21-1.79 4-4 4-13.3 0-24-10.7-24-24v-12c0-4.42-3.58-8-8-8-2.21 0-4-1.79-4-4v-8c0-2.21 1.79-4 4-4 4.42 0 8-3.58 8-8v-12c0-13.3 10.7-24 24-24 2.21 0 4 1.79 4 4v8c0 2.21-1.79 4-4 4-4.42 0-8 3.58-8 8v12c0 5.12-2.03 10-5.66 13.7l-2.34 2.34z" />
+                </symbol>
+                <symbol id="cut" viewBox="0 0 128 128">
+                    <path class="contour plein" d="m56 60c-1.1 0-2.1 0.448-2.83 1.17l36.8-36.8c3.12-3.12 8.19-3.12 11.3 0l-35.3 35.6h50c0 4.42-3.58 8-8 8h-52c2.16 0 4-1.79 4-4s-1.79-4-4-4z" />
+                    <path class="contour" d="m36.2 89.5c4.69-4.69 12.3-4.69 17 0 4.69 4.69 4.69 12.3 0 17-4.69 4.69-12.3 4.69-17 0-4.69-4.69-4.69-12.3 0-17l22.6-22.6c-0.724 0.724-1.72 1.17-2.83 1.17-2.21 0-4-1.79-4-4s1.79-4 4-4h-32c-6.63 0-12-5.37-12-12s5.37-12 12-12 12 5.37 12 12-5.37 12-12 12" />
+                </symbol>
+                <symbol id="paste" viewBox="0 0 128 128">
+                    <path class="plein" d="m56 8a8 8 0 0 0-8 8v8a8 8 0 0 0-8 8v8h48v-8a8 8 0 0 0-8-8v-8a8 8 0 0 0-8-8zm8 8a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4z" />
+                    <path class="contour" d="m52 20h-28a4 4 0 0 0-4 4v88a4 4 0 0 0 4 4h80a4 4 0 0 0 4-4v-88a4 4 0 0 0-4-4h-28" />
+                </symbol>
+            </defs>
+            <g>
+                <use xlink:href="#home" />
+                <use x="128" xlink:href="#save" />
+                <use x="256" xlink:href="#print" />
+                <use x="384" xlink:href="#edit" />
+                <use x="512" xlink:href="#duplicate" />
+                <use x="640" xlink:href="#delete" />
+                <use x="768" xlink:href="#archives" />
+                <use x="896" xlink:href="#copy" />
+                <use x="1024" xlink:href="#identification" />
+                <use x="1152" xlink:href="#grid" />
+                <use x="1280" xlink:href="#disposition" />
+                <use x="1408" xlink:href="#style" />
+                <use x="1536" xlink:href="#html" />
+                <use x="1664" xlink:href="#json" />
+                <use x="1792" xlink:href="#cut" />
+                <use x="1920" xlink:href="#paste" />
+            </g>
+        </g>
+        <g transform="matrix(.125 0 0 .125 0 16)">
+            <defs>
+                <symbol id="search" viewBox="0 0 128 128">
+                    <path class="contour" d="m73.6 85.6 31.5 31.5a4 4 0 0 0 5.66 0l6.34-6.34a4 4 0 0 0 0-5.66l-31.5-31.5m6.36-21.6a40 40 0 0 1-40 40 40 40 0 0 1-40-40 40 40 0 0 1 40-40 40 40 0 0 1 40 40z" />
+                </symbol>
+                <symbol id="zoom-out" viewBox="0 0 128 128">
+                    <path class="contour" d="m32 44h40a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-40a4 4 0 0 1-4-4v-8a4 4 0 0 1 4-4z" />
+                    <use xlink:href="#search" />
+                </symbol>
+                <symbol id="zoom-in" viewBox="0 0 128 128">
+                    <path class="contour" d="m48 28a4 4 0 0 0-4 4v12h-12a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h12v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4v-12h12a4 4 0 0 0 4-4v-8a4 4 0 0 0-4-4h-12v-12a4 4 0 0 0-4-4z" />
+                    <use xlink:href="#search" />
+                </symbol>
+                <symbol id="zoom-off" viewBox="0 0 128 128">
+                    <path class="contour" d="m66.1 32.2a4 4 0 0 0-5.66 0l-8.49 8.49-8.49-8.49a4 4 0 0 0-5.66 0l-5.66 5.66a4 4 0 0 0 0 5.66l8.49 8.49-8.49 8.49a4 4 0 0 0 0 5.66l5.66 5.66a4 4 0 0 0 5.66 0l8.49-8.49 8.49 8.49a4 4 0 0 0 5.66 0l5.66-5.66a4 4 0 0 0 0-5.66l-8.49-8.49 8.49-8.49a4 4 0 0 0 0-5.66z" />
+                    <use xlink:href="#search" />
+                </symbol>
+                <symbol id="visible" viewBox="0 0 128 128">
+                    <path class="contour" d="m64 20c-24 0.0611-45.6 14.4-55 36.3-0.873 2.03-0.873 5.42 1e-6 7.45 9.39 21.8 30.9 36.2 55 36.3 24.1-0.0594 45.7-14.5 55.1-36.5 0.865-2.03 0.853-5.42-0.0275-7.45-9.47-21.8-31-36.1-55-36.1z" />
+                    <path class="plein" d="m64 52c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm24 8c0 13.3-10.7 24-24 24s-24-10.7-24-24 10.7-24 24-24 24 10.7 24 24z" />
+                </symbol>
+                <symbol id="hidden" viewBox="0 0 128 128">
+                    <clipPath id="hidden-clipPath">
+                        <path d="m13.3 0 115 115v-115zm-13.3 9.31v119h119z" />
+                    </clipPath>
+                    <g clip-path="url(#hidden-clipPath)">
+                        <path class="contour" d="m64 20c-24 0.0611-45.6 14.4-55 36.3-0.873 2.03-0.873 5.42 1e-6 7.45 9.39 21.8 30.9 36.2 55 36.3 24.1-0.0594 45.7-14.5 55.1-36.5 0.865-2.03 0.853-5.42-0.0275-7.45-9.47-21.8-31-36.1-55-36.1z" />
+                        <path class="plein" d="m64 52c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm24 8c0 13.3-10.7 24-24 24s-24-10.7-24-24 10.7-24 24-24 24 10.7 24 24z" />
+                    </g>
+                    <path class="plein" d="m8.67 28.3 11.3-11.3 82 82-11.3 11.3z" />
+                </symbol>
+                <symbol id="gear" viewBox="0 0 128 128">
+                    <path class="plein" d="m64 56c-4.43 0-8.01 3.59-8.01 8.02s3.59 8.02 8.01 8.02 8.01-3.59 8.01-8.02-3.59-8.02-8.01-8.02z" />
+                    <path class="contour" d="m96 64.1c0 17.7-14.4 32.1-32.1 32.1s-32.1-14.4-32.1-32.1 14.4-32.1 32.1-32.1 32.1 14.4 32.1 32.1zm-32-52c-1.05 0-2.11 0.0324-3.16 0.0967-1.65 0.101-2.88 1.61-2.74 3.26l0.444 5.29c0.414 4.35-2.29 7.94-6.15 9.27-1.46 0.506-2.88 1.1-5.4 2.31s-6.97 0.584-9.76-2.78l-2.78-3.29c-1.43-1.69-4-1.96-5.63-0.463-0.531 0.488-1.05 0.987-1.56 1.5-0.51 0.51-1.01 1.03-1.5 1.56-1.5 1.63-1.22 4.2 0.463 5.63l3.29 2.78c3.37 2.78 4.01 7.24 2.21 10.9-0.672 1.37-1.28 2.77-1.78 4.24-1.33 3.86-4.92 6.56-9.27 6.15l-4.29-0.361c-2.2-0.185-4.21 1.44-4.31 3.65-0.0302 0.721-0.0453 1.44-0.0453 2.16 0 0.721 0.0151 1.44 0.0453 2.16 0.0924 2.21 2.1 3.84 4.31 3.65l4.29-0.361c4.35-0.414 7.94 2.29 9.27 6.15 0.478 1.45 1.06 2.86 1.73 4.26 1.79 3.67 1.16 8.12-2.21 10.9l-3.29 2.78c-1.69 1.43-1.96 4-0.463 5.63 0.488 0.531 0.987 1.05 1.5 1.56s1.03 1.01 1.56 1.5c1.63 1.5 4.2 1.22 5.63-0.463l2.78-3.29c2.78-3.37 7.24-4.01 10.9-2.21 1.37 0.672 2.77 1.28 4.24 1.78 3.86 1.33 6.56 4.92 6.15 9.27l-0.361 4.29c-0.185 2.2 1.44 4.21 3.65 4.31 0.721 0.0302 1.44 0.0453 2.16 0.0453 0.721 0 1.44-0.0151 2.16-0.0453 2.21-0.0924 3.84-2.1 3.65-4.31l-0.361-4.29c-0.414-4.35 2.29-7.94 6.15-9.27 1.45-0.478 2.86-1.06 4.26-1.73 3.67-1.79 8.12-1.16 10.9 2.21l2.78 3.29c1.43 1.69 4 1.96 5.63 0.463 0.531-0.488 1.05-0.987 1.56-1.5s1.01-1.03 1.5-1.56c1.5-1.63 1.22-4.2-0.463-5.63l-3.29-2.78c-3.37-2.78-4.01-7.24-2.21-10.9 0.672-1.37 1.28-2.77 1.78-4.24 1.33-3.86 4.92-6.56 9.27-6.15l4.29 0.361c2.2 0.185 4.21-1.44 4.31-3.65 0.0302-0.721 0.0453-1.44 0.0453-2.16 0-0.721-0.0151-1.44-0.0453-2.16-0.0924-2.21-2.1-3.84-4.31-3.65l-4.29 0.361c-4.35 0.414-7.94-2.29-9.27-6.15-0.478-1.45-1.06-2.86-1.73-4.26-1.79-3.67-1.16-8.12 2.21-10.9l3.29-2.78c1.69-1.43 1.96-4 0.463-5.63-0.488-0.531-0.987-1.05-1.5-1.56s-1.03-1.01-1.56-1.5c-1.63-1.5-4.2-1.22-5.63 0.463l-2.78 3.29c-2.78 3.37-7.24 4.01-10.9 2.21-1.37-0.672-2.77-1.28-4.24-1.78-3.86-1.33-6.56-4.92-6.15-9.27l0.444-5.29c0.139-1.65-1.08-3.16-2.74-3.26-1.05-0.0644-2.11-0.0967-3.16-0.0967z" />
+                </symbol>
+                <symbol id="gear2" viewBox="0 0 128 128">
+                    <path class="plein" d="m72 64a8.01 8 0 0 0-8.01-8 8.01 8 0 0 0-8.01 8 8.01 8 0 0 0 8.01 8 8.01 8 0 0 0 8.01-8z" />
+                    <path class="contour" d="m91.9 97.5 2.55 3.62c1.27 1.81 0.917 4.4-0.905 5.65-2.33 1.6-4.78 3-7.32 4.2-2 0.939-4.43-0.0687-5.35-2.08l-1.87-4.07c-1.72-4.01-5.8-6.04-9.78-5.26 0 0-4e-3 -2.61e-4 -0.0061 0-0.0029 3.66e-4 3.47-0.54-0.0087 0-3.51 0.545-7.07 0.506-10.6 0-4.02-0.581-8.03 1.34-9.76 5.33l-1.86 4.02c-0.927 2.01-3.36 3-5.35 2.04-2.55-1.22-4.99-2.64-7.29-4.24-1.81-1.26-2.15-3.87-0.876-5.67l2.59-3.65c2.61-3.49 2.19-7.93-0.339-11.1l-0.0041-0.0047-0.0048-0.0073c-2.23-2.77-4.01-5.84-5.32-9.12-1.51-3.77-5.13-6.3-9.45-5.8l-4.41 0.401c-2.2 0.2-4.27-1.41-4.44-3.61-0.219-2.82-0.211-5.64 0.0259-8.44 0.186-2.2 2.27-3.8 4.47-3.59l4.46 0.42c4.33 0.512 7.96-2.07 9.44-5.84l2e-3 -0.0059 0.0039-0.0078c1.28-3.31 3.06-6.39 5.24-9.17 2.51-3.19 2.89-7.6 0.305-11.1l-2.55-3.62c-1.27-1.81-0.917-4.4 0.905-5.65 2.33-1.6 4.78-3 7.32-4.2 2-0.939 4.43 0.0687 5.35 2.08l1.87 4.07c1.72 4.01 5.77 5.82 9.78 5.21h0.0148c3.51-0.545 7.07-0.508 10.6 0 4.02 0.578 8.02-1.29 9.75-5.28l1.86-4.02c0.927-2.01 3.36-3 5.35-2.04 2.55 1.22 4.99 2.64 7.29 4.24 1.81 1.26 2.15 3.87 0.876 5.67l-2.59 3.65c-2.61 3.49-2.19 7.93 0.339 11.1l0.0041 0.0047 0.0048 0.0073c2.23 2.77 4.01 5.84 5.32 9.13 1.51 3.77 5.13 6.31 9.45 5.81l4.41-0.401c2.2-0.2 4.27 1.41 4.44 3.61 0.219 2.82 0.211 5.64-0.0259 8.44-0.186 2.2-2.27 3.8-4.47 3.59l-4.46-0.42c-4.33-0.512-7.96 2.07-9.44 5.84l-2e-3 0.0059-4e-3 0.0078c-1.28 3.31-3.05 6.4-5.24 9.17-2.51 3.19-2.89 7.59-0.302 11.1zm4.2-33.5c0 17.7-14.4 32-32.1 32s-32.1-14.3-32.1-32 14.4-32 32.1-32 32.1 14.3 32.1 32z" />
+                </symbol>
+                <symbol id="document" viewBox="0 0 128 128">
+                    <path class="contour" d="m98.4 34.3c3.63 3.7 5.59 8.62 5.6 13.7v64c3e-3 2.21-1.79 4-4 4l-72 0.1c-2.21 0-4-1.79-4-4l0.02-96.1c4.6e-4 -2.21 1.79-3.89 4-3.9l40-0.1c5.17-0.0071 10.1 1.94 13.7 5.56zm-30.4-22.3c5.52 0 10 4.48 10 10l0.04 16 16 0.04c5.52 0.0138 10 4.48 10 10" />
+                    <path class="plein" d="m36 40v8h32v-8zm0 24v8h56v-8zm0 24v8h56v-8z" />
+                </symbol>
+                <symbol id="folder" viewBox="0 0 128 128">
+                    <path class="contour" d="m61.5 44-6.22-12.4a6.47 6.47 0 0 0-5.79-3.58h-19a6.47 6.47 0 0 0-5.79 3.58l-6.22 12.4m-2.47 0h88c2.21 0 4 1.79 4 4v64c0 2.21-1.79 4-4 4h-88c-2.21 0-4-1.79-4-4v-64c0-2.21 1.79-4 4-4z" />
+                </symbol>
+                <symbol id="folder-open" viewBox="0 0 128 128">
+                    <path class="contour" d="m108 60v-12c0-2.21-1.79-4-4-4h-38.5c-2.45 0-4.69-1.38-5.79-3.58l-4.43-8.84c-1.1-2.19-3.34-3.58-5.79-3.58h-19c-2.45 0-4.69 1.39-5.79 3.58l-5.32 10.6c-0.549 1.1-1.67 1.79-2.9 1.79h-0.467c-2.21 0-4 1.79-4 4v64c0 2.21 1.79 4 4 4m7.54-56h87.9a3.53 3.53 0 0 1 3.5 3.97l-6.01 48.1a4.53 4.53 0 0 1-4.5 3.97h-87.9a3.53 3.53 0 0 1-3.5-3.97l6.01-48.1a4.53 4.53 0 0 1 4.5-3.97z" />
+                </symbol>
+                <symbol id="folder-doc" viewBox="0 0 128 128">
+                    <path class="contour " d="m57.2 35.4-1.91-3.81c-1.1-2.19-3.34-3.58-5.79-3.58h-19c-2.45 0-4.69 1.39-5.79 3.58l-5.32 10.6c-0.549 1.1-1.67 1.79-2.89 1.79h-0.467c-2.21 0-4 1.79-4 4v64c0 2.21 1.79 4 4 4m92-56v-12c0-2.21-1.79-4-4-4h-4m-76.5 16h87.9c2.12 0 3.77 1.86 3.5 3.97l-6.01 48.1c-0.284 2.27-2.21 3.97-4.5 3.97h-87.9c-2.12 0-3.77-1.86-3.5-3.97l6.01-48.1c0.284-2.27 2.21-3.97 4.5-3.97zm4.46 0-2.21-4.42a4 4 0 0 1 1.79-5.37l56.8-28.4a4 4 0 0 1 5.37 1.79l18.2 36.4" />
+                </symbol>
+                <symbol id="hamburger" viewBox="0 0 128 128">
+                    <path id="hamburger-part" class="contour" d="m24 12a12 12 0 0 0-12 12 12 12 0 0 0 12 12h80a12 12 0 0 0 12-12 12 12 0 0 0-12-12z" />
+                    <use transform="translate(0,40)" xlink:href="#hamburger-part" />
+                    <use transform="translate(0,80)" xlink:href="#hamburger-part" />
+                </symbol>
+                <symbol id="ellipsis" viewBox="0 0 128 128">
+                    <path id="ellipsis-part" class="contour" d="m36 64a12 12 0 0 1-12 12 12 12 0 0 1-12-12 12 12 0 0 1 12-12 12 12 0 0 1 12 12z" />
+                    <use x="40" xlink:href="#ellipsis-part" />
+                    <use x="80" xlink:href="#ellipsis-part" />
+                </symbol>
+                <symbol id="hamburger-v" viewBox="0 0 128 128">
+                    <use transform="rotate(90,64,64)" xlink:href="#hamburger" />
+                </symbol>
+                <symbol id="ellipsis-v" viewBox="0 0 128 128">
+                    <use transform="rotate(90,64,64)" xlink:href="#ellipsis" />
+                </symbol>
+            </defs>
+            <g>
+                <use xlink:href="#search" />
+                <use x="128" xlink:href="#zoom-out" />
+                <use x="256" xlink:href="#zoom-in" />
+                <use x="384" xlink:href="#zoom-off" />
+                <use x="512" xlink:href="#visible" />
+                <use x="640" xlink:href="#hidden" />
+                <use x="768" xlink:href="#gear" />
+                <use x="896" xlink:href="#gear2" />
+                <use x="1024" xlink:href="#document" />
+                <use x="1152" xlink:href="#folder" />
+                <use x="1280" xlink:href="#folder-open" />
+                <use x="1408" xlink:href="#folder-doc" />
+                <use x="1536" xlink:href="#hamburger" />
+                <use x="1664" xlink:href="#ellipsis" />
+                <use x="1792" xlink:href="#hamburger-v" />
+                <use x="1920" xlink:href="#ellipsis-v" />
+            </g>
+        </g>
+        <g transform="matrix(.125 0 0 .125 0 32)" fill="blue">
+            <defs>
+                <symbol id="asterisk">
+                    <path class="contour" d="m43.4 16.5-13.9 8a4 4 0 0 0-1.46 5.46l11.6 20.1a2.31 2.31 0 0 1-2 3.46h-23.2a4 4 0 0 0-4 4v16a4 4 0 0 0 4 4h23.2a2.31 2.31 0 0 1 2 3.46l-11.6 20.1a4 4 0 0 0 1.46 5.46l13.9 8a4 4 0 0 0 5.46-1.46l11.6-20.1a2.31 2.31 0 0 1 4 0l11.6 20.1a4 4 0 0 0 5.46 1.46l13.9-8a4 4 0 0 0 1.46-5.46l-11.6-20.1a2.31 2.31 0 0 1 2-3.46h23.2a4 4 0 0 0 4-4v-16a4 4 0 0 0-4-4h-23.2a2.31 2.31 0 0 1-2-3.46l11.6-20.1a4 4 0 0 0-1.46-5.46l-13.9-8a4 4 0 0 0-5.46 1.46l-11.6 20.1a2.31 2.31 0 0 1-4 0l-11.6-20.1a4 4 0 0 0-5.46-1.46z" />
+                </symbol>
+            </defs>
+            <use xlink:href="#asterisk" />
+        </g>
+    </g>
+</svg>
