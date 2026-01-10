@@ -1,23 +1,66 @@
 :host {
 	--drawer-size: 200px;
-	--handle-width: .8rem;
+	--handle-width: 1.8rem;
 	--pin-size: 1rem;
 	--hue: 210;
 	--sat: 50%;
 	--lum: 90%;
+	--duration: 200ms;
+	--delay: 0ms;
+
 	font-size: 1rem;
 	position: fixed;
-	left: 0;
 	box-sizing: border-box;
 	overflow: hidden;
-	transition-duration: 300ms;
+	transition-duration: var(--duration);
 	transition-property: width;
 	transition-timing-function: ease-in;
 	z-index: 1000;
 	width: var(--handle-width);
 }
+/* Default left */
+:host {
+	left: 0;
+	right: auto;
+	main {
+		border-radius: 0 1em 1em 0;
+		right: var(--handle-width);
+		left: auto;
+	}
+	.pin {
+		right: var(--handle-width);
+		left: auto;
+	}
+	.handle {
+		right: 0;
+		left: auto;
+	}
+	.handle::before {
+		border-radius: 0 1ch 1ch 0;
+	}
+}
+:host([side="right"]) {
+	right: 0;
+	left: auto;
+	main {
+		border-radius: 1em 0 0 1em;
+		left: var(--handle-width);
+		right: auto;
+	}
+	.pin {
+		left: var(--handle-width);
+		right: auto;
+	}
+	.handle {
+		left: 0;
+		right: auto;
+	}
+	.handle::before {
+		border-radius: 1ch 0 0 1ch;
+	}
+}
 :host(:hover) {
-	transition-delay: 750ms;
+	transition-delay: var(--delay);
 	width: calc(var(--drawer-size) + var(--handle-width));
 }
 :host(:focus-within) {
@@ -26,7 +69,6 @@
 :host(:not([pinned])) {
 	top: .5rem;
 	bottom: .5rem;
-	/* width: calc(var(--drawer-size) + var(--handle-width)); */
 }
 :host([pinned]) {
 	top: 0;
@@ -56,13 +98,10 @@ main {
 	height: 100%;
 	background-color: hsl(var(--hue), var(--sat), var(--lum));
 	position: absolute;
-	right: var(--handle-width);
-	border-radius: 0 1em 1em 0;
 	box-shadow: inset 0 0 10px #0003;
 }
 .pin {
 	position: absolute;
-	right: var(--handle-width);
 	top: 0;
 	font-size: var(--pin-size);
 	width: 2em;
@@ -81,7 +120,6 @@ main {
 }
 .handle {
 	position: absolute;
-	right: 0em;
 	top: 0;
 	width: var(--handle-width);
 	height: 100%;
@@ -99,7 +137,6 @@ main {
 		content: '•\0A•\0A•';
 		white-space: pre;
 		position: absolute;
-		left: 0%;
 		top: 50%;
 		display: grid;
 		place-items: center;
@@ -111,6 +148,5 @@ main {
 		text-shadow: 1px 1px 1px #0005, -1px -1px 1px #FFF9;
 		line-height: 1;
 		color: hsl(var(--hue), var(--sat), calc(var(--lum) - 20%));
-		border-radius: 0 1ch 1ch 0;
 	}
 }
