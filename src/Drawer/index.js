@@ -25,11 +25,12 @@ export class Drawer extends Webponent {
 	get dom() {
 		return {
 			main: () => {
-				const result = document.createDocumentFragment();
+				const result = document.createElement("div");
+				result.classList.add("container");
 				result.appendChild(this.dom.handle());
-				result.appendChild(this.dom.pin());
 				const main = document.createElement("main");
 				main.part = "content";
+				main.appendChild(this.dom.pin());
 				const slot = document.createElement("slot");
 				main.appendChild(slot);
 				result.appendChild(main);
