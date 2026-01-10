@@ -1,4 +1,4 @@
-import Webponent from "./Webponent.js";
+import Webponent from "../Webponent.js";
 
 /**
  * Title component that renders heading elements (h1-h6) with dynamic level cycling.
@@ -143,4 +143,5 @@ export class Title extends Webponent {
  * Automatically register the Title component as 'title-ponent' custom element.
  * This makes the component immediately available for use in HTML.
  */
-Title.register();
+Title.register("title");
+export default Title;

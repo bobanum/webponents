@@ -1,4 +1,4 @@
-import Webponent from "./Webponent.js";
+import Webponent from "../Webponent.js";
 
 export default class SvgIcon extends Webponent {
 	static _href;
@@ -60,6 +60,6 @@ export default class SvgIcon extends Webponent {
 		}
 	};
 }
-SvgIcon.setMeta(import.meta).register();
+SvgIcon.setMeta(import.meta).register('svg-icon');
 
 

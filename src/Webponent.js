@@ -80,6 +80,19 @@ export default class Webponent extends HTMLElement {
 				result.textContent = content;
 				return result;
 			},
+			slot: (name, content) => {
+				const result = document.createElement("slot");
+				if (name) {
+					result.name = name;
+				}
+				if (typeof content === "string") {
+					content = document.createTextNode(content);
+				}
+				if (content) {
+					result.appendChild(content);
+				}
+				return result;
+			}
 		};
 	}
 	static properties = {};
@@ -252,15 +265,19 @@ export default class Webponent extends HTMLElement {
 	 * // Returns: 'app-my-component-widget'
 	 */
 	static fixed(name) {
-		let result = this.toKebabCase(name || this.name).replaceAll(/(?:^_+|_+$)/g, "");
+		let result = this.toKebabCase(name || this.name)
+			.replaceAll(/(?:^[_0-9.+]+|[_0-9.+]+$)/g, "");
+		console.log(result);
 		const [prefix, suffix] = this.affix.split('-');
 
 		if (prefix && !result.startsWith(`${prefix}-`)) {
 			result = `${prefix}-${result}`;
 		}
+		console.log(result);
 		if (suffix && !result.endsWith(`-${suffix}`)) {
 			result = `${result}-${suffix}`;
 		}
+		console.log(result);
 		return result;
 	}
 
@@ -314,10 +331,11 @@ export default class Webponent extends HTMLElement {
 	 * MyComponent.register('my-widget');
 	 * // Registers as: 'my-widget'
 	 */
-	static register(name) {
-		if (this.meta) {
-			console.log(this);
+	static register(name, meta) {
+		if (meta) {
+			this.setMeta(meta);
 		}
+
 		name = this.fixed(name);
 		if (!customElements.get(name)) {
 			console.log(`Registering custom element: ${name}`);

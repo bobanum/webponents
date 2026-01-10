@@ -1,4 +1,4 @@
-import Webponent from "./Webponent.js";
+import Webponent from "../Webponent.js";
 
 export class ToolbarItem extends Webponent {
 	constructor() {

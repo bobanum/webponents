@@ -1,6 +1,6 @@
-import Component from "../Component.js";
+import Webponent from "../Webponent.js";
 
-export default class Menu extends Component {
+export default class Menu extends Webponent {
 	connectedCallback() {
 		this.shadowRoot.appendChild(this.dom.style());
 		this.shadowRoot.appendChild(this.dom.main());
@@ -91,7 +91,7 @@ class MenuItem extends Component {
 		}
 	};
 }
-Menu.register();
-MenuItem.register();
+Menu.register('menu');
+MenuItem.register('menu-item');
 
 

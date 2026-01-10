@@ -54,6 +54,6 @@ export class Drawer extends Webponent {
 		};
 	}
 }
-console.log(import.meta.url);
 
-Drawer.register();
+Drawer.register('drawer');
+export default Drawer;
