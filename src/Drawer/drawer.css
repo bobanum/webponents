@@ -1,13 +1,13 @@
 :host {
 	--drawer-size: 200px;
-	--handle-width: .8rem;
+	--handle-width: 1.8rem;
 	--pin-size: 1rem;
 	--hue: 210;
 	--sat: 50%;
 	--lum: 90%;
 	--duration: 200ms;
 	--delay: 0ms;
-
+	--radius: 0.5rem;
 	font-size: 1rem;
 	position: fixed;
 	box-sizing: border-box;
@@ -23,27 +23,43 @@
 	width: calc(var(--drawer-size) + var(--handle-width));
 }
 
-/* Default left and bottom */
-/* :host {
-	top: 0;
-	bottom: 0;
-	transition-property: width;
-} */
+/* Defaults for side */
 :host {
+	--border-radius: 0 var(--radius) var(--radius) 0;
 	left: 0;
 	right: auto;
-
-	main {
-		border-radius: 0 1em 1em 0;
-	}
 
 	.pin {
 		right: 0;
 		left: auto;
 	}
+
+	.container {
+		right: 0;
+		left: auto;
+		grid-template-columns: var(--drawer-size) var(--handle-width);
+		grid-template-areas: "content handle";
+	}
 }
-/* 
-:host(:hover) {
+:host([side="right"]) {
+	--border-radius: var(--radius) 0 0 var(--radius);
+	right: 0;
+	left: auto;
+
+	.pin {
+		left: 0;
+		right: auto;
+	}
+
+	.container {
+		left: 0;
+		right: auto;
+		grid-template-columns: var(--handle-width) var(--drawer-size);
+		grid-template-areas: "handle content";
+	}
+}
+
+/* :host(:hover) {
 	transition-delay: var(--delay);
 	width: var(--handle-width);
 } */
@@ -87,15 +103,14 @@
 
 .container {
 	position: absolute;
-	right: 0;
+	left: auto;
 	height: 100%;
 	display: grid;
-	grid-template-columns: var(--drawer-size) var(--handle-width);
-	grid-template-areas: "content handle";
 }
 
 main {
 	position: relative;
+	border-radius: var(--border-radius);
 	/* align-self: center; */
 	box-sizing: border-box;
 	overflow-y: auto;
@@ -107,8 +122,6 @@ main {
 
 .pin {
 	position: absolute;
-	top: 0;
-	right: 0;
 	font-size: var(--pin-size);
 	width: 2em;
 	height: 2em;
@@ -129,7 +142,7 @@ main {
 	padding: 0.5em 0;
 	align-self: center;
 	background-color: hsl(var(--hue), var(--sat), calc(var(--lum) - 20%));
-	border-radius: 0 1ch 1ch 0;
+	border-radius: var(--border-radius);
 	color: hsl(var(--hue), var(--sat), calc(var(--lum) - 20%));
 	display: grid;
 	font-size: .8em;
