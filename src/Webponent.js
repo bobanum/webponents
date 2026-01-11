@@ -180,7 +180,11 @@ export default class Webponent extends HTMLElement {
 		if (prop.type === undefined) {
 			prop.type = String;
 		}
-		prop.assert ??= PropsProxy.asserts[prop.type.name] ?? prop.type;
+		prop.assert = prop.assert 
+			?? PropsProxy.asserts[prop.type.name] 
+			?? PropsProxy.asserts[prop.type]
+			?? ((typeof prop.type === 'function') ? prop.type : (v) => v);
+		
 		const descriptor = {
 			get() {
 				let result = prop.get ? prop.get.call(this)

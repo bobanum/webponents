@@ -1,12 +1,13 @@
 :host {
 	--drawer-size: 200px;
-	--handle-width: 1.8rem;
+	--handle-width: 1rem;
 	--pin-size: 1rem;
 	--hue: 210;
 	--sat: 50%;
 	--lum: 90%;
+	--alpha:.9;
 	--duration: 200ms;
-	--delay: 0ms;
+	--delay: 150ms;
 	--radius: 0.5rem;
 	font-size: 1rem;
 	position: fixed;
@@ -16,42 +17,99 @@
 	transition-duration: var(--duration);
 	transition-timing-function: ease-in;
 	z-index: 1000;
-	/* top: 0;
-	bottom: 0;
-	left: 0;
-	width: calc(var(--drawer-size) + var(--handle-width)); */
-
-	/* &,
-	* {
-		box-shadow: inset 0 0 10px #000;
-	} */
 	--opening: calc(var(--drawer-size) + var(--handle-width));
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+.container {
+	position: absolute;
+	display: grid;
+	grid-row: 1;
+}
+
+main {
+	position: relative;
+	border-radius: var(--border-radius);
+	box-sizing: border-box;
+	overflow-y: auto;
+	background-color: hsl(var(--hue), var(--sat), var(--lum), var(--alpha));
+	box-shadow: inset 0 0 10px #0003;
+	grid-area: content;
+}
+
+.handle {
+	background-color: hsl(var(--hue), var(--sat), calc(var(--lum) - 20%));
+	border-radius: var(--border-radius);
+	color: hsl(var(--hue), var(--sat), calc(var(--lum) - 20%));
+	display: grid;
+	font-size: .8em;
+	line-height: 1;
+	opacity: .5;
+	place-items: center;
+	grid-area: handle;
+	text-shadow: 1px 1px 0px #0005, -1px -1px 0px #FFF9;
+
+	&:hover {
+		opacity: 1;
+	}
+
+	&::before {
+		content: '• • •';
+		padding-inline: 2ch;
+		word-spacing: 1ch;
+	}
+}
+
+.pin {
+	position: absolute;
+	font-size: var(--pin-size);
+	width: 2em;
+	height: 2em;
+	cursor: pointer;
+	z-index: 10;
+	display: grid;
+	place-items: center;
+	opacity: .3;
+	line-height: 1;
+	color: hsl(var(--hue), var(--sat), 50%);
+
+	&::before {
+		content: '🔓\FE0E';
+	}
+	&:hover {
+		opacity: 1;
+		text-shadow: 1px 1px 1px #0005;
+	}
 }
 
 /* Defaults for side */
 :host,
 :host([side="right"]) {
-	top: .5em;
-	bottom: .5em;
+	top: var(--radius);
+	bottom: var(--radius);
 	right: var(--a);
 	left: var(--b);
 	width: var(--opening);
 	height: auto;
 
 	.handle {
-		padding: 0.5em 0em;
 		place-self: center stretch;
 
 		&::before {
-			content: '•\0A•\0A•';
+			writing-mode: vertical-lr;
 		}
 	}
 
 	.container {
-		width: auto;
-		height: auto;
 		left: var(--a);
 		right: var(--b);
+		top: 0;
+		bottom: 0;
 		grid-template-rows: [handle content] 1fr;
 	}
 
@@ -65,27 +123,24 @@
 
 :host([side="top"]),
 :host([side="bottom"]) {
-	left: .5em;
-	right: .5em;
+	left: var(--radius);
+	right: var(--radius);
 	height: var(--opening);
 	width: auto;
 	bottom: var(--a);
 	top: var(--b);
 
 	.handle {
-		padding: 0 1.5em;
 		place-self: stretch center;
 
 		&::before {
-			content: '• • •';
-			word-spacing: 2ch;
+			writing-mode: horizontal-tb;
+
 		}
 	}
 
 	.container {
 		grid-template-columns: [handle content] 1fr;
-		height: auto;
-		width: auto;
 		top: var(--a);
 		bottom: var(--b);
 	}
@@ -105,9 +160,8 @@
 	--border-radius: 0 var(--radius) var(--radius) 0;
 
 	.container {
-		grid-template-columns: 
-			[content] var(--drawer-size) 
-			[handle] var(--handle-width);
+		grid-template-columns:
+			[content] var(--drawer-size) [handle] var(--handle-width);
 	}
 }
 
@@ -117,9 +171,8 @@
 	--border-radius: var(--radius) 0 0 var(--radius);
 
 	.container {
-		grid-template-columns: 
-			[handle] var(--handle-width) 
-			[content] var(--drawer-size);
+		grid-template-columns:
+			[handle] var(--handle-width) [content] var(--drawer-size);
 	}
 }
 
@@ -129,43 +182,47 @@
 	--border-radius: 0 0 var(--radius) var(--radius);
 
 	.container {
-		grid-template-rows: 
-			[content] var(--drawer-size) 
-			[handle] var(--handle-width);
+		grid-template-rows:
+			[content] var(--drawer-size) [handle] var(--handle-width);
 	}
 }
+
 :host([side="bottom"]) {
 	--a: 0;
 	--b: auto;
 	--border-radius: var(--radius) var(--radius) 0 0;
 
 	.container {
-		grid-template-rows: 
-			[handle] var(--handle-width)
-			[content] var(--drawer-size);
+		grid-template-rows:
+			[handle] var(--handle-width) [content] var(--drawer-size);
 	}
 }
 
-/* :host(:hover) {
+:host(:hover) {
 	transition-delay: var(--delay);
-	width: var(--handle-width);
-} */
+	z-index: 1001;
+}
 :host(:not(:hover)) {
-	transition-delay: var(--delay);
 	--opening: var(--handle-width);
 }
 
-/* :host(:focus-within) {
-	width: calc(var(--drawer-size) + var(--handle-width));
-} */
+:host(:focus-within) {
+	main {
+		outline: hsl(var(--hue), var(--sat), 50%, .5) solid 1px;
+		outline-offset: -1px;
+		--opening: calc(var(--drawer-size) + var(--handle-width));
+	}
+}
+:host(:not(:hover):focus-within) {
+	--opening: calc(var(--drawer-size) + var(--handle-width));
+}
 
 :host([pinned]) {
-	top: 0;
-	bottom: 0;
-	width: calc(var(--drawer-size) + var(--handle-width));
+	--opening: calc(var(--drawer-size) + var(--handle-width));
+	--radius: 0;
 
 	.content {
-		border-radius: 0;
+		/* border-radius: 0; */
 		box-shadow: none;
 	}
 
@@ -174,76 +231,9 @@
 	}
 
 	.pin {
-		opacity: .6;
-
+		opacity: 1;
 		&::before {
 			content: '🔒\FE0E';
 		}
-	}
-}
-
-*,
-*::before,
-*::after {
-	box-sizing: border-box;
-}
-
-.container {
-	position: absolute;
-	left: auto;
-	height: 100%;
-	display: grid;
-	grid-row: 1;
-}
-
-main {
-	position: relative;
-	border-radius: var(--border-radius);
-	box-sizing: border-box;
-	overflow-y: auto;
-	background-color: hsl(var(--hue), var(--sat), var(--lum));
-	box-shadow: inset 0 0 10px #0003;
-	grid-area: content;
-}
-
-.handle {
-	/* padding: 0.5em 0; */
-	align-self: center;
-	background-color: hsl(var(--hue), var(--sat), calc(var(--lum) - 20%));
-	border-radius: var(--border-radius);
-	color: hsl(var(--hue), var(--sat), calc(var(--lum) - 20%));
-	display: grid;
-	font-size: .8em;
-	line-height: 1;
-	opacity: .5;
-	place-items: center;
-	grid-area: handle;
-	text-shadow: 1px 1px 1px #0005, -1px -1px 1px #FFF9;
-
-	&:hover {
-		opacity: 1;
-	}
-
-	&::before {
-		content: '•  •  •';
-		white-space: pre;
-	}
-}
-
-.pin {
-	position: absolute;
-	font-size: var(--pin-size);
-	width: 2em;
-	height: 2em;
-	cursor: pointer;
-	z-index: 10;
-	display: grid;
-	place-items: center;
-	opacity: .3;
-
-	&::before {
-		content: '🔓\FE0E';
-		line-height: 1;
-		color: hsl(var(--hue), var(--sat), 50%);
 	}
 }

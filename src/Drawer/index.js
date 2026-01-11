@@ -4,19 +4,26 @@ import styles from './drawer.css';
 export class Drawer extends Webponent {
 	connectedCallback() {
 		this.tabIndex = 1;
+		this.size = this.size; // trigger setter
 		this.shadowRoot.appendChild(super.dom.style(styles));
 		this.rendered = this.shadowRoot.appendChild(this.dom.main());
 	}
 	static properties = {
 		pinned: {
-			type: Boolean,
+			type: "Boolean",
 		},
 		size: {
-			type: "Number",
+			type: Number,
 			default: 250,
 			set: function (value) {
+				console.log(value);
+				
 				this.style.setProperty('--drawer-size', value + 'px');
 			}
+		},
+		side: {
+			type: String,
+			default: 'left',
 		},
 		open: {
 			type: Boolean,
@@ -43,12 +50,18 @@ export class Drawer extends Webponent {
 				return result;
 			},
 			pin: () => {
+				const sides = {
+					left: 'marginLeft',
+					right: 'marginRight',
+					top: 'marginTop',
+					bottom: 'marginBottom',
+				};
 				const result = document.createElement("div");
 				result.classList.add("pin");
 				result.part = "pin";
 				result.addEventListener("click", () => {
 					this.pinned = !this.pinned;
-					this.parentNode.style.marginLeft = this.pinned ? "250px" : "";
+					this.parentNode.style[sides[this.side]] = this.pinned ? "250px" : "";
 				});
 				return result;
 			},
