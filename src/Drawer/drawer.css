@@ -12,50 +12,137 @@
 	position: fixed;
 	box-sizing: border-box;
 	overflow: hidden;
+	transition-property: width, height;
 	transition-duration: var(--duration);
 	transition-timing-function: ease-in;
 	z-index: 1000;
-	width: var(--handle-width);
-	display: grid;
-	top: 0;
+	/* top: 0;
 	bottom: 0;
 	left: 0;
-	width: calc(var(--drawer-size) + var(--handle-width));
+	width: calc(var(--drawer-size) + var(--handle-width)); */
+
+	/* &,
+	* {
+		box-shadow: inset 0 0 10px #000;
+	} */
+	--opening: calc(var(--drawer-size) + var(--handle-width));
 }
 
 /* Defaults for side */
-:host {
-	--border-radius: 0 var(--radius) var(--radius) 0;
-	left: 0;
-	right: auto;
+:host,
+:host([side="right"]) {
+	top: .5em;
+	bottom: .5em;
+	right: var(--a);
+	left: var(--b);
+	width: var(--opening);
+	height: auto;
 
-	.pin {
-		right: 0;
-		left: auto;
+	.handle {
+		padding: 0.5em 0em;
+		place-self: center stretch;
+
+		&::before {
+			content: '•\0A•\0A•';
+		}
 	}
 
 	.container {
-		right: 0;
-		left: auto;
-		grid-template-columns: var(--drawer-size) var(--handle-width);
-		grid-template-areas: "content handle";
+		width: auto;
+		height: auto;
+		left: var(--a);
+		right: var(--b);
+		grid-template-rows: [handle content] 1fr;
+	}
+
+	.pin {
+		top: 0;
+		bottom: auto;
+		left: var(--a);
+		right: var(--b);
 	}
 }
-:host([side="right"]) {
-	--border-radius: var(--radius) 0 0 var(--radius);
-	right: 0;
-	left: auto;
 
-	.pin {
-		left: 0;
-		right: auto;
+:host([side="top"]),
+:host([side="bottom"]) {
+	left: .5em;
+	right: .5em;
+	height: var(--opening);
+	width: auto;
+	bottom: var(--a);
+	top: var(--b);
+
+	.handle {
+		padding: 0 1.5em;
+		place-self: stretch center;
+
+		&::before {
+			content: '• • •';
+			word-spacing: 2ch;
+		}
 	}
 
 	.container {
-		left: 0;
-		right: auto;
-		grid-template-columns: var(--handle-width) var(--drawer-size);
-		grid-template-areas: "handle content";
+		grid-template-columns: [handle content] 1fr;
+		height: auto;
+		width: auto;
+		top: var(--a);
+		bottom: var(--b);
+	}
+
+	.pin {
+		left: auto;
+		right: 0;
+		top: var(--a);
+		bottom: var(--b);
+	}
+
+}
+
+:host {
+	--a: auto;
+	--b: 0;
+	--border-radius: 0 var(--radius) var(--radius) 0;
+
+	.container {
+		grid-template-columns: 
+			[content] var(--drawer-size) 
+			[handle] var(--handle-width);
+	}
+}
+
+:host([side="right"]) {
+	--a: 0;
+	--b: auto;
+	--border-radius: var(--radius) 0 0 var(--radius);
+
+	.container {
+		grid-template-columns: 
+			[handle] var(--handle-width) 
+			[content] var(--drawer-size);
+	}
+}
+
+:host([side="top"]) {
+	--a: auto;
+	--b: 0;
+	--border-radius: 0 0 var(--radius) var(--radius);
+
+	.container {
+		grid-template-rows: 
+			[content] var(--drawer-size) 
+			[handle] var(--handle-width);
+	}
+}
+:host([side="bottom"]) {
+	--a: 0;
+	--b: auto;
+	--border-radius: var(--radius) var(--radius) 0 0;
+
+	.container {
+		grid-template-rows: 
+			[handle] var(--handle-width)
+			[content] var(--drawer-size);
 	}
 }
 
@@ -65,12 +152,12 @@
 } */
 :host(:not(:hover)) {
 	transition-delay: var(--delay);
-	width: var(--handle-width);
+	--opening: var(--handle-width);
 }
 
-:host(:focus-within) {
+/* :host(:focus-within) {
 	width: calc(var(--drawer-size) + var(--handle-width));
-}
+} */
 
 :host([pinned]) {
 	top: 0;
@@ -106,18 +193,41 @@
 	left: auto;
 	height: 100%;
 	display: grid;
+	grid-row: 1;
 }
 
 main {
 	position: relative;
 	border-radius: var(--border-radius);
-	/* align-self: center; */
 	box-sizing: border-box;
 	overflow-y: auto;
 	background-color: hsl(var(--hue), var(--sat), var(--lum));
 	box-shadow: inset 0 0 10px #0003;
 	grid-area: content;
-	margin: .5em 0;
+}
+
+.handle {
+	/* padding: 0.5em 0; */
+	align-self: center;
+	background-color: hsl(var(--hue), var(--sat), calc(var(--lum) - 20%));
+	border-radius: var(--border-radius);
+	color: hsl(var(--hue), var(--sat), calc(var(--lum) - 20%));
+	display: grid;
+	font-size: .8em;
+	line-height: 1;
+	opacity: .5;
+	place-items: center;
+	grid-area: handle;
+	text-shadow: 1px 1px 1px #0005, -1px -1px 1px #FFF9;
+
+	&:hover {
+		opacity: 1;
+	}
+
+	&::before {
+		content: '•  •  •';
+		white-space: pre;
+	}
 }
 
 .pin {
@@ -135,29 +245,5 @@ main {
 		content: '🔓\FE0E';
 		line-height: 1;
 		color: hsl(var(--hue), var(--sat), 50%);
-	}
-}
-
-.handle {
-	padding: 0.5em 0;
-	align-self: center;
-	background-color: hsl(var(--hue), var(--sat), calc(var(--lum) - 20%));
-	border-radius: var(--border-radius);
-	color: hsl(var(--hue), var(--sat), calc(var(--lum) - 20%));
-	display: grid;
-	font-size: .8em;
-	grid-area: handle;
-	line-height: 1;
-	opacity: .5;
-	place-items: center;
-	text-shadow: 1px 1px 1px #0005, -1px -1px 1px #FFF9;
-
-	&:hover {
-		opacity: 1;
-	}
-
-	&::before {
-		content: '•\0A•\0A•';
-		white-space: pre;
 	}
 }
