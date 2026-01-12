@@ -271,17 +271,14 @@ export default class Webponent extends HTMLElement {
 	static fixed(name) {
 		let result = this.toKebabCase(name || this.name)
 			.replaceAll(/(?:^[_0-9.+]+|[_0-9.+]+$)/g, "");
-		console.log(result);
 		const [prefix, suffix] = this.affix.split('-');
 
 		if (prefix && !result.startsWith(`${prefix}-`)) {
 			result = `${prefix}-${result}`;
 		}
-		console.log(result);
 		if (suffix && !result.endsWith(`-${suffix}`)) {
 			result = `${result}-${suffix}`;
 		}
-		console.log(result);
 		return result;
 	}
 

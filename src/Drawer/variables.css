@@ -1,0 +1,16 @@
+:host {
+	--drawer-size: 200px; /* Width or height of the drawer */
+	--handle-width: 1rem; /* Width or height of the handle */
+	--pin-size: 1rem;	 /* Size of the pin area */
+	--radius: 0.5rem;	/* Border radius */
+	--padding: 0;		 /* Padding inside the drawer */
+	/* Color variables */
+	--hue: 0;	/* Base hue for colors */
+	--sat: 0%;	/* Base saturation for colors */
+	--lum: 95%;	/* Base lightness for colors */
+	--alpha: 1;	/* Base alpha for colors */
+	/* Transition variables */
+	--duration: 200ms;	/* Transition duration */
+	--delay: 150ms;	/* Transition delay */
+	--ease: ease-in-out;	/* Transition timing function */
+}

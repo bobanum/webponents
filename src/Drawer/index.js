@@ -1,11 +1,12 @@
 import Webponent from "../Webponent.js";
+import variables from './variables.css';
 import styles from './drawer.css';
 
 export class Drawer extends Webponent {
 	connectedCallback() {
 		this.tabIndex = 1;
 		this.size = this.size; // trigger setter
-		this.shadowRoot.appendChild(super.dom.style(styles));
+		this.shadowRoot.appendChild(super.dom.style(variables + styles));
 		this.rendered = this.shadowRoot.appendChild(this.dom.main());
 	}
 	static properties = {
@@ -16,17 +17,12 @@ export class Drawer extends Webponent {
 			type: Number,
 			default: 250,
 			set: function (value) {
-				console.log(value);
-				
 				this.style.setProperty('--drawer-size', value + 'px');
 			}
 		},
 		side: {
 			type: String,
 			default: 'left',
-		},
-		open: {
-			type: Boolean,
 		},
 	};
 	get dom() {
@@ -51,17 +47,24 @@ export class Drawer extends Webponent {
 			},
 			pin: () => {
 				const sides = {
-					left: 'marginLeft',
-					right: 'marginRight',
-					top: 'marginTop',
-					bottom: 'marginBottom',
+					left: 'margin-left',
+					right: 'margin-right',
+					top: 'margin-top',
+					bottom: 'margin-bottom',
 				};
 				const result = document.createElement("div");
 				result.classList.add("pin");
 				result.part = "pin";
 				result.addEventListener("click", () => {
 					this.pinned = !this.pinned;
-					this.parentNode.style[sides[this.side]] = this.pinned ? "250px" : "";
+					console.log();
+					
+					
+					if (this.pinned) {
+						document.body.style.setProperty(sides[this.side], this.size + "px");
+					} else {
+						document.body.style.removeProperty(sides[this.side]);
+					}
 				});
 				return result;
 			},

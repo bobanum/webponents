@@ -6,35 +6,68 @@
 	<script type="module" src="./bundle.js"></script>
 	
 	<title>Drawer Webponent</title>
+	<style>
+		/* ::part(handle):not(:hover) { opacity: 0.2; } */
+		.examples { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 1100px; margin: 24px auto; }
+		.example { border: 1px solid #eee; padding: 12px; border-radius: 8px; background: #fafafa }
+		.controls { margin-top: 8px; display:flex; gap:8px; align-items:center }
+		.controls input[type="number"] { width:80px }
+		#drawer-top::part(handle) { justify-self: start; box-shadow: 0 1px 1px #0006; }
+	</style>
 </head>
 <body>
-	<drawer-ponent side="left">
-		<h1>Drawer Left</h1>
-		<p>Impedit fugit optio quidem molestiae nihil alias porro natus rerum quam libero tempora architecto id atque, ab cupiditate est cum soluta ipsam, quaerat veritatis quasi! Aliquam sed natus fuga velit.</p>
-	</drawer-ponent>
-	<drawer-ponent side="right">
-		<h1>Drawer Right</h1>
-		<p>Impedit fugit optio quidem molestiae nihil alias porro natus rerum quam libero tempora architecto id atque, ab cupiditate est cum soluta ipsam, quaerat veritatis quasi! Aliquam sed natus fuga velit.</p>
-	</drawer-ponent>
-	<drawer-ponent side="top" size="100">
-		<h1>Drawer Top</h1>
-		<p>Impedit fugit optio quidem molestiae nihil alias porro natus rerum quam libero tempora architecto id atque, ab cupiditate est cum soluta ipsam, quaerat veritatis quasi! Aliquam sed natus fuga velit.</p>
-	</drawer-ponent>
-	<drawer-ponent side="bottom">
-		<h1>Drawer Bottom</h1>
-		<p>Impedit fugit optio quidem molestiae nihil alias porro natus rerum quam libero tempora architecto id atque, ab cupiditate est cum soluta ipsam, quaerat veritatis quasi! Aliquam sed natus fuga velit.</p>
-	</drawer-ponent>
-	<h1>Tenetur quas aliquid eos in quaerat, dolorem molestias sequi dolor alias voluptatem veniam quod reprehenderit distinctio nulla, animi minus. Quo, blanditiis veritatis.</h1>
-	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis sed sint ex assumenda doloremque. Voluptates quibusdam vel obcaecati molestiae! Rem, perferendis. Minima perspiciatis veritatis vitae atque corrupti expedita ipsam velit.</p>
-	<p>Quasi, aliquid! Incidunt ex laboriosam facilis eveniet impedit quidem, quis perferendis illum dolor debitis, rem inventore rerum. Repudiandae labore eos sequi nisi, vero mollitia delectus harum cum dolorem porro ex.</p>
-	<p>Omnis, velit sint molestias, accusantium optio placeat possimus nisi similique deleniti nihil reiciendis, perspiciatis veritatis quidem ratione iure assumenda. Inventore, perferendis! Nisi illo eaque, ad facilis maiores eos praesentium omnis!</p>
-	<p>Fuga, enim odio delectus soluta quaerat, voluptate odit officia sequi nobis ipsum voluptas. Ratione pariatur placeat, id ab tempore repudiandae quidem, aliquam reprehenderit, eos magni explicabo perspiciatis obcaecati doloremque quos!</p>
-	<p>Amet praesentium quis quo odit qui fugit! Magnam, distinctio quasi? Nostrum assumenda, possimus ex aliquid quibusdam libero quis soluta officia dolorem placeat sequi voluptates qui debitis, dicta, voluptate adipisci pariatur!</p>
-	<h2>Tempore eaque nemo fugiat vel, neque in placeat harum laborum quisquam nostrum at minus esse odit eum facilis, similique ab excepturi explicabo!</h2>
-	<p>Laudantium fugit reprehenderit velit odio aliquid nisi recusandae quibusdam quae sapiente aperiam aut, temporibus ex tempora. Nesciunt recusandae vitae labore magnam, expedita ea cupiditate qui ab odit maxime dolores officia.</p>
-	<p>Doloribus corrupti esse corporis ea rerum quod? Praesentium aliquam, repudiandae dicta laudantium repellat, animi, odit iste mollitia accusantium officia alias reiciendis quaerat pariatur nobis saepe voluptate minus temporibus. Saepe, temporibus!</p>
-	<p>Nihil earum placeat, doloribus accusantium suscipit alias tenetur vero, commodi officia, hic iusto beatae? Dolorum repellat, temporibus, ipsa odit enim deleniti suscipit repudiandae, at aperiam earum quas voluptatibus perspiciatis nobis!</p>
-	<p>Suscipit ratione voluptatem ipsam consectetur tempore velit iusto iste qui doloribus, soluta nam dolore distinctio, nihil ut natus nemo quos aut quod eum sint impedit et laudantium. Recusandae, et tenetur.</p>
-	<p>Debitis eius ducimus voluptatem esse delectus quas consequuntur, repudiandae, recusandae a dolorem odit ad at repellendus aliquid doloremque. Molestias quaerat neque amet unde ea voluptatibus modi fuga incidunt ullam nulla.</p>
+	<div class="examples">
+		<div class="example">
+			<drawer-ponent id="drawer-left" side="left" style="--handle-width:40px;--alpha:1" size="300">
+				<h2>Left Drawer (size=300)</h2>
+				<p>Controls and navigation usually live here. This drawer demonstrates `side="left"` and a custom handle width.</p>
+			</drawer-ponent>
+			<div class="controls">
+				<button data-target="drawer-left" data-action="toggle-open">Toggle Open</button>
+				<button data-target="drawer-left" data-action="toggle-pin">Toggle Pin</button>
+				<label>Size <input type="number" data-target="drawer-left" data-action="set-size" value="300" min="50"></label>
+			</div>
+		</div>
+		<div class="example">
+			<drawer-ponent id="drawer-right" side="right" size="260" style="--padding: 1em">
+				<h2>Right Drawer (size=260)</h2>
+				<p>Useful for secondary tools and contextual panels. Try pinning to see how the parent is offset.</p>
+			</drawer-ponent>
+			<div class="controls">
+				<button data-target="drawer-right" data-action="open">Open</button>
+				<button data-target="drawer-right" data-action="close">Close</button>
+				<label>Size <input type="number" data-target="drawer-right" data-action="set-size" value="260" min="50"></label>
+			</div>
+		</div>
+		<div class="example">
+			<drawer-ponent id="drawer-top" side="top" size="120">
+				<h2>Top Drawer (size=120)</h2>
+				<p>Top drawers work well for filters, notifications or quick toolbars.</p>
+			</drawer-ponent>
+			<div class="controls">
+				<button data-target="drawer-top" data-action="toggle-open">Toggle</button>
+				<label>Size <input type="number" data-target="drawer-top" data-action="set-size" value="120" min="40"></label>
+			</div>
+		</div>
+		<div class="example">
+			<drawer-ponent id="drawer-bottom" side="bottom" size="160">
+				<h2>Bottom Drawer (size=160)</h2>
+				<p>Bottom drawers are convenient for mobile actions and transient controls.</p>
+			</drawer-ponent>
+			<div class="controls">
+				<button data-target="drawer-bottom" data-action="toggle-pin">Toggle Pin</button>
+				<button data-target="drawer-bottom" data-action="toggle-open">Open/Close</button>
+				<label>Size <input type="number" data-target="drawer-bottom" data-action="set-size" value="160" min="40"></label>
+			</div>
+		</div>
+	</div>
+
+	<section style="max-width:900px;margin:32px auto;padding:0 12px;line-height:1.6">
+		<h1>The Night Courier</h1>
+		<p>On the far edge of the city, where neon bled into the river, a courier named Mara rode the quiet hours. She delivered small, impossible things — a pocket of dusk bottled for a painter, a single honest note tucked into a locked drawer, a key that fit no door but opened a memory.</p>
+		<p>One rainy midnight she carried a thin parcel wrapped in wax. The address was a name she had never heard; the directions were a poem. She followed the lines: past the clocktower that ran backwards, beneath a bridge humming with old songs, and into a lane where streetlamps bowed like tired sentries.</p>
+		<p>At the threshold she found no person, only a drawer built into the wall. It slid open without a touch and accepted the parcel like it had been waiting a long time. From inside came a whisper of wind and the faint shape of a story being born. Mara left without asking questions — some deliveries are meant to be made, not understood.</p>
+		<p>Years later, villagers would speak of lights that blinked in precise patterns and a melody that drifted from walls at night. They said the drawer kept secrets safe until someone remembered how to listen. Mara kept riding, keeping her lists and her quiet faith: the world needs couriers to move the small, impossible things between people who cannot yet be friends.</p>
+	</section>
 </body>
 </html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		section {
+			position: relative;
+			float: left;
+			width: 0px;
+			clip-path: inset(0 -100vw 0 0);
+			border: 1px dotted red;
+			height: 400px;
+			&::after {
+				content: "aaa";
+				position: absolute;
+				top: 0;
+				left: 0px;
+				/* inset-block: calc((100% - 3em) / 2);
+				inset-inline: 100% -20px;
+				*/
+				background: linear-gradient(to left, #0000, #000f);
+			}
+
+			&:hover div {
+				translate: 0% 0px;
+			}
+			div {
+				width: 300px;
+				border-radius: 0 8px 8px 0;
+				background: #fafafa;
+				padding: 2em;
+				border: 1px solid #eee;
+				translate: -100% 0px;
+				position: relative;
+				transition: translate 0.3s ease;
+
+				/* overflow-x: auto; */
+
+
+			}
+	</style>
+</head>
+
+<body>
+	<section>
+		<div>
+			<p>Facilis nisi, dolorum saepe commodi minima maiores sint molestias veniam, illum placeat voluptatibus! Dolorum eos maiores voluptate et necessitatibus aliquam quas velit, fugit autem dolore esse beatae nam, molestiae temporibus.</p>
+			<p>Optio, dignissimos doloribus doloremque nam ipsa, iste alias sed nisi dolorem quaerat sapiente porro suscipit, ea velit quas quam voluptates rerum aspernatur molestiae nobis? Tempore tenetur pariatur reiciendis esse quasi.</p>
+			<p>Aperiam aliquid officiis corporis laboriosam fugit a eaque dolor totam quam voluptate porro optio nobis, ratione mollitia sunt distinctio! Nulla, nesciunt! Reiciendis ratione beatae, non explicabo sit praesentium earum provident.</p>
+		</div>
+	</section>
+	<p>Aut quia necessitatibus nostrum. Nihil autem aperiam odit suscipit quod quos minus at, debitis asperiores nam consequuntur, rem saepe eius et magnam cum maxime. Hic iste aliquam est tenetur eum.</p>
+	<p>Amet sit, architecto minima dolore vero necessitatibus sapiente rem excepturi natus rerum suscipit dolor repellendus quos distinctio sed ratione adipisci dignissimos porro ut ex praesentium, enim quod eligendi! Molestias, itaque.</p>
+	<p>Sequi, unde iusto quod vero laudantium molestias, perspiciatis doloremque a accusamus sunt officia, enim ut itaque repellat. Enim, expedita magni quae neque numquam, labore sunt voluptatem beatae aspernatur, voluptates praesentium!</p>
+	<p>Incidunt atque ipsam dicta porro eveniet a dolorem illum velit tempora quae, ullam, consectetur quod nesciunt nulla, blanditiis nisi minima. Odio laborum, eos deserunt sapiente quia ipsa nihil obcaecati nobis?</p>
+	<p>Voluptates tempora eum ratione fugiat ea nesciunt dolore minus eius debitis accusamus quis nemo obcaecati est et ullam, quisquam similique itaque, vel nulla ipsam voluptatem voluptatibus earum facilis! Earum, cumque.</p>
+	<p>Voluptates facere, ab nemo accusantium nostrum deleniti, nam ad aliquam quo quidem magni minima sit veniam? Architecto rerum molestiae nam sapiente, iste tempora facilis voluptatum dignissimos nihil harum necessitatibus ipsum.</p>
+</body>
+
+</html>
