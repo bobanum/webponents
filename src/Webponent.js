@@ -70,9 +70,6 @@ export default class Webponent extends HTMLElement {
 		if (oldValue === newValue) return;
 		this[name] = newValue;
 	}
-	static get slug() {
-		return this.toKebabCase(this.name);
-	}
 	get dom() {
 		return {
 			style: (content) => {
@@ -332,15 +329,16 @@ export default class Webponent extends HTMLElement {
 	 * MyComponent.register('my-widget');
 	 * // Registers as: 'my-widget'
 	 */
-	static register(name, meta) {
-		if (meta) {
-			this.setMeta(meta);
+	static register(name, options = {}) {
+		if (options.meta) {
+			this.setMeta(options.meta);
+			delete options.meta;
 		}
 
 		name = this.fixed(name);
 		if (!customElements.get(name)) {
 			console.log(`Registering custom element: ${name}`);
-			customElements.define(name, this);
+			customElements.define(name, this, options);
 		}
 	}
 }
