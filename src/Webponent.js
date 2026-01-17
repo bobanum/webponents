@@ -191,8 +191,8 @@ export default class Webponent extends HTMLElement {
 				return result;
 			},
 			set(value) {
-				value = prop.assert.call(this, value);
-				if (value === undefined) {
+				let asserted = prop.assert.call(this, value);
+				if (asserted === undefined) {
 					delete this._[name];
 					return true;
 				}
@@ -337,7 +337,7 @@ export default class Webponent extends HTMLElement {
 
 		name = this.fixed(name);
 		if (!customElements.get(name)) {
-			console.log(`Registering custom element: ${name}`);
+			// console.log(`Registering custom element: ${name}`);
 			customElements.define(name, this, options);
 		}
 	}

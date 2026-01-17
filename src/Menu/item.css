@@ -1,0 +1,46 @@
+:host {
+	--padding: .5em 1em;
+	display: flex;
+	position: relative;
+}
+
+slot {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	top: 100%;
+	--gap: 0;
+	background-color: hsl(from inherit h s l);
+}
+:host(:has(menu-ponent)) a::after {
+	content: "▾";
+	margin-left: .25em;
+	cursor: wait;
+}
+
+:host(:not(:focus-within):not(:hover)) {
+	background-color: var(--background-color);
+
+	slot {
+		display: none;
+	}
+}
+:host(:hover) slot {
+	transition-property: display;
+	transition-duration: .2s;
+	transition-delay: 1s;
+	transition-behavior: allow-discrete;
+}
+::slotted(menu-ponent) {
+	flex-direction: column;
+}
+
+a {
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	color: inherit;
+	padding: var(--padding);
+}
