@@ -337,7 +337,7 @@ export default class Webponent extends HTMLElement {
 
 		name = this.fixed(name);
 		if (!customElements.get(name)) {
-			// console.log(`Registering custom element: ${name}`);
+			console.log(`Registering custom element: ${name}`);
 			customElements.define(name, this, options);
 		}
 	}

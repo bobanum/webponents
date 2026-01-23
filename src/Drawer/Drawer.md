@@ -2,25 +2,25 @@
 
 ## Overview
 
-`<drawer>` is a lightweight slide-out panel web component. It provides a handle, an optional pin control, and a content slot. The component supports placement on any side, a configurable size, and a pinned state that offsets its parent element.
+`<drawer-ponent>` is a lightweight slide-out panel web component. It provides a handle, an optional pin control, and a content slot. The component supports placement on any side, a configurable size, and a pinned state that offsets its parent element.
 
 ## Quick Usage
 
 Basic example:
 
-```html
-<drawer>
+~~~html
+<drawer-ponent>
   <p>Your drawer content here</p>
-</drawer>
-```
+</drawer-ponent>
+~~~
 
 With attributes:
 
-```html
-<drawer side="right" size="300" pinned open>
+~~~html
+<drawer-ponent side="right" size="300" pinned open>
   <nav>Navigation...</nav>
-</drawer>
-```
+</drawer-ponent>
+~~~
 
 ## Properties / Attributes
 
@@ -44,15 +44,15 @@ The component builds an internal DOM with named parts you can style via the `::p
 Example styling using parts:
 
 ```css
-drawer::part(handle) { cursor: grab; }
-drawer::part(content) { padding: 16px; }
-drawer::part(pin) { width: 24px; height: 24px; }
+drawer-ponent::part(handle) { cursor: grab; }
+drawer-ponent::part(content) { padding: 16px; }
+drawer-ponent::part(pin) { width: 24px; height: 24px; }
 ```
 
 You can also customize the size using the `--drawer-size` CSS variable:
 
 ```css
-drawer { --drawer-size: 300px; }
+drawer-ponent { --drawer-size: 300px; }
 ```
 
 ## Events
@@ -68,7 +68,7 @@ The component does not dispatch custom events by default. Interaction is primari
 Programmatic usage:
 
 ```javascript
-const d = document.querySelector('drawer');
+const d = document.querySelector('drawer-ponent');
 d.size = 320; // updates --drawer-size
 d.pinned = true;
 d.side = 'right';

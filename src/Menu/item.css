@@ -1,7 +1,6 @@
 :host {
 	--padding: .5em 1em;
 	display: flex;
-	position: relative;
 }
 
 slot {
@@ -11,13 +10,14 @@ slot {
 	margin: 0;
 	padding: 0;
 	top: 100%;
+	left: 0;
+	right: 0;
 	--gap: 0;
 	background-color: hsl(from inherit h s l);
 }
 :host(:has(menu-ponent)) a::after {
 	content: "▾";
 	margin-left: .25em;
-	cursor: wait;
 }
 
 :host(:not(:focus-within):not(:hover)) {
@@ -35,6 +35,7 @@ slot {
 }
 ::slotted(menu-ponent) {
 	flex-direction: column;
+	font-size: smaller;
 }
 
 a {

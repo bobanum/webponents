@@ -1,0 +1,16 @@
+:host {
+    display: grid;
+}
+
+:host(:not(.active)) {
+    display: none;
+}
+
+
+.tab-panels {
+    border: 1px solid #e6eef7;
+    padding: 1em;
+    border-radius: 6px;
+    background: #fff;
+    min-width: 40em;
+}

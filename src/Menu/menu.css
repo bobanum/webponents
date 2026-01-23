@@ -1,4 +1,10 @@
 :host {
 	display: flex;
 	gap: var(--gap, 0);
+	position: relative;
+}
+slot {
+	position: relative;
+	display: flex;
+	gap: var(--gap, 0);
 }
