@@ -26,7 +26,7 @@ function getEntryPoints() {
       } catch (e) {
         // No index.js, skip
       }
-    } else if (item.endsWith('.js') && item !== 'Webponent.js' && item !== 'PropsProxy.js') {
+    } else if (item.endsWith('.js') && ['Webponent.js', 'PProxy.js'].includes(item) === false) {
       // Individual component file (exclude base classes)
       const name = item.replace('.js', '');
       entries[name] = itemPath;

@@ -1,4 +1,4 @@
-import PropsProxy from "./PropsProxy.js";
+import PProxy from "./PProxy.js";
 
 /**
  * Base class for creating reactive web components with automatic attribute-property synchronization.
@@ -57,7 +57,7 @@ export default class Webponent extends HTMLElement {
 	 */
 	constructor() {
 		super();
-		this._ = new PropsProxy(this);
+		this._ = new PProxy(this);
 
 		/**
 		 * Internal storage object.
@@ -178,8 +178,8 @@ export default class Webponent extends HTMLElement {
 			prop.type = String;
 		}
 		prop.assert = prop.assert 
-			?? PropsProxy.asserts[prop.type.name] 
-			?? PropsProxy.asserts[prop.type]
+			?? PProxy.asserts[prop.type.name] 
+			?? PProxy.asserts[prop.type]
 			?? ((typeof prop.type === 'function') ? prop.type : (v) => v);
 		
 		const descriptor = {
